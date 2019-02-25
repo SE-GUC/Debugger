@@ -6,6 +6,7 @@ class Announcements
     }
         printMyName(x){
             console.log(x);
+            console.log('lol')
         }
        
     }
