@@ -1,7 +1,7 @@
 const uuid= require('uuid')
 
 
-class VGS 
+class VGS_User
 {   constructor(email, userType, clubCommittee, hobbies, VGSYear, appliedPosition, appStatus, 
                 notes, gameName, gameScrSho, downloadLink, boothMember)
     {
@@ -20,3 +20,5 @@ class VGS
     };
 
 };
+
+module.exports = VGS_User

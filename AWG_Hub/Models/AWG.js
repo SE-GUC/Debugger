@@ -10,4 +10,4 @@ class AWG
     };
 };
 
-module.exports = User
+module.exports = AWG
