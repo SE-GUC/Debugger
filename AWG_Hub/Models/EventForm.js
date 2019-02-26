@@ -15,3 +15,5 @@ class EventForm
     };
 
 };
+
+module.exports = EventForm
