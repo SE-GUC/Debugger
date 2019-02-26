@@ -1,17 +1,19 @@
-class Announcements
+const uuid= require('uuid')
+
+class Announcement
 {
-    constructor( )
+    constructor(clubName, sentTo, sentFrom, image, text, pdfFile, eventId )
     {
-            console.log(this)
+        this.clubName = clubName;
+        this.sentTo = sentTo;
+        this.sentFrom = sentFrom;
+        this.image = image;
+        this.text = text;
+        this.pdfFile = pdfFile;
+        this.eventId = eventId;
+        this.id = uuid.v4();
     }
-        printMyName(x){
-            console.log(x);
-        }
-       
-    }
-    
 
-var obj = new Announcements();
+}
 
-obj.printMyName('maha');
-module.exports = Announcements
+module.exports= Announcement;
