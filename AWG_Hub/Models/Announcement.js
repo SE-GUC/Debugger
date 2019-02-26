@@ -11,7 +11,6 @@ class Announcement
         this.text = text;
         this.pdfFile = pdfFile;
         this.eventId = eventId;
-
         this.id = uuid.v4();
     }
 
