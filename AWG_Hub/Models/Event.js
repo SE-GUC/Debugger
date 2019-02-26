@@ -11,3 +11,5 @@ class Event
         this.date = date;
     };
 };
+
+module.exports = Event

@@ -1,13 +1,19 @@
-const express = require('../../node_modules/express')
+const uuid= require('uuid')
 
-
-class Announcements
+class Announcement
 {
-    constructor( )
+    constructor(clubName, sentTo, sentFrom, image, text, pdfFile, eventId )
     {
-        console.log(express);
+        this.clubName = clubName;
+        this.sentTo = sentTo;
+        this.sentFrom = sentFrom;
+        this.image = image;
+        this.text = text;
+        this.pdfFile = pdfFile;
+        this.eventId = eventId;
+        this.id = uuid.v4();
     }
 
 }
 
-var x = new Announcements();
+module.exports= Announcement;
