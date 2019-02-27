@@ -1,4 +1,4 @@
-const express = require('../node_modules/express')
+const express = require('express')
 
 const users = require('./Models/User')
 const events = require('./Models/Event')
