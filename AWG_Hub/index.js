@@ -2,14 +2,19 @@ const express = require('../node_modules/express')
 
 const users = require('./Models/User')
 const events = require('./Models/Event')
+const AWGs = require('./Models/AWG')
+
 
 const app = express()
 app.use(express.json())
 
 app.get('/', (req, res) => {
-    res.send(`<h1>Welcome to Book Store</h1>
+    res.send(`<h1>¡AWG!</h1>
     <a href="/api/users">Users</a>
-    <a href="/api/books">Events</a>
+    <a href="/api/events">Events</a>
+    <a href="/api/AWGs">AWGs</a>
+    <a href="/api/MUN">MUN</a>
+
     `);
 })
 
