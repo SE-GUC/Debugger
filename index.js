@@ -10,10 +10,11 @@ app.use(express.json())
 
 app.get('/', (req, res) => {
     res.send(`<h1>¡AWG!</h1>
-    <a href="/api/users">users</a>
+    <a href="/api/users">Users</a>
     <a href="/api/events">Events</a>
-    <a href="/api/AWGs">AWG</a>
+    <a href="/api/AWGs">AWGs</a>
     <a href="/api/MUN">MUN</a>
+
     `);
 })
 
