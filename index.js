@@ -22,6 +22,8 @@ app.get('/', (req, res) => {
 //app.use('/api/users', users)
 //app.use('/api/books', books)
 
+app.use('/api/vgs_users_G', vgs_users_G)
+
 // Handling 404
 app.use((req, res) => {
     res.status(404).send({err: 'We can not find what you are looking for'});
