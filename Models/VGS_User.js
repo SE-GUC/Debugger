@@ -1,4 +1,6 @@
 const uuid= require('uuid')
+const fs = require('fs');
+// const jfile = require('../')
 
 
 class VGS_User
@@ -20,5 +22,11 @@ class VGS_User
     };
 
 };
+
+//let rawdata = fs.readFileSync('../Applicants.json');  
+//let applicants = JSON.parse(rawdata);  
+//console.log(applicants);  
+
+
 
 module.exports = VGS_User

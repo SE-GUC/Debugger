@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
 // Direct routes to appropriate files 
 app.use('/api/VGS' , vgsUsers)
 app.use('/api/VGS/application_form', vgsUsers)
+app.use('/api/VGS/application_form_view', vgsUsers)
 
 
 // Handling 404

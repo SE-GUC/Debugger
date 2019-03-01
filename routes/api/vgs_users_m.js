@@ -1,29 +1,44 @@
-const Joi= require('joi')
-const uuid= require('uuid')
-const express = require('express')
-const Application_Form = require('../../Models/Application_Form')
-const User = require('../../Models/User')
-const VGS_User = require('../../Models/VGS_User')
-const router = express.Router()
+const Joi = require("joi");
+const uuid = require("uuid");
+const express = require("express");
+const Application_Form = require("../../Models/Application_Form");
+const User = require("../../Models/User");
+const VGS_User = require("../../Models/VGS_User");
+const router = express.Router();
+const fs = require("fs");
 
-class applicant{
-    constructor(appl, msg){
-        this.appl=appl
-        this.msg=msg
-    }
-}
 
-const applicants = []
 
-router.get('/', (req, res) => {
-    res.send(`<a href="/api/Application Form">Application Form</a>`)
-})
+console.log('hi out of get');
 
-router.post('/application_form', (req, res) => {
+//const applicants = [];
 
-    var user = new VGS_User (req.body.email, req.body.clubCommittee);
-    user.
-   /* const newApplicant = {
+var applicant  = new VGS_User();
+
+router.get("/", (req, res) => {
+  res.send(`<a href="/api/Application Form">Application Form</a>`);
+});
+
+router.post("/application_form", (req, res) => {
+
+    applicant.email = req.body.email;
+    applicant.clubCommittee = req.body.clubCommittee;
+    applicant.hobbies = req.body.hobbies;
+    applicant.appliedPosition = req.body.appliedPosition;
+    applicant.gameName = req.body.gameName;
+
+
+    let rawdata = fs.readFileSync(`Applicants.json`);
+    let applicants = JSON.parse(rawdata); 
+    
+    applicants.push(applicant);
+    
+    fs.writeFileSync("Applicants.json", JSON.stringify(applicants))
+    
+    res.send(applicant);
+    
+ //#region 
+    /* const newApplicant = {
         //name: new User = (req.body.name, req.body.phoneNumber, req.body.email, req.body.password, 
            // req.body.birthday),
         name: req.body.name,
@@ -37,16 +52,23 @@ router.post('/application_form', (req, res) => {
         clubName: req.body.clubName,
         clubCommittee: req.body.clubCommittee,
         hobbies: req.body.hobbies
-    }*/
-    //applicants.push(newApplicant)
-    //res.send(res.status(200),r);
-    res.send(user)
-})
+    }*///applicants.push(newApplicant)
+    //#endregion
+});
 
-router.get('/application_form_view', (req, res) => {
+router.get("/application_form_view", (req, res) => {
+  let rawdata = fs.readFileSync(`Users.json`);
+  let applicants = JSON.parse(rawdata);
 
-})
+  //   var accpetedApplicatns = applicants.filter(
+  //     x => x.appStatus == "Complete" && x.name == "Ghada"
+  //   );
 
+  var accpetedApplicatns = applicants.filter(function(item) {
+      return item.appStatus != "Complete" && item.name == "Ghada"
+  });
+  res.send(accpetedApplicatns.length > 0 ? accpetedApplicatns : "no matches");
+});
 
 /*router.get('/api/testing', (req, res) => {
     res.send('Hola');
@@ -54,14 +76,13 @@ router.get('/application_form_view', (req, res) => {
 
 router.post('/api/application_forms', (req, res) => {
     const newApplicant = {
-        id: uuid.v4(),
+        id: uuid.v4(),`
         name: req.body.name,
         age: req.body.age
     };
     applicants.push(newApplicant);
     res.send('Your Application Form has been submitted ;)');
 })*/
-
 
 //get the requirement fields from whom ever is making the application form
 
@@ -101,5 +122,4 @@ function postingAppForm (url) {
     return res.send(info, 'done!')
 }*/
 
-
-module.exports = router
+module.exports = router;
