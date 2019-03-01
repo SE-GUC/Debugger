@@ -23,8 +23,8 @@ const vgs_users = [
 router.get ('/', (req, res) => res.json({ data: vgs_users }));
 
 // Assigning the booth member
-router.put('/:id', (req, res) => {
-    const memberId = req.params.id 
+router.put('/', (req, res) => {
+    const memberId = req.body.id  //req.body.id
     const user = vgs_users.find(user => user.id === memberId)
     
     // checking if he is already a booth member
