@@ -9,7 +9,7 @@ const app = express()
 // Inorder to be able to use the "req.body" statement.
 app.use(express.json())
 
-
+,
 
 app.get('/', (req, res) => {
     res.send(`<h1>¡AWG!</h1>
