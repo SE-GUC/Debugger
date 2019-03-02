@@ -6,19 +6,30 @@ const router = express.Router();
 const Application_Form = require("../../Models/Application_Form");
 const User = require("../../Models/User");
 const VGS_User = require("../../Models/VGS_User");
-
+const events = require("./events");
+const Event = require('../../models/Event')
 const fs = require("fs");
 
 console.log("hi out of get");
 
 //const applicants = [];
+const eventsList = [
 
+  new Event ('public', 'recruitment booth','1/2/2019'),
+  new Event ('private', 'general meeting ','1/3/2019'),
+  new Event ('public', 'career advising','1/6/2019'),
+ 
+];
 var applicant = new VGS_User();
 
 router.get("/", (req, res) => {
-  res.send(`<a href="/api/Application Form">Application Form</a>`);
+  res.send(`<a href="/api/Application Form">Application Form</a>
+            <a href="/api/Events">Events</a>`);
 });
-
+router.get('/Events', (req, res) => {
+  res.json({ data: eventsList })
+  
+});
 router.post("/application_form", (req, res) => {
   applicant.email = req.body.email;
   applicant.clubCommittee = req.body.clubCommittee;
