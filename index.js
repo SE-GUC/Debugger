@@ -10,6 +10,7 @@ const eventforms  = require('./routes/api/eventforms')
 const interviews = require ('./routes/api/interviews')
 const headFreeSlots = require ('./routes/api/headFreeSlots')
 const vgs_users2= require('./routes/api/vgs_users2')
+const FAQfile = require('./routes/api/faq')
 
 const app = express()
 
@@ -27,6 +28,9 @@ app.get('/', (req, res) => {
     <a href="/api/Events">Events</a>`);
 })
 
+app.get('/api/FAQ', (req, res) => {
+    res.send(FAQfile.FAQ);
+})
 // Direct routes to appropriate files 
 app.use('/api/VGS' , vgsUsers);
 app.use('/api/VGS/application_form', vgsUsers)
