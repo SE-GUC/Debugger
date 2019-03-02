@@ -11,9 +11,7 @@ new attendanceSheet('mohamed@gmail.com','Thursday','12-12-2018', false, false, t
 
 router.get('/',(req,res) => {
     res.send(attendance);
-}
-
-);
+});
 
 router.get('/userattendance', (req, res) => {
     const userEmail= req.body.email;
