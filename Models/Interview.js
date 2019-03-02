@@ -1,6 +1,6 @@
 const uuid= require('uuid')
 
-class BoothInterviewSheet {
+class Interview  {
 
 // The interview attribute indicates whether there is interview in that specific slot
 // Its value can be 'true'/ 'false'
@@ -16,14 +16,14 @@ class BoothInterviewSheet {
 // and the attribute "freeSlot" will be set to False so that the booth member can change asign
 // the interview to another inteviewer.
 
-    constructor (interviewerEmail, intervieweeEmail, date, interviewslot, freeSlot, startTime, 
+    constructor (interviewerEmail, intervieweeEmail, day, date, interviewslot, freeSlot, startTime, 
     endTime, interview )
     {
         this.interviewerEmail = interviewerEmail;
         this.intervieweeEmail = intervieweeEmail;
+        this.day = day;
         this.date = date;
         this.interviewslot = interviewslot;
-        this.freeSlot = freeSlot;
         this.startTime = startTime;
         this.endTime = endTime;
         this.interview = interview;
@@ -34,4 +34,4 @@ class BoothInterviewSheet {
     
 };
 
-module.exports = BoothInterviewSheet
+module.exports = Interview 
