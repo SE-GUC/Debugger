@@ -13,10 +13,9 @@ class AttendanceSheet
         this.attended = attended;
         this.meeting = meeting;
         this.workshop = workshop;
-
         this.id = uuid.v4();
     }
-
-}
-
+    
+    }
+    
 module.exports= AttendanceSheet;
