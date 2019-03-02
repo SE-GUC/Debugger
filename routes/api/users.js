@@ -30,10 +30,8 @@ const users = [
    
 
 
-// Get all users
 router.get('/', (req, res) => res.json({users}));
 
-// Get a certain user
 router.get('/:name', (req, res) => {
     const username = req.params.name
     const user = users.find(user => user.name === username)
