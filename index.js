@@ -1,36 +1,29 @@
 const express = require('express')
 
-const users = require('./Models/User')
-const events = require('./Models/Event')
-const awgs = require('./routes/api/awgs')
-const vgs_users =require('./routes/api/vgs_users')
+const vgsUsers = require('./routes/api/vgs_users_m')
 
-const app = express();
-app.use(express.json());
+const app = express()
+
+// Inorder to be able to use the "req.body" statement.
+app.use(express.json())
 
 app.get('/', (req, res) => {
-    res.send(`<h1>Welcome to GUC Clubs!</h1>
-    <a href="/api/Nebny">Nebny</a>
+    res.send(`<h1>¡AWG!</h1>
+    <a href="/api/AWGs">AWGs</a>
     <a href="/api/MUN">MUN</a>
-    <a href="/api/VGS">VGS</a>
-    <a href="/api/TIQ">TIQ</a>
-    <a href="/api/awgs">About Clubs </a>
-    `);
+    <a href="/api/VGS">VGS</a>`);
 })
 
-
-
- app.use('/api/awgs', awgs);
- app.use('/api/VGS', vgs_users);
-
-
+// Direct routes to appropriate files 
+app.use('/api/VGS' , vgsUsers)
+app.use('/api/VGS/application_form', vgsUsers)
+app.use('/api/VGS/application_form_view', vgsUsers)
 
 
 // Handling 404
 app.use((req, res) => {
- res.status(404).send({err: 'We can not find what you are looking for'});
- })
+    res.status(404).send({err: 'We can not find what you are looking for'});
+})
 
- 
-const port = 3000
-app.listen(port, () => console.log(`Server up and running on port ${port}`))
+ const port= process.env.PORT || 3000;
+ app.listen(port, () => console.log(`${port} is live and running...`))
