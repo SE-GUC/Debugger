@@ -10,11 +10,6 @@ const eventforms  = require('./routes/api/eventforms')
 
 const app = express()
 
-
-
-app.use(express.json());
-
-
 app.use(express.json())
 
 app.get('/', (req, res) => {
@@ -26,12 +21,11 @@ app.get('/', (req, res) => {
     <a href="/api/TIQ">TIQ</a>
     <a href="/api/awgs">About Clubs</a>
     <a href="/api/profile">edit or view your profile</a>    
-
     <a href="/api/Events">Events</a>`);
 })
 
 // Direct routes to appropriate files 
-app.use('/api/VGS' , vgsUsers)
+app.use('/api/VGS' , vgsUsers);
 app.use('/api/VGS/application_form', vgsUsers)
 app.use('/api/VGS/application_form_view', vgsUsers)
 app.use('/api/profile', users)
@@ -47,5 +41,5 @@ app.use((req, res) => {
     res.status(404).send({err: 'We can not find what you are looking for'});
 })
 
- const port= process.env.PORT || 4000;
+ const port= process.env.PORT || 3000;
  app.listen(port, () => console.log(`${port} is live and running...`))
