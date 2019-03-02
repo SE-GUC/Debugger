@@ -2,10 +2,11 @@ const uuid= require('uuid')
 
 
 class VGS_User
-{   constructor(email, userType, clubCommittee, hobbies, VGSYear, appliedPosition, appStatus, 
+{   constructor(userEmail, userType, clubCommittee, hobbies, VGSYear, appliedPosition, appStatus, 
                 notes, gameName, gameScrSho, downloadLink, boothMember)
     {
-        this.email= email;
+      //  this.userId = userId;
+        this.userEmail= userEmail;
         this.userType = userType;
         this.clubCommittee = clubCommittee;
         this.hobbies = hobbies;

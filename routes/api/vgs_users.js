@@ -20,25 +20,32 @@ const vgs_users = [
 ];
 
 // Showing all users
-router.get ('/', (req, res) => res.json({ data: vgs_users }));
+//router.get ('/', (req, res) => res.json({ data: vgs_users }));
 
 // Assigning the booth member
-router.put('/', (req, res) => {
-    const memberId = req.body.id  //req.body.id
-    const user = vgs_users.find(user => user.id === memberId)
+router.put('/assign', (req, res) => {
+    const memberEmail = req.body.email;  //req.body.id
+
+    const schema = {
+        email: Joi.string().email().required()};
+
+    const result = Joi.validate(req.body, schema);
+    if (result.error) return res.status(400).send({ error: result.error.details[0].message });
+
+    const user = vgs_users.find(user => user.userEmail === memberEmail);
     
     // checking if he is already a booth member
-    if (user.boothMember === true ) return res.send ('This member is already a booth member')
+    if (user.boothMember === true ) return res.status(404).send({err:('This member is already a booth member')});
 
     // checking if he is even accepted
-    if (user.appStatus === 'Rejected' ) return res.send ('This member is already a booth member')
+    if (user.appStatus === 'Rejected' ) return res.status(404).send({err:'This applicant was rejected and is not a member in the club'});
 
     // checking if he is a member
-    if (user.userType !== 'Member' || user.userType !== 'Recruit' ) 
-    return res.send ('This person position is not member')
+    if (user.userType !== 'Member' && user.userType !== 'Recruit' ) 
+    return res.status(404).send({err: ('This person position is not member')});
 
     user.boothMember = true;
-    res.send(vgs_users)
+    res.send(vgs_users);
 });
 
 module.exports = router;

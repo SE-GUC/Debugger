@@ -5,9 +5,9 @@ class AttendanceSheet
     // attended attribute indicates whether a member has attended.
     // meeting attribute indicates whether the attendace was for a meeting.
     // workshop attribute indicates whether the attendace was for a workshop.
-    constructor(email, day, date, attended, meeting, workshop)
+    constructor(memberEmail, day, date, attended, meeting, workshop)
     {
-        this.email = email;
+        this.memberEmail = memberEmail;
         this.day = day;
         this.date = date;
         this.attended = attended;
