@@ -1,15 +1,22 @@
 const express = require('express')
 
+
+const users = require('./routes/api/users')
+const events = require('./Models/Event')
+const AWGs = require('./Models/AWG')
+
 const vgsUsers = require('./routes/api/vgs_users_m')
+//const users = require('./routes/api/users')
 
 const events = require('./routes/api/events')
 const eventforms  = require('./routes/api/eventforms')
 
-const users = require('./routes/api/users')
+
 const awgs = require('./routes/api/awgs')
 const vgs_users =require('./routes/api/vgs_users')
 
 const app = express()
+
 
 
 app.use(express.json())
@@ -30,9 +37,18 @@ app.get('/', (req, res) => {
     `);
 })
 
+
+
+app.use('/api/profile', users)
+
+// Direct routes to appropriate files 
 app.use('/api/VGS' , vgsUsers)
 app.use('/api/VGS/application_form', vgsUsers)
 app.use('/api/VGS/application_form_view', vgsUsers)
+//app.use('/api/profile', users)
+
+
+
 
 app.use('/api/Events', events)
 app.use('/api/VGS/Events', vgsUsers)
@@ -46,9 +62,12 @@ app.use('/api/VGS', vgs_users);
 
 
 
+
 app.use((req, res) => {
     res.status(404).send({err: 'We can not find what you are looking for'});
 })
 
+
  const port= process.env.PORT || 4000;
  app.listen(port, () => console.log(`${port} is live and running...`))
+
