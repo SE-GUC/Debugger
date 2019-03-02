@@ -1,8 +1,13 @@
 const express = require('express')
 
 
-const users = require('./routes/api/users')
+/*const users = require('./Models/User')
 const events = require('./Models/Event')
+const AWGs = require('./Models/AWG')*/
+const attendanceSheets = require('./routes/api/attendanceSheets')
+
+const users = require('./routes/api/users')
+//const events = require('./Models/Event')
 const AWGs = require('./Models/AWG')
 
 const vgsUsers = require('./routes/api/vgs_users_m')
@@ -20,9 +25,9 @@ const announcement = require ('./routes/api/announcements')
 const app = express()
 
 // Inorder to be able to use the "req.body" statement.
-=======
+app.use(express.json())
 
-
+app.get('/', (req, res) => {
 
 
 app.use(express.json())
@@ -30,11 +35,23 @@ app.use(express.json())
 
 
 /*app.get('/', (req, res) => {
-    res.send(`<h1>¡AWG!</h1>
-    <a href="/api/Nebny">Nebny</a>
-    <a href="/api/MUN">MUN</a>
-    <a href="/api/VGS">VGS</a>
 
+    res.send(`<h1>¡AWG!</h1>
+    <a href="/api/users">Users</a>
+    <a href="/api/events">Events</a>
+    <a href="/api/AWGs">AWGs</a>
+    <a href="/api/MUN">MUN</a>
+
+
+    `);
+})
+
+// Direct routes to appropriate files 
+//app.use('/api/users', users)
+//app.use('/api/books', books)
+app.use ('/api/attendance',attendanceSheets)
+
+// Handling 404
     <a href="/api/announcements">announcements</a>
     <a href="/api/interviewSlot">interviewSlot</a>`);
 
@@ -84,7 +101,8 @@ app.use('/api/VGS', vgs_users);
 
 app.use((req, res) => {
     res.status(404).send({err: 'We can not find what you are looking for'});
-})
+ })
+
 
 
  const port= process.env.PORT || 4000;
