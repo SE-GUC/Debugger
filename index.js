@@ -1,8 +1,9 @@
 const express = require('express')
 
-const users = require('./Models/User')
+/*const users = require('./Models/User')
 const events = require('./Models/Event')
-const AWGs = require('./Models/AWG')
+const AWGs = require('./Models/AWG')*/
+const attendanceSheets = require('./routes/api/attendanceSheets')
 
 
 const app = express()
@@ -21,11 +22,12 @@ app.get('/', (req, res) => {
 // Direct routes to appropriate files 
 //app.use('/api/users', users)
 //app.use('/api/books', books)
+app.use ('/api/attendance',attendanceSheets)
 
 // Handling 404
 app.use((req, res) => {
     res.status(404).send({err: 'We can not find what you are looking for'});
  })
 
-const port = 3000
+const port = 8080
 app.listen(port, () => console.log(`Server up and running on port ${port}`))
