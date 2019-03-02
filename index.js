@@ -8,7 +8,7 @@ const vgs_users =require('./routes/api/vgs_users')
 const app = express()
 
 
-app.use(express.json())
+app.use(express.json());
 
 app.get('/', (req, res) => {
     res.send(`<h1>¡AWG!</h1>
