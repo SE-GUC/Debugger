@@ -9,7 +9,7 @@ const fs = require("fs");
 
 console.log("hi out of get");
 
-//const applicants = [];
+
 
 var applicant = new VGS_User();
 

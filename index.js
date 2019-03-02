@@ -21,7 +21,6 @@ app.get('/', (req, res) => {
     `);
 })
 
-// Direct routes to appropriate files 
 app.use('/api/VGS' , vgsUsers)
 app.use('/api/VGS/application_form', vgsUsers)
 app.use('/api/VGS/application_form_view', vgsUsers)
@@ -30,7 +29,6 @@ app.use('/api/awgs', awgs);
  app.use('/api/VGS', vgs_users);
 
 
-// Handling 404
 app.use((req, res) => {
     res.status(404).send({err: 'We can not find what you are looking for'});
 })
