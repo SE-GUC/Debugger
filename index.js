@@ -16,7 +16,8 @@ app.get('/', (req, res) => {
     <a href="/api/MUN">MUN</a>
     <a href="/api/VGS">VGS</a>
     <a href="/api/TIQ">TIQ</a>
-    <a href="/api/awgs">About Clubs</a>
+    <a href="/api/awgs">About Clubss</a>
+  
     <a href="/api/profile">edit or view your profile</a>
     `);
 })
