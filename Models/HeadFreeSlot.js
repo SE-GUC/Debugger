@@ -1,10 +1,11 @@
 const uuid= require('uuid')
 
 // All the Heads free slots will be saved here.
-class HeadInterviewSheet 
-{   constructor(email, date, slot )
+class HeadFreeSlot 
+{   constructor(headEmail, day, date, slot )
     {
-        this.email= email;
+        this.headEmail= headEmail;
+        this.day = day;
         this.date = date;
         this.slot = slot;
         
@@ -14,4 +15,4 @@ class HeadInterviewSheet
     
 };
 
-module.exports= HeadInterviewSheet;
+module.exports= HeadFreeSlot;

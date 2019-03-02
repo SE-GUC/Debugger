@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const sheet = require ("../../Models/BoothInterviewSheet")
+const sheet = require ("../../Models/Interview ")
 
 
 const interviews = [
