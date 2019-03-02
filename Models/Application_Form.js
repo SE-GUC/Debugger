@@ -1,7 +1,7 @@
 const uuid= require('uuid')
 
 
-class RecruitmentRequirement
+class Application_Form
 {
     constructor(requirement, requiredBy)
     {
@@ -13,4 +13,4 @@ class RecruitmentRequirement
 
 };
 
-module.exports = RecruitmentRequirement;
+module.exports = Application_Form;
