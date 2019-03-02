@@ -15,7 +15,13 @@ const eventforms  = require('./routes/api/eventforms')
 const awgs = require('./routes/api/awgs')
 const vgs_users =require('./routes/api/vgs_users')
 
+const interviewSlot = require ('./routes/api/interviewSlots')
+const announcement = require ('./routes/api/announcements')
 const app = express()
+
+// Inorder to be able to use the "req.body" statement.
+=======
+
 
 
 
@@ -23,19 +29,35 @@ app.use(express.json())
 
 
 
-app.get('/', (req, res) => {
+/*app.get('/', (req, res) => {
     res.send(`<h1>¡AWG!</h1>
     <a href="/api/Nebny">Nebny</a>
     <a href="/api/MUN">MUN</a>
     <a href="/api/VGS">VGS</a>
+
+    <a href="/api/announcements">announcements</a>
+    <a href="/api/interviewSlot">interviewSlot</a>`);
+
 
     <a href="/api/Events">Events</a>`);
 });
     <a href="/api/TIQ">TIQ</a>
     <a href="/api/awgs">About Clubs</a>
     <a href="/api/profile">edit or view your profile</a>
-    `);
+    `);*/
 })
+
+app.get('/', (req, res) => {
+    res.send(`<h1>¡AWG!</h1>
+    <a href="/api/Nebny">Nebny</a>
+    <a href="/api/MUN">MUN</a>
+    <a href="/api/VGS">VGS</a>
+    <a href="/api/announcements">announcements</a>
+    <a href="/api/interviewSlot">interviewSlot</a>
+    <a href="/api/Events">Events</a>`);
+    <a href="/api/TIQ">TIQ</a>
+    <a href="/api/awgs">About Clubs</a>
+    <a href="/api/profile">edit or view your profile</a>`)})
 
 
 
@@ -45,10 +67,9 @@ app.use('/api/profile', users)
 app.use('/api/VGS' , vgsUsers)
 app.use('/api/VGS/application_form', vgsUsers)
 app.use('/api/VGS/application_form_view', vgsUsers)
+app.use('/api/interviewSlots', interviewSlot)
+app.use('/api/announcements', announcement)
 //app.use('/api/profile', users)
-
-
-
 
 app.use('/api/Events', events)
 app.use('/api/VGS/Events', vgsUsers)
@@ -59,8 +80,6 @@ app.use('/api/Events/filleventforms', events)
 app.use('/api/profile', users)
 app.use('/api/awgs', awgs);
 app.use('/api/VGS', vgs_users);
-
-
 
 
 app.use((req, res) => {
