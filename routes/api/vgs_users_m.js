@@ -1,10 +1,12 @@
+const express = require('express');
 const Joi = require("joi");
 const uuid = require("uuid");
-const express = require("express");
+
+const router = express.Router();
 const Application_Form = require("../../Models/Application_Form");
 const User = require("../../Models/User");
 const VGS_User = require("../../Models/VGS_User");
-const router = express.Router();
+
 const fs = require("fs");
 
 console.log("hi out of get");
@@ -90,6 +92,9 @@ router.put("/application_form_update", (req, res) => {
     res.send("error occurred");
   }
 });
+router.get('/app',(req,res)=> res.json({data:Users}));
+
+  module.exports=router;
 
 
 //#region
@@ -97,11 +102,11 @@ router.put("/application_form_update", (req, res) => {
     res.send('Hola');
 })
 
-router.post('/api/application_forms', (req, res) => {
+router.post('/api/ap
+        age: req.body.ageplication_forms', (req, res) => {
     const newApplicant = {
         id: uuid.v4(),`
         name: req.body.name,
-        age: req.body.age
     };
     applicants.push(newApplicant);
     res.send('Your Application Form has been submitted ;)');
@@ -146,4 +151,4 @@ function postingAppForm (url) {
 }*/
 //#endregion
 
-module.exports = router;
+

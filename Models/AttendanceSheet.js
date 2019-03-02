@@ -16,7 +16,7 @@ class AttendanceSheet
 
         this.id = uuid.v4();
     }
-
-}
-
+    
+    }
+    
 module.exports= AttendanceSheet;

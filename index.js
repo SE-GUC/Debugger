@@ -1,7 +1,7 @@
 const express = require('express')
 
 const vgsUsers = require('./routes/api/vgs_users_m')
-
+const attendancesheet = ('./routes/api/attendancesheets')
 const app = express()
 
 // Inorder to be able to use the "req.body" statement.
@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 app.use('/api/VGS' , vgsUsers)
 app.use('/api/VGS/application_form', vgsUsers)
 app.use('/api/VGS/application_form_view', vgsUsers)
-
+app.use('/api/attendancesheet',attendancesheet)
 
 // Handling 404
 app.use((req, res) => {
