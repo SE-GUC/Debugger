@@ -12,6 +12,7 @@ const headFreeSlots = require ('./routes/api/headFreeSlots')
 const vgs_users2= require('./routes/api/vgs_users2')
 const FAQfile = require('./routes/api/faq')
 
+
 const app = express()
 
 app.use(express.json())
@@ -24,7 +25,8 @@ app.get('/', (req, res) => {
     <a href="/api/VGS">VGS</a>
     <a href="/api/TIQ">TIQ</a>
     <a href="/api/awgs">About Clubs</a>
-    <a href="/api/profile">edit or view your profile</a>    
+    <a href="/api/profile">edit or view your profile</a>
+    <a href="/api/eventforms">view all eventforms</a>    
     <a href="/api/Events">Events</a>`);
 })
 
@@ -40,7 +42,7 @@ app.use('/api/awgs', awgs);
 app.use('/api/VGS', vgs_users);
 app.use('/api/Events', events)
 app.use('/api/VGS/Events', vgsUsers)
-app.use('/api/Events/EventForm', events)
+app.use('/api/eventforms', eventforms)
 app.use('/api/Events/filleventforms', events)
 app.use('/api/vgs_users2', vgs_users2)
 app.use('/api/interviews', interviews)
