@@ -1,6 +1,5 @@
-require('dotenv').config()
 const express = require('express')
-const mongoose = require('mongoose')
+
 const vgsUsers = require('./routes/api/vgs_users_m')
 const attendancesheet = ('./routes/api/attendancesheets')
 const users = require('./routes/api/users')
@@ -13,7 +12,6 @@ const headFreeSlots = require ('./routes/api/headFreeSlots')
 const vgs_users2= require('./routes/api/vgs_users2')
 const FAQfile = require('./routes/api/faq')
 
-mongoose.connect(process.env.MONGO)
 
 const app = express()
 
