@@ -44,7 +44,7 @@ router.put('/', async (req,res) => {
 
        const name = req.body.name
        const searchGroup = await Group.findOne({name: name})
-       if (!searchGroup) 
+       if (searchGroup == false ||!searchGroup) 
           return res.status(404).send({error: 'Group does not exist'})
     
        oldMembers = searchGroup.members
