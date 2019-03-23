@@ -12,6 +12,7 @@ const interviews = require ('./routes/api/interviews')
 const headFreeSlots = require ('./routes/api/headFreeSlots')
 const vgs_users2= require('./routes/api/vgs_users2')
 const FAQfile = require('./routes/api/faq')
+const groups = require('./routes/api/groups')
 
 mongoose.connect(process.env.MONGO)
 
@@ -49,6 +50,7 @@ app.use('/api/Events/filleventforms', events)
 app.use('/api/vgs_users2', vgs_users2)
 app.use('/api/interviews', interviews)
 app.use('/api/headFreeSlots', headFreeSlots)
+app.use('/api/groups', groups)
  
 // Handling 404
 app.use((req, res) => {
