@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
-const vgsUsers = require('./routes/api/vgsUsers')
+const vgs_users = require('./routes/api/vgs_users')
 const attendancesheet = ('./routes/api/attendancesheets')
 const users = require('./routes/api/users')
 const awgs = require('./routes/api/awgs')
@@ -39,7 +39,7 @@ app.use('/api/awgs', awgs);
 app.use('/api/Events', events)
 app.use('/api/eventforms', eventforms)
 app.use('/api/Events/filleventforms', events)
-app.use('/api/vgs', vgsUsers)
+app.use('/api/VGS', vgs_users)
 app.use('/api/interviews', interviews)
 app.use('/api/headFreeSlots', headFreeSlots)
  
