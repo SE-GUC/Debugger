@@ -1,4 +1,5 @@
 const uuid= require('uuid')
+const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 // When a Head adds a free slot in his sheet , his email, name, date and interviewSlot 

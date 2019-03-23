@@ -1,4 +1,5 @@
 const uuid= require('uuid')
+const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 // All the Heads free slots will be saved here.

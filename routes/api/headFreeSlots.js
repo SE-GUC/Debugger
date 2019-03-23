@@ -2,6 +2,7 @@ const express = require('express')
 const Joi = require('joi')
 const uuid = require('uuid')
 const router = express.Router()
+const mogoose = require('mongoose') 
 
 
 const Interview = require('../../Models/Interview')
@@ -10,7 +11,7 @@ const User = require ('../../models/User')
 
 router.post ('/add', async(req, res) => {
     try {
-
+    
         const exist = Interview.find()
         if (!exist){
             await Interview.create({
@@ -62,19 +63,23 @@ router.post ('/add', async(req, res) => {
         const result = Joi.validate(req.body, schema)
         if (result.error) return res.status(400).send({ error: result.error.details[0].message })
     
-        const headSlot = await HeadFreeSlot.find({ headEmail: email
-                                                 , date: date
-                                                 , day: day
-                                                 , slot: slot
-                                                })
+        const headSlot = await HeadFreeSlot.find({ 'headEmail': email
+                                                 , 'date': date
+                                                 , 'day': day
+                                                 , 'slot': slot
+        } )/*,(err, result) => {
+                                                    if (err) 
+                                                        res.status(404).send(err.message)
+                                                 })*/
+                                             
     
         if (headSlot) return res.status(404).send({err:'Already exists'})
 
-        newFreeSlot = await HeadFreeSlot.create({ headEmail: email
+       newFreeSlot = await HeadFreeSlot.create({ headEmail: email
                                                 , date: date
                                                 , day: day
-                                                , slot: slot
-                                               })
+                                                , slot: slot})
+                                                
 
         newInterview = await Interview.create({ interviewerEmail: email
                                               , intervieweeEmail: null
@@ -83,8 +88,11 @@ router.post ('/add', async(req, res) => {
                                               , interviewslot: slot
                                               , startTime: null
                                               , endTime: null
-                                              , interview: false
-                                             }) 
+                                              , interview: false}/*(err, result) => {
+                                                if (err) 
+                                                    res.status(404).send(err.message)*/
+                                             )
+                                             
 
         const freeSlots = await HeadFreeSlot.find({headEmail: email})
         res.send({data: freeSlots})
@@ -93,12 +101,13 @@ router.post ('/add', async(req, res) => {
 
     catch (error){
         res.status(404).send(error.message);
+       
     }
 });
 
 
 // Showing the whole free slots table
-router.get ('/view', async(req, res) => {
+/*router.get ('/view', async(req, res) => {
     try {
 
         const exist = HeadFreeSlot.find()
@@ -203,48 +212,68 @@ router.put('/update/',  async(req, res) => {
            newSlot: Joi.string().required()
         }
     
-    const result = Joi.validate(req.body, schema)
+        const result = Joi.validate(req.body, schema)
 
-	if (result.error) return res.status(400).send({ error: result.error.details[0].message })
+    	if (result.error) return res.status(400).send({ error: result.error.details[0].message })
 
 
-    const interviewsCheck =  await Interview.find({
-        interviewerEmail: headEmail
-    ,   day: oldDay
-    ,   date: oldDate
-    ,   interviewslot: oldSlot
-    })
+        const interviewsCheck =  await Interview.find({
+            interviewerEmail: headEmail
+        ,   day: oldDay
+        ,   date: oldDate
+        ,   interviewslot: oldSlot
+        })
     
-    if (interviewsCheck.interview == true )
-        return res.status(404).send({err:'Cannot update this slot since you have an interview in'})
+        if (interviewsCheck.interview == true )
+           return res.status(404).send({err:'Cannot update this slot since you have an interview in'})
     //console.log(interviewsCheck);
-    const headSlot = await HeadFreeSlot.find ({ headEmail: headEmail
-                                              , date: oldDate
-                                              , day: oldDay
-                                              , slot: oldSlot
-                                             })
-        
-    headSlot.day = day;
-    headSlot.date = date;
-    headSlot.slot = slot;
+        const oldOne = { 
+          headEmail: { $eq: headEmail }
+        , day: { $eq: oldDay }
+        , date: { $eq: oldDate }
+        , slot: { $eq: oldSlot }
+        }
 
-    interviewsCheck.day = day;
-    interviewsCheck.date = date;
-    interviewsCheck.interviewslot = slot;
+        const newOne = { $set: { day: day
+                               , date: date
+                               , slot: slot 
+                               }
+                        }
+        const updated = await HeadFreeSlot.updateOne(oldOne, newOne, (err, result) => {
+           if (err) 
+               res.status(404).send(err.message)
+        })
+    
+        oldInterview = { 
+          interviewerEmail: { $eq: headEmail }
+        , day: { $eq: oldDay }
+        , date: { $eq: oldDate }
+        , interviewslot: { $eq: oldSlot }
+        }
+    
+        newInterview = { $set: { day: day
+                               , date: date
+                               , interviewslot: slot 
+                               }
+                        }
+        const updatedInterviews = await Interview.updateOne(oldInterview, newInterview, (err, result) => {
+          if (err) 
+             res.status(404).send(err.message)
+        })
 
-    res.send (headFreeSlots.filter (headSlot => headSlot.headEmail === headEmail ));
+        const freeSlots = await HeadFreeSlot.find({headEmail: email})
+        const showInterview = await Interview.find()
+        res.send({data: freeSlots, data: showInterview})
     }
 
     catch (error){
         res.status(404).send(error.message);
     }
-  //  res.send (interviews);
-    //res.json({ data: headFreeSlots })
-    //res.json({ data: interviews })
+  
 });
 
 //router.delete ('/delete/:id', (req, res) => {
 
 //})
-
+*/
 module.exports = router;
