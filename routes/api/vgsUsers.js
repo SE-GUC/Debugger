@@ -11,8 +11,9 @@ const VGS_User = require('../../models/VGS_User');
 // Assigning the booth member
 router.put('/assign', async(req, res) => {
     try {
-
+        await VGS_User.deleteMany()
         const exist = await VGS_User.find()
+        
         if (exist == false){
             await VGS_User.create({
                 email: 'ghada@gmail.com'
@@ -74,7 +75,7 @@ router.put('/assign', async(req, res) => {
             ,   boothMember: false
             })
         }
-
+         console.log(await VGS_User.find())
         const memberEmail = req.body.email
         const schema = {
            email: Joi.string().email().required()
@@ -85,7 +86,6 @@ router.put('/assign', async(req, res) => {
             return res.status(400).send({ error: result.error.details[0].message })
 
         const user = await VGS_User.findOne({email: memberEmail})
-    
        // checking if he is already a booth member
         if (user.boothMember === true ) 
            return res.status(404).send({err:('This member is already a booth member')})

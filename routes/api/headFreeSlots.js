@@ -7,7 +7,7 @@ const router = express.Router();
 const Interview = require('../../Models/Interview');
 const HeadFreeSlot = require('../../models/HeadFreeSlot');
 const User = require ('../../models/User');
-
+/*
 const users = [
      new User('Ahmed', '01008883742', 'ahmed@gmail.com', 'TheDeveloper19', '11-09-1995', '37-',
     'Car', 'Nasr City', 'VGS')
@@ -143,5 +143,5 @@ router.put('/update/',  (req, res) => {
 //router.delete ('/delete/:id', (req, res) => {
 
 //})
-
+*/
 module.exports = router;

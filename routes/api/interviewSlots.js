@@ -3,7 +3,7 @@ const router = express.Router();
 
 const sheet = require ("../../Models/Interview ")
 
-
+/*
 const interviews = [
     new sheet("email" , "email2", "mon" , "12-02-2019 " , "1st" , "14:00" , "15:00" , true )
 ]
@@ -29,5 +29,5 @@ router.put('/', (req, res) => {
         interview_slot.interviewSlot = updatedinterviewSlot;
     res.send(interviews);
 })
-
+*/
 module.exports = router; 
