@@ -1,6 +1,3 @@
-// arrays
-// book vs delete
-// free slot of the head in case of adding interview
 
 const express = require('express');
 const Joi = require('joi');
@@ -9,24 +6,21 @@ const router = express.Router();
 
 
 const Interview = require('../../Models/Interview');
-const User = require('../../models/User');
-
-
+/*
 const interviews = [  
 new Interview('ahmed@gmail.com', 'mohamed@gmail.com' , 'Monday', '11-09-2019', '2nd', '10:00' , '10:30', true),
 new Interview('ahmed@gmail.com' , null, 'Monday', '11-09-2019', '3rd', null , null, false),
 new Interview('tamer@gmail.com' , null, 'Monday', '11-09-2019', '3rd', null , null, false)
     
 ];
-
-const users = [
-    new User('Ahmed', '01008883742', 'ahmed@gmail.com', 'TheDeveloper19', '11-09-1995', '37-',
-    'Car', 'Nasr City', 'VGS')
-];
+*/
 
 
 // Showing the whole interview sheet
-router.get ('/', (req, res) => res.json({ data: interviews }));
+router.get ('/', async(req, res) => {
+    const interviews = await Interview.find()
+    res.send (interviews)
+});
 
 // book/ change interview times
 router.put('/edit', (req, res) => {
