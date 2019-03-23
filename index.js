@@ -12,8 +12,10 @@ const interviews = require ('./routes/api/interviews')
 const headFreeSlots = require ('./routes/api/headFreeSlots')
 const vgs_users2= require('./routes/api/vgs_users2')
 const FAQfile = require('./routes/api/faq')
+const faq = require('./routes/api/faq')
+const router = express.Router()
 
-mongoose.connect(process.env.MONGO)
+mongoose.connect(process.env.mongo)
 
 const app = express()
 
@@ -29,7 +31,8 @@ app.get('/', (req, res) => {
     <a href="/api/awgs">About Clubs</a>
     <a href="/api/profile">edit or view your profile</a>
     <a href="/api/eventforms">view all eventforms</a>    
-    <a href="/api/Events">Events</a>`);
+    <a href="/api/Events">Events</a>
+    <a href="/api/faq">FAQ</a>` );
 })
 
 app.get('/api/FAQ', (req, res) => {
@@ -48,8 +51,9 @@ app.use('/api/eventforms', eventforms)
 app.use('/api/Events/filleventforms', events)
 app.use('/api/vgs_users2', vgs_users2)
 app.use('/api/interviews', interviews)
-app.use('/api/headFreeSlots', headFreeSlots)
- 
+app.use('/api/headFreeSlots', headFreeSlots),
+app.use('/api/faq', faq)
+
 // Handling 404
 app.use((req, res) => {
     res.status(404).send({err: 'We can not find what you are looking for'});
