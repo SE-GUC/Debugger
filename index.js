@@ -1,4 +1,5 @@
-require('dotenv').config()
+require('dotenv').config() ;
+
 const express = require('express')
 const mongoose = require('mongoose')
 const vgsUsers = require('./routes/api/vgs_users_m')
@@ -12,8 +13,26 @@ const interviews = require ('./routes/api/interviews')
 const headFreeSlots = require ('./routes/api/headFreeSlots')
 const vgs_users2= require('./routes/api/vgs_users2')
 const FAQfile = require('./routes/api/faq')
+const requests = require('./routes/api/requests')
 
-mongoose.connect(process.env.MONGO)
+
+mongoose.connect('mongodb+srv://mahamekdad:6gfvF79hbKVh124X@cluster0-mlucg.mongodb.net/test?retryWrites=true')
+
+//const db = require('./node_modules/.env').mongoURI
+
+
+
+// Connect to mongo
+
+
+
+    ////.connect(db)
+
+    //.then(() => console.log('Connected to MongoDB'))
+
+    // .catch(err => console.log(err))
+
+
 
 const app = express()
 
@@ -49,11 +68,12 @@ app.use('/api/Events/filleventforms', events)
 app.use('/api/vgs_users2', vgs_users2)
 app.use('/api/interviews', interviews)
 app.use('/api/headFreeSlots', headFreeSlots)
- 
+app.use('/api/requests', requests)
+
 // Handling 404
 app.use((req, res) => {
     res.status(404).send({err: 'We can not find what you are looking for'});
 })
 
- const port= process.env.PORT || 3000;
+ const port= process.env.PORT || 8000 ;
  app.listen(port, () => console.log(`${port} is live and running...`))
