@@ -18,7 +18,7 @@ const GroupSchema = new Schema({
                }
 ,
     members: {  type: [String]
-             ,  required: true
+         // removed required: true
              }
 
 
