@@ -1,4 +1,5 @@
 // const uuid= require('uuid')
+
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
@@ -38,3 +39,18 @@ module.exports = Message = mongoose.model('Messages', MessageSchema)
 
 
 // module.exports = Message
+
+
+
+class Message 
+{
+    constructor( name, email, message)
+    {
+        this.name =  name;
+        this.email = email;
+        this.message = message;
+    };
+};
+
+module.exports = Message
+
