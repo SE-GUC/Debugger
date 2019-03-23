@@ -1,130 +1,228 @@
-const express = require('express');
-const Joi = require('joi');
-const uuid = require('uuid');
-const router = express.Router();
+const express = require('express')
+const Joi = require('joi')
+const uuid = require('uuid')
+const router = express.Router()
 
 
-const Interview = require('../../Models/Interview');
-const HeadFreeSlot = require('../../models/HeadFreeSlot');
-const User = require ('../../models/User');
+const Interview = require('../../Models/Interview')
+const HeadFreeSlot = require('../../models/HeadFreeSlot')
+const User = require ('../../models/User')
 
-const users = [
-     new User('Ahmed', '01008883742', 'ahmed@gmail.com', 'TheDeveloper19', '11-09-1995', '37-',
-    'Car', 'Nasr City', 'VGS')
-];
+router.post ('/add', async(req, res) => {
+    try {
 
+        const exist = Interview.find()
+        if (!exist){
+            await Interview.create({
+                interviewerEmail: 'ahmed@gmail.com'
+            ,   intervieweeEmail: 'mohamed@gmail.com'
+            ,   day: 'Monday'
+            ,   date: '11-09-2019'
+            ,   interviewslot: '2nd'
+            ,   startTime: '10:00'
+            ,   endTime: '10:30'
+            ,   interview: true
+            })
 
-//const ahmed = users.find(user => user.email === 'ahmed@gmail.com')
-//const ahmedId = ahmed.id
-//console.log(users)
+            await Interview.create({
+                interviewerEmail: 'ahmed@gmail.com'
+            ,   intervieweeEmail: null
+            ,   day: 'Monday'
+            ,   date: '11-09-2019'
+            ,   interviewslot: '3rd'
+            ,   startTime: null
+            ,   endTime: null
+            ,   interview: false
+            })
 
+            await Interview.create({
+                interviewerEmail: 'tamer@gmail.com'
+            ,   intervieweeEmail: null
+            ,   day: 'Monday'
+            ,   date: '11-09-2019'
+            ,   interviewslot: '3rd'
+            ,   startTime: null
+            ,   endTime: null
+            ,   interview: false
+            })
 
-const headFreeSlots = [
-    new HeadFreeSlot('ahmed@gmail.com', 'Monday', '11-09-2019', '2nd' ),
-    new HeadFreeSlot('ahmed@gmail.com', 'Monday', '11-09-2019', '3rd' ),
-    new HeadFreeSlot('tamer@gmail.com', 'Monday', '11-09-2019', '3rd' )
- ];
+        }
+        const email = req.body.email
+        const day = req.body.day
+        const date = req.body.date
+        const slot = req.body.slot
 
-
- const interviews = [ 
-   new Interview('ahmed@gmail.com', 'mohamed@gmail.com' , 'Monday', '11-09-2019', '2nd', '10:00' , '10:30', true),
-   new Interview('ahmed@gmail.com' , null, 'Monday', '11-09-2019', '3rd', null , null, false),
-   new Interview('tamer@gmail.com' , null, 'Monday', '11-09-2019', '3rd', null , null, false)
+        const schema = {
+           email: Joi.string().email().required(),
+           day: Joi.string().required(),
+           date: Joi.date().required(),
+           slot: Joi.string().required()
+        };
     
-];
+        const result = Joi.validate(req.body, schema)
+        if (result.error) return res.status(400).send({ error: result.error.details[0].message })
+    
+        const headSlot = await HeadFreeSlot.find({ headEmail: email
+                                                 , date: date
+                                                 , day: day
+                                                 , slot: slot
+                                                })
+    
+        if (headSlot) return res.status(404).send({err:'Already exists'})
 
-//console.log(headFreeSlots)
-//console.log(interviews)
+        newFreeSlot = await HeadFreeSlot.create({ headEmail: email
+                                                , date: date
+                                                , day: day
+                                                , slot: slot
+                                               })
 
+        newInterview = await Interview.create({ interviewerEmail: email
+                                              , intervieweeEmail: null
+                                              , day: day
+                                              , date: date
+                                              , interviewslot: slot
+                                              , startTime: null
+                                              , endTime: null
+                                              , interview: false
+                                             }) 
+
+        const freeSlots = await HeadFreeSlot.find({headEmail: email})
+        res.send({data: freeSlots})
+    
+    }
+
+    catch (error){
+        res.status(404).send(error.message);
+    }
+});
 
 
 // Showing the whole free slots table
-router.get ('/view', (req, res) => {
-    const userEmail = req.body.email;
+router.get ('/view', async(req, res) => {
+    try {
 
-    const schema = {
-        email: Joi.string().email().required()};
+        const exist = HeadFreeSlot.find()
+        if (!exist){
+            await HeadFreeSlot.create({
+                headEmail: 'ahmed@gmail.com'
+            ,   day: 'Monday'
+            ,   date: '11-09-2019'
+            ,   slot: '2nd'
+            })
 
-    const result = Joi.validate(req.body, schema);
-    if (result.error) return res.status(400).send({ error: result.error.details[0].message });
+            await HeadFreeSlot.create({
+                headEmail: 'ahmed@gmail.com'
+            ,   day: 'Monday'
+            ,   date: '11-09-2019'
+            ,   slot: '3rd'
+            })
 
-    res.send(headFreeSlots.filter(freeSlots => freeSlots.headEmail === userEmail));
+            await HeadFreeSlot.create({
+                headEmail: 'tamer@gmail.com'
+            ,   day: 'Monday'
+            ,   date: '11-09-2019'
+            ,   slot: '3rd'
+            })
 
-});
+        }
 
-router.post ('/add', (req, res) => {
-    const email = req.body.email
-    const day = req.body.day
-    const date = req.body.date
-    const slot = req.body.slot
+        const userEmail = req.body.email
 
+        const schema = {email: Joi.string().email().required()}
+        const result = Joi.validate(req.body, schema)
+        if (result.error) return res.status(400).send({ error: result.error.details[0].message })
 
-    const schema = {
-        email: Joi.string().email().required(),
-        day: Joi.string().required(),
-        date: Joi.date().required(),
-        slot: Joi.string().required()
-    };
+        const freeSlots = await HeadFreeSlot.find({headEmail: userEmail})
+        res.send({data: freeSlots})
+
+    }
+
+    catch (error){
+        res.status(404).send(error.message)
+    }
     
-    const result = Joi.validate(req.body, schema);
-
-    if (result.error) return res.status(400).send({ error: result.error.details[0].message });
-    
-    const headSlot = headFreeSlots.find (headSlot => headSlot.headEmail === email &&
-        headSlot.date === date && headSlot.day === day && headSlot.slot === slot);
-    
-    if (headSlot) return res.status(404).send({err:'Already exists'});
-
-    newFreeSlot = new HeadFreeSlot (email, day, date, slot);
-    headFreeSlots.push(newFreeSlot);
-
-    newInterview = new Interview (email, null, day, date, slot, null, null, false );
-    interviews.push(newInterview);
-
-   // console.log(interviews);
-    res.send (headFreeSlots.filter (headSlot => headSlot.headEmail === email));
-    
-
-});
+})
 
 
 // edit my free slots
-router.put('/update/',  (req, res) => {
-    const headEmail = req.body.email;
-    const oldDay = req.body.oldDayToBeChanged;
-    const oldDate = req.body.oldDateToBeChanged;
-    const oldSlot = req.body.oldSlotToBeChanged;
+router.put('/update/',  async(req, res) => {
+    try {
 
-    const day = req.body.newDay;
-    const date = req.body.newDate;
-    const slot = req.body.newSlot;
+        const exist = Interview.find()
+        if (!exist){
+            await Interview.create({
+                interviewerEmail: 'ahmed@gmail.com'
+            ,   intervieweeEmail: 'mohamed@gmail.com'
+            ,   day: 'Monday'
+            ,   date: '11-09-2019'
+            ,   interviewslot: '2nd'
+            ,   startTime: '10:00'
+            ,   endTime: '10:30'
+            ,   interview: true
+            })
 
+            await Interview.create({
+                interviewerEmail: 'ahmed@gmail.com'
+            ,   intervieweeEmail: null
+            ,   day: 'Monday'
+            ,   date: '11-09-2019'
+            ,   interviewslot: '3rd'
+            ,   startTime: null
+            ,   endTime: null
+            ,   interview: false
+            })
+
+            await Interview.create({
+                interviewerEmail: 'tamer@gmail.com'
+            ,   intervieweeEmail: null
+            ,   day: 'Monday'
+            ,   date: '11-09-2019'
+            ,   interviewslot: '3rd'
+            ,   startTime: null
+            ,   endTime: null
+            ,   interview: false
+            })
+
+        }
+        const headEmail = req.body.email
+        const oldDay = req.body.oldDayToBeChanged
+        const oldDate = req.body.oldDateToBeChanged
+        const oldSlot = req.body.oldSlotToBeChanged
+
+        const day = req.body.newDay
+        const date = req.body.newDate
+        const slot = req.body.newSlot
+
+        const schema = {
+           email: Joi.string().email().required(),
+           oldDayToBeChanged: Joi.string().required(),
+           oldDateToBeChanged: Joi.date().required(),
+           oldSlotToBeChanged: Joi.string().required(),
+           newDay: Joi.string().required(),
+           newDate: Joi.date().required(),
+           newSlot: Joi.string().required()
+        }
     
-    const schema = {
-        email: Joi.string().email().required(),
-        oldDayToBeChanged: Joi.string().required(),
-        oldDateToBeChanged: Joi.date().required(),
-        oldSlotToBeChanged: Joi.string().required(),
-        newDay: Joi.string().required(),
-        newDate: Joi.date().required(),
-        newSlot: Joi.string().required()
-    };
+    const result = Joi.validate(req.body, schema)
+
+	if (result.error) return res.status(400).send({ error: result.error.details[0].message })
+
+
+    const interviewsCheck =  await Interview.find({
+        interviewerEmail: headEmail
+    ,   day: oldDay
+    ,   date: oldDate
+    ,   interviewslot: oldSlot
+    })
     
-    const result = Joi.validate(req.body, schema);
-
-	if (result.error) return res.status(400).send({ error: result.error.details[0].message });
-
-
-   const interviewsCheck =  interviews.find(
-        interviewsCheck => interviewsCheck.interviewerEmail===headEmail &&
-        interviewsCheck.day === oldDay &&
-        interviewsCheck.date === oldDate &&
-        interviewsCheck.interviewslot === oldSlot);
-    
-  if (interviewsCheck.interview == true ){ return res.status(404).send({err:'Cannot update this slot since you have an interview in'})};
+    if (interviewsCheck.interview == true )
+        return res.status(404).send({err:'Cannot update this slot since you have an interview in'})
     //console.log(interviewsCheck);
-    const headSlot = headFreeSlots.find (headSlot => headSlot.headEmail === headEmail &&
-        headSlot.date === oldDate && headSlot.day === oldDay && headSlot.slot === oldSlot);
+    const headSlot = await HeadFreeSlot.find ({ headEmail: headEmail
+                                              , date: oldDate
+                                              , day: oldDay
+                                              , slot: oldSlot
+                                             })
         
     headSlot.day = day;
     headSlot.date = date;
@@ -135,6 +233,11 @@ router.put('/update/',  (req, res) => {
     interviewsCheck.interviewslot = slot;
 
     res.send (headFreeSlots.filter (headSlot => headSlot.headEmail === headEmail ));
+    }
+
+    catch (error){
+        res.status(404).send(error.message);
+    }
   //  res.send (interviews);
     //res.json({ data: headFreeSlots })
     //res.json({ data: interviews })
