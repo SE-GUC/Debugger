@@ -64,5 +64,12 @@ router.post("/", (req, res) => {
 
   //   return res.json({ data: newMessage });
 });
+/* Get about us page for logged in/ not logged in user  */
+router.get('/', function(req, res, next) {
+  AWG.find(function (err, aboutUs) {
+    if (err) return next(err);
+    res.json(aboutUs);
+  });
+});
 
 module.exports = router;
