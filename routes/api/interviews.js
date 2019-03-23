@@ -10,7 +10,7 @@ const router = express.Router();
 
 const Interview = require('../../Models/Interview');
 const User = require('../../models/User');
-
+/*
 
 const interviews = [  
 new Interview('ahmed@gmail.com', 'mohamed@gmail.com' , 'Monday', '11-09-2019', '2nd', '10:00' , '10:30', true),
@@ -42,7 +42,7 @@ router.put('/edit', (req, res) => {
     /*const oldIntervieweeEmail = req.body.intervieweeEmailToBeChanged;
     const oldStartTime = req.body.oldStartTimeToBeChanged;
     const oldEndTime = req.body.oldEndTimeToBeChanged;
-    const oldInterview = req.body.oldInterviewToBeChanged;*/
+    const oldInterview = req.body.oldInterviewToBeChanged;
 
     const newIntervieweeEmail = req.body.intervieweeEmail;
     const newStartTime = req.body.startTime;
@@ -63,7 +63,7 @@ router.put('/edit', (req, res) => {
         oldEndTimeToBeChanged: Joi.string().isoDate.required(),
         oldInterviewToBeChanged: Joi.bool().required(),*/
 
-        intervieweeEmail: Joi.string().email().required(),
+        /*ntervieweeEmail: Joi.string().email().required(),
         startTime: Joi.string().required(),
         endTime: Joi.string().required(),
         interview: Joi.bool().required()
@@ -88,6 +88,6 @@ router.put('/edit', (req, res) => {
     interviewsCheck.interview = newInterview;
 
     res.send(interviewsCheck);
-});
-
+})
+*/
 module.exports = router;
