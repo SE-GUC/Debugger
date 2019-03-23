@@ -1,18 +1,36 @@
 const uuid= require('uuid')
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 // All the Heads free slots will be saved here.
-class HeadFreeSlot 
-{   constructor(headEmail, day, date, slot )
-    {
-        this.headEmail= headEmail;
-        this.day = day;
-        this.date = date;
-        this.slot = slot;
-        
-        this.id= uuid.v4;
-    };
+const HeadFreeSlotSchema = new Schema({
 
+    headEmail: {
+        type: String
+    ,   required: true
+    }
+
+,
     
-};
+    day:  {
+        type: String
+    ,   required: true
+    }
+    
+,
+    
+    date:  {
+        type: String
+    ,   required: true
+    }
 
-module.exports= HeadFreeSlot;
+,
+    
+    slot:  {
+        type: String
+    ,   required: true
+    }
+
+})
+
+module.exports = HeadFreeSlot = mongoose.model('headFreeSlots', HeadFreeSlotSchema)
