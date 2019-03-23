@@ -1,13 +1,10 @@
-// arrays
-// book vs delete
-// free slot of the head in case of adding interview
 
 const express = require('express');
 const Joi = require('joi');
 const uuid = require('uuid');
 const router = express.Router();
 
-
+/*
 const Interview = require('../../Models/Interview');
 const User = require('../../models/User');
 
@@ -43,7 +40,7 @@ router.put('/edit', (req, res) => {
     const oldStartTime = req.body.oldStartTimeToBeChanged;
     const oldEndTime = req.body.oldEndTimeToBeChanged;
     const oldInterview = req.body.oldInterviewToBeChanged;*/
-
+/*
     const newIntervieweeEmail = req.body.intervieweeEmail;
     const newStartTime = req.body.startTime;
     const newEndTime = req.body.endTime;
@@ -63,7 +60,7 @@ router.put('/edit', (req, res) => {
         oldEndTimeToBeChanged: Joi.string().isoDate.required(),
         oldInterviewToBeChanged: Joi.bool().required(),*/
 
-        intervieweeEmail: Joi.string().email().required(),
+  /*      intervieweeEmail: Joi.string().email().required(),
         startTime: Joi.string().required(),
         endTime: Joi.string().required(),
         interview: Joi.bool().required()
@@ -90,4 +87,5 @@ router.put('/edit', (req, res) => {
     res.send(interviewsCheck);
 });
 
+*/
 module.exports = router;
