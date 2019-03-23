@@ -12,8 +12,9 @@ const interviews = require ('./routes/api/interviews')
 const headFreeSlots = require ('./routes/api/headFreeSlots')
 const vgs_users2= require('./routes/api/vgs_users2')
 const FAQfile = require('./routes/api/faq')
+const votes = require('./routes/api/votes')
 
-mongoose.connect(process.env.MONGO)
+mongoose.connect(process.env.MONGO, {dbName:"test"})
 
 const app = express()
 
@@ -37,18 +38,19 @@ app.get('/api/FAQ', (req, res) => {
 })
 // Direct routes to appropriate files 
 app.use('/api/VGS' , vgsUsers);
-app.use('/api/VGS/application_form', vgsUsers)
-app.use('/api/VGS/application_form_view', vgsUsers)
+//app.use('/api/VGS/application_form', vgsUsers)
+//app.use('/api/VGS/application_form_view', vgsUsers)
 app.use('/api/profile', users)
 app.use('/api/awgs', awgs);
-app.use('/api/VGS', vgs_users);
+//app.use('/api/VGS', vgs_users);
 app.use('/api/Events', events)
 app.use('/api/VGS/Events', vgsUsers)
 app.use('/api/eventforms', eventforms)
 app.use('/api/Events/filleventforms', events)
-app.use('/api/vgs_users2', vgs_users2)
+//app.use('/api/vgs_users2', vgs_users2)
 app.use('/api/interviews', interviews)
 app.use('/api/headFreeSlots', headFreeSlots)
+app.use('/api/raise_vote', votes)
  
 // Handling 404
 app.use((req, res) => {

@@ -1,16 +1,9 @@
-const express = require('express');
 const Joi = require("joi");
-const uuid = require("uuid");
-
+const express = require('express');
 const router = express.Router();
-const Application_Form = require("../../Models/Application_Form");
-const User = require("../../Models/User");
 const VGS_User = require("../../Models/VGS_User");
 const events = require("./events");
 const Event = require('../../models/Event')
-const fs = require("fs");
-
-console.log("hi out of get");
 
 //const applicants = [];
 const eventsList = [
@@ -27,65 +20,72 @@ router.get("/", (req, res) => {
             <a href="/api/Events">Events</a>`);
 });
 router.get('/Events', (req, res) => {
-  res.json({ data: eventsList })
-  
-});
-router.post("/application_form", (req, res) => {
-  applicant.email = req.body.email;
-  applicant.clubCommittee = req.body.clubCommittee;
-  applicant.hobbies = req.body.hobbies;
-  applicant.appliedPosition = req.body.appliedPosition;
-  applicant.gameName = req.body.gameName;
-
-  let rawdata = fs.readFileSync(`Applicants.json`);
-  let applicants = JSON.parse(rawdata);
-
-  applicants.push(applicant);
-
-  fs.writeFileSync("Applicants.json", JSON.stringify(applicants));
-
-  res.send(applicant);
+  res.json({ data: eventsList }) 
 });
 
-router.get("/application_form_view", (req, res) => {
-  let rawdata = fs.readFileSync(`Users.json`);
-  let applicants = JSON.parse(rawdata);
+// user filling an application form and we create new VGS user
+router
+    .route('/application_form')
+    .post(async (req, res) => {
+        try {
 
-  //var accpetedApplicatns = applicants.filter(x => x.appStatus == "Complete" && x.name == "Ghada");
+            const applicant = await VGS_User.create(req.body);
+            return res.send(applicant)
+        }
+        catch (error) {
+            res.send(`error, we couldn't create the application form`)
+        }
+    })
 
-  var accpetedApplicatns = applicants.filter(function(item) {
-    return item.appStatus != "" && item.email == "koela_@ee.com";
-  });
-  res.send(accpetedApplicatns.length > 0 ? accpetedApplicatns : "no matches");
-});
+// viewing the application form for a user to see his/her status
+router
+    .route('/application_form_view/:id')
+    .get(async (req, res) => {
+        try{
+            const accpetedApplicant = await VGS_User.findById(req.params.id)
+            let status = accpetedApplicant.appStatus
+            return res.send(status)
+        }
+        catch (error){
+            return res.send(`error, we couldn't find the application form`)
+        }
+    })
 
-router.put("/application_form_update", (req, res) => {
-  let rawdata = fs.readFileSync(`Applicants.json`);
-  let applicants = JSON.parse(rawdata);
+// viewing all the application forms that are still not accepted nor rejected
+router
+    .route('/application_forms_view')
+    .get(async (req, res) => {
+        try {
+            const allApplicationForms = await VGS_User.find({appStatus: 'pending'})
+            return res.send(allApplicationForms)
+        }
+        catch (error){
+            return res.send(`error, we couldn't get the application forms`)
+        }
+    })
 
-  var findingApp = applicants.find(app => app.email == req.body.email);
-
-  if (findingApp != null) {
-    applicants = applicants.filter(app => app.email != req.body.email);
-
-    findingApp.email =
-      req.body.NewEmail == "" || null ? findingApp.email : req.body.NewEmail;
-    findingApp.clubCommittee = req.body.clubCommittee;
-    findingApp.hobbies = req.body.hobbies;
-    findingApp.appliedPosition = req.body.appliedPosition;
-    findingApp.gameName = req.body.gameName;
-
-    applicants.push(findingApp);
-
-    fs.writeFileSync("Applicants.json", JSON.stringify(applicants));
-    res.send("Done!");
-  }
-  else
-  {
-    res.send("error occurred");
-  }
-});
-router.get('/app',(req,res)=> res.json({data:Users}));
-
-  module.exports=router;
+// update applicant fields
+router
+    .route('/application_form_update')
+    .put(async (req, res) => {
+        try{
+            let foundApplicant = (await VGS_User.findOne({email:req.body.email}))
+            if(!foundApplicant) return res.status(400).send(`the applicant with this email is not found, check the email`)
+            else{
+                await VGS_User.update({email:req.body.email}, 
+                  {
+                  email : (req.body.newEmail || foundApplicant.email),
+                  clubCommittee : (req.body.clubCommittee || foundApplicant.clubCommittee),
+                  hobbies: (req.body.hobbies  || foundApplicant.hobbies), 
+                  appliedPosition: (req.body.appliedPosition  || foundApplicant.appliedPosition),
+                  gameName : (req.body.gameName  || foundApplicant.gameName)
+                  })
+            }
+            return res.send(foundApplicant)
+        }
+        catch (error){
+            return res.send('error, failed to update')
+        }
+    })
+module.exports=router;
 
