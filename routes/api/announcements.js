@@ -1,12 +1,11 @@
 const express = require("express");
 const router = express.Router();
-
+const mongoose = require('mongoose')
 const announce = require("../../Models/Announcement");
+const validator = require('../../validations/announcementsValidations')
 
-const annoucem = [
-    new announce ("VGS" , "me" , "you" , null , "event" , null , "17" )
-];
-
-router.get('/', (req, res) => res.json({data: annoucem}));
-
+router.get('/', async (req,res) => {
+    const announcem = await announce.find()
+    res.json({data: announcem})
+})
 module.exports = router ;
