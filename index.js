@@ -11,6 +11,7 @@ const interviews = require ('./routes/api/interviews')
 const headFreeSlots = require ('./routes/api/headFreeSlots')
 const FAQfile = require('./routes/api/faq')
 const votes = require('./routes/api/votes')
+const groups = require('./routes/api/groups')
 
 mongoose.connect(process.env.MONGO, {dbName:"test"})
 
@@ -45,6 +46,8 @@ app.use('/api/Events/filleventforms', events)
 app.use('/api/interviews', interviews)
 app.use('/api/headFreeSlots', headFreeSlots)
 app.use('/api/raise_vote', votes)
+app.use('/api/groups', groups)
+
  
 // Handling 404
 app.use((req, res) => {
