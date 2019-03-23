@@ -2,38 +2,39 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-// class AWG 
+
+// class Message 
 // {
-//     constructor( clubDescription, clubName, aboutUs, contactUs )
+//     constructor( clubName, name, email, message)
 //     {
 //         this.id = uuid.v4();
-//         this.clubDescription = clubDescription;
 //         this.clubName = clubName;
-//         this.aboutUs = aboutUs;
-//         this.contactUs = contactUs
+//         this.name =  name;
+//         this.email = email;
+//         this.message = message;
 //     };
 // };
-
 // Create the schema
-const AWGSchema = new Schema({
-    clubDescription : {
-        type: String,
-        required: true
-    },
+const MessageSchema = new Schema({
     clubName : {
         type: String,
         required: true
     },
-    aboutUs : {
+    name : {
         type: String,
         required: true
     },
-    contactUs : {
+    email : {
+        type: String,
+        required: true
+    },
+    message : {
         type: String, 
         required: true
     }
 })
 
-module.exports = AWG = mongoose.model('AWGs', AWGSchema)
+module.exports = Message = mongoose.model('Messages', MessageSchema)
 
-// module.exports = AWG
+
+// module.exports = Message
