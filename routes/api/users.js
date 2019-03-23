@@ -1,6 +1,86 @@
 const express = require('express')
 const router=express.Router()
 const User= require('../../Models/User')
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+
+mongoose.connect('mongodb://localhost:27017/myapp', {useNewUrlParser: true});
+const newUser = {
+        name:'abdelazeem',
+       email:'m.abdelazem@email.com',
+}
+
+// Create the schema
+const UserSchema = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    phoneNumber: {
+        type: String,
+        required: false
+    },
+    password: {
+        type: String, 
+        required: false
+    },
+    birthday: {
+        type: Date,
+        required: false
+    },
+    
+    studyYear: {
+        type: Date,
+        required: false
+    },
+    
+    modeOfTran: {
+        type: String,
+        required: false
+    },
+    
+    generalAddress: {
+        type: String,
+        required: false
+    },
+    
+    clubName: {
+        type: String,
+        required: false
+    }
+})
+
+module.exports = Users = mongoose.model('Users', UserSchema)
+        const addUser = new Users(newUser)
+        addUser.save(function (err, addUser) {
+                    if (err) return console.error(err);
+                        console.log('here')
+                  });
+
+                  Users.find(function (err, users) {
+                    if (err) return console.error(err);
+                    console.log('users',users);
+                  })
+
+                  var query = { userType:"normal" };
+
+                  Users.deleteOne(query, function (err, result) {
+              
+                      if (err) {
+              
+                          console.log("error query");
+              
+                      } else {
+              
+                          console.log(result);
+              
+                      }
+              
+                  });
 
 const users = [
    new User (
@@ -26,8 +106,6 @@ const users = [
         clubName= 'MUN'
     )
     ];
-
-   
 
 
 router.get('/', (req, res) => res.json({users}));
