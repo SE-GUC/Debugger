@@ -1,3 +1,37 @@
+
+const express = require('express');
+const Joi = require('joi');
+const uuid = require('uuid');
+const router = express.Router();
+
+/*
+const Interview = require('../../Models/Interview');
+const HeadFreeSlot = require('../../models/HeadFreeSlot');
+const User = require ('../../models/User');
+
+const users = [
+     new User('Ahmed', '01008883742', 'ahmed@gmail.com', 'TheDeveloper19', '11-09-1995', '37-',
+    'Car', 'Nasr City', 'VGS')
+];
+
+
+//const ahmed = users.find(user => user.email === 'ahmed@gmail.com')
+//const ahmedId = ahmed.id
+//console.log(users)
+
+
+const headFreeSlots = [
+    new HeadFreeSlot('ahmed@gmail.com', 'Monday', '11-09-2019', '2nd' ),
+    new HeadFreeSlot('ahmed@gmail.com', 'Monday', '11-09-2019', '3rd' ),
+    new HeadFreeSlot('tamer@gmail.com', 'Monday', '11-09-2019', '3rd' )
+ ];
+
+
+ const interviews = [ 
+   new Interview('ahmed@gmail.com', 'mohamed@gmail.com' , 'Monday', '11-09-2019', '2nd', '10:00' , '10:30', true),
+   new Interview('ahmed@gmail.com' , null, 'Monday', '11-09-2019', '3rd', null , null, false),
+   new Interview('tamer@gmail.com' , null, 'Monday', '11-09-2019', '3rd', null , null, false)
+=======
 const express = require('express')
 const Joi = require('joi')
 const uuid = require('uuid')
@@ -24,6 +58,7 @@ router.post ('/add', async(req, res) => {
            date: Joi.date().required(),
            slot: Joi.string().required()
         };
+
     
         const result = Joi.validate(req.body, schema)
         if (result.error) return res.status(400).send({ error: result.error.details[0].message })
@@ -268,5 +303,5 @@ router.put('/update/',  async(req, res) => {
 //router.delete ('/delete/:id', (req, res) => {
 
 //})
-
+*/
 module.exports = router;
