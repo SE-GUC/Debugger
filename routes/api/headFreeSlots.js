@@ -3,7 +3,7 @@ const Joi = require('joi');
 const uuid = require('uuid');
 const router = express.Router();
 
-
+/*
 const Interview = require('../../Models/Interview');
 const HeadFreeSlot = require('../../models/HeadFreeSlot');
 const User = require ('../../models/User');
@@ -143,5 +143,5 @@ router.put('/update/',  (req, res) => {
 //router.delete ('/delete/:id', (req, res) => {
 
 //})
-
+*/
 module.exports = router;
