@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config() ;
 const express = require('express')
 const mongoose = require('mongoose')
 const attendancesheet = ('./routes/api/attendancesheets')
@@ -10,6 +10,12 @@ const eventforms  = require('./routes/api/eventforms')
 const interviews = require ('./routes/api/interviews')
 const headFreeSlots = require ('./routes/api/headFreeSlots')
 const FAQfile = require('./routes/api/faq')
+const requests = require('./routes/api/requests')
+
+
+//mongoose.connect('mongodb+srv://mahamekdad:6gfvF79hbKVh124X@cluster0-mlucg.mongodb.net/test?retryWrites=true')
+
+const db = require('./node_modules/.env').mongoURI
 const votes = require('./routes/api/votes')
 const groups = require('./routes/api/groups')
 
@@ -45,14 +51,16 @@ app.use('/api/eventforms', eventforms)
 app.use('/api/Events/filleventforms', events)
 app.use('/api/interviews', interviews)
 app.use('/api/headFreeSlots', headFreeSlots)
+app.use('/api/requests', requests)
 app.use('/api/raise_vote', votes)
 app.use('/api/groups', groups)
 
  
+
 // Handling 404
 app.use((req, res) => {
     res.status(404).send({err: 'We can not find what you are looking for'});
 })
 
- const port= process.env.PORT || 3000;
+ const port= process.env.PORT || 8000 ;
  app.listen(port, () => console.log(`${port} is live and running...`))
