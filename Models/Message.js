@@ -35,13 +35,13 @@ const MessageSchema = new Schema({
     }
 })
 
-module.exports = Message = mongoose.model('Messages', MessageSchema)
+module.exports = mongoose.model('Messages', MessageSchema)
 
 
 // module.exports = Message
 
 
-
+/*
 class Message 
 {
     constructor( name, email, message)
@@ -53,4 +53,4 @@ class Message
 };
 
 module.exports = Message
-
+*/

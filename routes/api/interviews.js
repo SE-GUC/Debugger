@@ -36,9 +36,8 @@ router.get ('/', async(req, res) => {
         return res.status(404).send(error.message)
     }
 
+})
 
-const Interview = require('../../Models/Interview');
-const User = require('../../models/User');
 /*
 
 const interviews = [  
