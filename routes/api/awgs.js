@@ -96,7 +96,7 @@ router.post("/", async (req, res) => {
 
   //   return res.json({ data: newMessage });
 // });
-
+/*
 router.get("/:clubname", (req, res) => {
   const filteredClubName = req.params.clubname;
   const filteredMessages = eventforms.filter(
@@ -164,6 +164,6 @@ router.post("/", (req, res) => {
 
   //   return res.json({ data: newMessage });
 
-});
+});*/
 
 module.exports = router;

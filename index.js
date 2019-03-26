@@ -11,19 +11,13 @@ const interviews = require ('./routes/api/interviews')
 const headFreeSlots = require ('./routes/api/headFreeSlots')
 const FAQfile = require('./routes/api/faq')
 const faq = require('./routes/api/faq')
-
-
-
-const requests = require('./routes/api/requests')
-
-
-//mongoose.connect('mongodb+srv://mahamekdad:6gfvF79hbKVh124X@cluster0-mlucg.mongodb.net/test?retryWrites=true')
-
-const db = require('./node_modules/.env').mongoURI
+//const db = require('./node_modules/.env').mongoURI
 const votes = require('./routes/api/votes')
 const groups = require('./routes/api/groups')
+const requests = require('./routes/api/requests')
 //mongoose.connect(process.env.mongo)
 mongoose.connect(process.env.MONGO, {dbName:"test"})
+//mongoose.connect('mongodb+srv://mahamekdad:6gfvF79hbKVh124X@cluster0-mlucg.mongodb.net/test?retryWrites=true')
 
 const app = express()
 
