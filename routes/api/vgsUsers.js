@@ -4,6 +4,7 @@ const router = express.Router();
 const VGS_User = require("../../Models/VGS_User");
 const events = require("./events");
 const Event = require('../../Models/Event')
+const validator = require('../../Validations/vgsuserValidations')
 
 //const applicants = [];
 const eventsList = [
@@ -87,10 +88,6 @@ router
             return res.send('error, failed to update')
         }
     })
-//module.exports=router;
-
-const validator = require('../../Validations/vgsuserValidations')
-
  
  router.get('/', async (req,res) => {
 try{
