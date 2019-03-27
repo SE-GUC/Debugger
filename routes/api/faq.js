@@ -3,7 +3,7 @@ const router = express.Router()
 const mongoose = require('mongoose')
 
 const FAQ = require('../../Models/FAQ')
-const validator = require('../../Validations/ValidationsFAQ')
+const validator = require('../../NValidations/ValidationsFAQ')
 
 router
     .route('/create_faq')

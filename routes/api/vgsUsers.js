@@ -89,7 +89,7 @@ router
     })
 //module.exports=router;
 
-const validator = require('../../Validations/vgsuserValidations')
+const validator = require('../../NValidations/vgsuserValidations')
 
  
  router.get('/', async (req,res) => {

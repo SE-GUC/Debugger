@@ -3,7 +3,7 @@ const router = express.Router()
 //const mongoose = require('mongoose')
 
 const Group = require('../../Models/Group')
-const validator = require('../../Validations/groupValidations')
+const validator = require('../../NValidations/groupValidations')
 
 
 // The method creates a group with members or without members
