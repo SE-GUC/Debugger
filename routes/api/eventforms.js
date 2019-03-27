@@ -4,7 +4,7 @@ const router = express.Router();
 
 // We will be connecting using database
 
-const EventForm = require("../../models/EventForm");
+const EventForm = require("../../Models/EventForm");
 
 const eventforms = [
   new EventForm("15e516bf-dad0-4421-accb-dc20f9806275", "15e0dfa1-ae7c-4d18-9115-5254c686942d", "Amina Sedky", "55555", "aminasedky@gmail.com","29765452110034"),

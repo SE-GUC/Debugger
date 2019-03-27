@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const VGS_User = require("../../Models/VGS_User");
 const events = require("./events");
-const Event = require('../../models/Event')
+const Event = require('../../Models/Event')
 
 //const applicants = [];
 const eventsList = [
@@ -89,7 +89,7 @@ router
     })
 //module.exports=router;
 
-const validator = require('../../validations/vgsuserValidations')
+const validator = require('../../Validations/vgsuserValidations')
 
  
  router.get('/', async (req,res) => {

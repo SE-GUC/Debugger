@@ -5,12 +5,12 @@ const router = express.Router()
 
 
 
-const Request = require('../../models/Request')
+const Request = require('../../Models/Request')
 
 
 
 
-const validator = require('../../validations/RequestValidations')
+const validator = require('../../Validations/RequestValidations')
 
 
 
