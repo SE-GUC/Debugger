@@ -5,7 +5,7 @@ const uuid = require('uuid');
 const router = express.Router();
 const mongoose = require('mongoose')
 //const sheet = require ("../../Models/Interview")
-const validator = require('../../NValidations/interviewValidations')
+const validator = require('../../Validations/interviewValidations')
 
 const Interview = require('../../Models/Interview')
 
