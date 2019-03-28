@@ -4,8 +4,8 @@ const router = express.Router();
 
 // We will be connecting using database
 
-const Event = require("../../models/Event");
-const EventForm = require("../../models/EventForm");
+const Event = require("../../Models/Event");
+const EventForm = require("../../Models/EventForm");
 
 const events = [
   new Event("public", "recruitment booth", "1/2/2019"),
