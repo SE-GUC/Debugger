@@ -10,7 +10,7 @@ router
     .post(async (req, res)=>{
         try{
             const faq = await FAQ.create(req.body);
-            return res.send(faq)
+            return res.send(faq);
         }
         catch(err){
             res.send(`error, can't create faq`)
