@@ -5,8 +5,8 @@ module.exports = {
         const createSchema = {
 
             name: Joi.string().min(3).max(100).required()
-        ,   createdBy: Joi.string().email().required()
-        ,   members: Joi.array().items(Joi.string().email()).allow('')
+            , createdBy: Joi.string().email().required()
+            , members: Joi.array().items(Joi.string().email()).allow('')
 
         }
 
@@ -17,9 +17,9 @@ module.exports = {
     updateValidation: request => {
 
         const updateSchema = {
-             
+
             name: Joi.string().min(3).max(100).required()
-        ,   members: Joi.array().items(Joi.string().email()).allow('')
+            , members: Joi.array().items(Joi.string().email()).allow('')
 
         }
 
