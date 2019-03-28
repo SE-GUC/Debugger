@@ -6,8 +6,8 @@ const router = express.Router()
 const mogoose = require('mongoose')
 
 const Interview = require('../../Models/Interview')
-const HeadFreeSlot = require('../../models/HeadFreeSlot')
-const User = require('../../models/User')
+const HeadFreeSlot = require('../../Models/HeadFreeSlot')
+const User = require('../../Models/User')
 
 //Adding a new row to HeadFreeSlot and Interview
 router.post('/add', async (req, res) => {

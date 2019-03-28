@@ -6,7 +6,7 @@ const router = express.Router();
 const mongoose = require('mongoose')
 //const sheet = require ("../../Models/Interview")
 
-const validator = require('../../validations/interviewValidations')
+const validator = require('../../Validations/interviewValidations')
 const Interview = require('../../Models/Interview')
 
 router.put('/interview/:interviewerEmail', async (req, res) => {
