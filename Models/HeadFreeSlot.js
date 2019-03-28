@@ -1,4 +1,4 @@
-const uuid= require('uuid')
+const uuid = require('uuid')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
@@ -7,28 +7,28 @@ const HeadFreeSlotSchema = new Schema({
 
     headEmail: {
         type: String
-    ,   required: true
+        , required: true
     }
 
-,
-    
-    day:  {
+    ,
+
+    day: {
         type: String
-    ,   required: true
-    }
-    
-,
-    
-    date:  {
-        type: String
-    ,   required: true
+        , required: true
     }
 
-,
-    
-    slot:  {
+    ,
+
+    date: {
         type: String
-    ,   required: true
+        , required: true
+    }
+
+    ,
+
+    slot: {
+        type: String
+        , required: true
     }
 
 })
