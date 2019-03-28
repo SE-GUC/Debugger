@@ -5,8 +5,8 @@ const mongoose = require("mongoose");
 
 
 
-const AWG = require("../../models/AWG");
-const Message = require("../../models/Message");
+const AWG = require("../../Models/AWG");
+const Message = require("../../Models/Message");
 
 
 // const awgs = [
