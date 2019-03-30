@@ -6,8 +6,8 @@ const Schema = mongoose.Schema
 
 mongoose.connect('mongodb://localhost:27017/myapp', {useNewUrlParser: true});
 const newUser = {
-        name:'abdelazeem',
-       email:'m.abdelazem@email.com',
+        name:'passant',
+       email:'passant.nasr@email.com',
 }
 
 // Create the schema
@@ -58,12 +58,10 @@ module.exports = Users = mongoose.model('Users', UserSchema)
         const addUser = new Users(newUser)
         addUser.save(function (err, addUser) {
                     if (err) return console.error(err);
-                        console.log('here')
                   });
 
                   Users.find(function (err, users) {
                     if (err) return console.error(err);
-                    console.log('users',users);
                   })
 
 
@@ -102,7 +100,7 @@ router.get('/:name', (req, res) => {
     const user = users.find(user => user.name === username)
     res.send(user)
 })
-app.delete('/user/delete:name', function (req, res) {
+router.delete('/user/delete:name', function (req, res) {
     var query = { name:req.param.name };
 
     Users.deleteOne(query, function (err, result) {
@@ -112,13 +110,13 @@ app.delete('/user/delete:name', function (req, res) {
             console.log("error query");
 
         } else {
+            res.send(result)
 
             console.log(result);
 
         }
 
     });
-    res.send('Got a DELETE request at /user')
   })
 
 router.put('/update/:name', (req, res) => {
