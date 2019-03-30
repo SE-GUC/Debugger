@@ -1,4 +1,4 @@
-const uuid= require('uuid')
+const uuid = require('uuid')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
@@ -6,20 +6,23 @@ const Schema = mongoose.Schema
 // Groups have unique names?
 const GroupSchema = new Schema({
     //id: {  type: String
-       // ,  default: uuid.v4
-       // }
-//,
-    name: {  type: String
-          ,  required: true
-          }
-,
-    createdBy: {  type: String
-               ,  required: true
-               }
-,
-    members: {  type: [String]
-         // removed required: true
-             }
+    // ,  default: uuid.v4
+    // }
+    //,
+    name: {
+        type: String
+        , required: true
+    }
+    ,
+    createdBy: {
+        type: String
+        , required: true
+    }
+    ,
+    members: {
+        type: [String]
+        // removed required: true
+    }
 
 
 })
