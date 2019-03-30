@@ -110,7 +110,7 @@ router.delete('/user/delete:name', function (req, res) {
             console.log("error query");
 
         } else {
-            res.send(result)
+            res.send(req.param.name)
 
             console.log(result);
 
