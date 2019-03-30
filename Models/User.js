@@ -1,22 +1,45 @@
-const uuid= require('uuid')
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+
+// Create the schema
+const UserSchema = new Schema({
+    name:{
+        type: String,
+        required: true
+    },
+    phoneNumber:{
+        type: Number,
+        required: true
+    },
+    email:{
+        type: String,
+        required : true
+    },
+    password:{
+        type: String,
+        required: true
+    },
+    birthday:{
+        type: String,
+        required: true
+    },
+    studyYear:{
+        type: Number,
+        required: true
+    },
+    modeOfTran:{
+        type: String,
+        required: true
+    },
+    generalAddress:{
+        type: String,
+        required: true
+    },
+    clubName:{
+        type: String,
+    }
+})
 
 
-class User 
-{
-    constructor(name, phoneNumber, email, password, birthday, studyYear, modeOfTran, 
-                generalAddress, clubName)
-                {
-                    this.id= uuid.v4();
-                    this.name = name;
-                    this.phoneNumber = phoneNumber;
-                    this.email = email;
-                    this.password = password;
-                    this.birthday = birthday;
-                    this.studyYear = studyYear;
-                    this.modeOfTran = modeOfTran;
-                    this.generalAddress = generalAddress;
-                    this.clubName = clubName;
-                };
-};
 
-module.exports = User
+module.exports = User = mongoose.model('users' , UserSchema)
