@@ -1,33 +1,24 @@
 const express = require("express");
 const router = express.Router();
-
+const mongoose = require('mongoose')
 const sheet = require ("../../Models/Interview ")
+const validator = require('../../validations/interviewValidations')
 
 
-const interviews = [
-    new sheet("email" , "email2", "mon" , "12-02-2019 " , "1st" , "14:00" , "15:00" , true )
-]
-
-
-router.put('/', (req, res) => {
-    const userEmail = req.body.interviewerEmail;
-    const slotDay = req.body.oldDay;
-    const slotDate = req.body.oldDate;
-    const intSlot = req.body.oldInterviewSlot;
-    
-    const interview_slot = interviews.find(interview_slot => interview_slot.interviewerEmail === userEmail
-        && interview_slot.day === slotDay && interview_slot.date === slotDate && interview_slot.interviewslot === intSlot);
-    
-    const updatedStartTime = req.body.startTime;
-    const updatedEndTime = req.body.endTime;
-    const updatedDate = req.body.date ;
-    const updatedinterviewSlot = req.body.interviewSlot;
-        
-        interview_slot.startTime = updatedStartTime;
-        interview_slot.endTime = updatedEndTime;
-        interview_slot.date = updatedDate;
-        interview_slot.interviewSlot = updatedinterviewSlot;
-    res.send(interviews);
-})
+router.put('/:interviewerEmail', async (req,res) => {
+    try {
+     const interviewerEmail = req.params.interviewerEmail
+     const intr = await sheet.findOne({interviewerEmail})
+     if(!intr) return res.status(404).send({error: 'InterviewerSlot does not exist'})
+     const isValidated = validator.updateValidation(req.body)
+     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+     const updatedinterviewSlot = await sheet.updateOne(req.body)
+     res.json({msg: 'Interview Slot updated successfully'})
+    }
+    catch(error) {
+        // We will be handling the error later
+        console.log(error)
+    }  
+ })
 
 module.exports = router; 

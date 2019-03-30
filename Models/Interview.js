@@ -1,7 +1,3 @@
-const uuid= require('uuid')
-
-class Interview  {
-
 // The interview attribute indicates whether there is interview in that specific slot
 // Its value can be 'true'/ 'false'
 
@@ -15,23 +11,38 @@ class Interview  {
 // Once a Head deletes his free slot, the row indicating that in the HeadInterviewSheet will be deleted
 // and the attribute "freeSlot" will be set to False so that the booth member can change asign
 // the interview to another inteviewer.
-
-    constructor (interviewerEmail, intervieweeEmail, day, date, interviewslot, freeSlot, startTime, 
-    endTime, interview )
-    {
-        this.interviewerEmail = interviewerEmail;
-        this.intervieweeEmail = intervieweeEmail;
-        this.day = day;
-        this.date = date;
-        this.interviewslot = interviewslot;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.interview = interview;
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+// Create the schema
+const InterviewSchema = new Schema({
+    interviewerEmail:{
+        type: String,
+        required: true
+    },
+    intervieweeEmail:{
+        type: String,
         
-        this.id= uuid.v4;
-    };
-
-    
-};
-
-module.exports = Interview 
+    },
+    day:{
+        type: String,
+        required : true
+    },
+    date:{
+        type: String,
+        required: true
+    },
+    interviewslot:{
+        type: String,
+        required: true
+    },
+    startTime:{
+        type: String,
+    },
+    endTime:{
+        type: String,
+    },
+    interview:{
+        type: Boolean,
+    }
+})
+module.exports = Interview = mongoose.model('interviewSlots' , InterviewSchema)

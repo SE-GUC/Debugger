@@ -1,34 +1,35 @@
-//const uuid= require('uuid')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const AnnouncementSchema= new Schema({
-    clubName: {
-        type: string,
+// Create the schema
+const AnnouncementSchema = new Schema({
+    clubName:{
+        type: String,
         required: true
- } ,
-   sentTo: {
-       type: [string],
-},
-   sentFrom:{
-       type: string,
-       required: true
-   },
-   image:{
-       type: Image,
-},
-  text:{
-      type: string,
-      required:true
-  },
-  pdfFile:{
-      type: File
-},
- eventId:{
-     type: number,
-     required: true
- },
-  
+    },
+    sentTo:{
+        type: String,
+        required: true
+    },
+    sentFrom:{
+        type: String,
+        required : true
+    },
+    image:{
+        type: image,
+        required: true
+    },
+    text:{
+        type: String,
+        required: true
+    },
+    pdfFile:{
+        type: pdfFile,
+        required: true
+    },
+    eventId:{
+        type: String,
+        required: true
+    }
 })
-
-module.exports= Announcement= mongoose.model('announcements', AnnouncementSchema );
+module.exports = Announcement = mongoose.model('announcements' , AnnouncementSchema)

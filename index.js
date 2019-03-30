@@ -12,6 +12,10 @@ const interviews = require ('./routes/api/interviews')
 const headFreeSlots = require ('./routes/api/headFreeSlots')
 const vgs_users2= require('./routes/api/vgs_users2')
 const FAQfile = require('./routes/api/faq')
+const editUsers = require('./routes/api/editUsers')
+const interviewSlots = require('./routes/api/interviewSlots')
+const announcements = require('./routes/api/announcements')
+
 
 mongoose.connect(process.env.MONGO)
 
@@ -49,7 +53,11 @@ app.use('/api/Events/filleventforms', events)
 app.use('/api/vgs_users2', vgs_users2)
 app.use('/api/interviews', interviews)
 app.use('/api/headFreeSlots', headFreeSlots)
- 
+app.use('/api/editUsers', editUsers)
+app.use('/api/interviewSlots' , interviewSlots )
+app.use('/api/announcemnts' , announcements)
+
+
 // Handling 404
 app.use((req, res) => {
     res.status(404).send({err: 'We can not find what you are looking for'});
