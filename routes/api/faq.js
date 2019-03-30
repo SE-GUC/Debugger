@@ -2,8 +2,8 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 
-const FAQ = require('../../models/FAQ')
-const validator = require('../../validations/ValidationsFAQ')
+const FAQ = require('../../Models/FAQ')
+const validator = require('../../Validations/ValidationsFAQ')
 
 router
     .route('/create_faq')
