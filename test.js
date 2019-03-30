@@ -1,4 +1,3 @@
-require('dotenv').config()
-const mongoose = require('mongoose')
-
-mongoose.connect(process.env.MONGO, {dbName:"test"})
+test('but there is a "stop" in Christoph', () => {
+    expect('Christoph').toMatch(/stop/);
+  });
