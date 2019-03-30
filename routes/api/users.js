@@ -66,21 +66,8 @@ module.exports = Users = mongoose.model('Users', UserSchema)
                     console.log('users',users);
                   })
 
-                  var query = { userType:"normal" };
 
-                  Users.deleteOne(query, function (err, result) {
-              
-                      if (err) {
-              
-                          console.log("error query");
-              
-                      } else {
-              
-                          console.log(result);
-              
-                      }
-              
-                  });
+
 
 const users = [
    new User (
@@ -115,7 +102,24 @@ router.get('/:name', (req, res) => {
     const user = users.find(user => user.name === username)
     res.send(user)
 })
+app.delete('/user/delete:name', function (req, res) {
+    var query = { name:req.param.name };
 
+    Users.deleteOne(query, function (err, result) {
+              
+        if (err) {
+
+            console.log("error query");
+
+        } else {
+
+            console.log(result);
+
+        }
+
+    });
+    res.send('Got a DELETE request at /user')
+  })
 
 router.put('/update/:name', (req, res) => {
     const username = req.params.name 
