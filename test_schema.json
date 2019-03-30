@@ -1,0 +1,24 @@
+{
+    "routes": [
+        {
+            "url": "/api/v1/users/user/delete:name",
+            "params": {
+                "!name":"String().min(2)"
+            },
+            "methods": {
+                "DELETE": {
+                    "summary": "delete a single user",
+                    "body": {},
+                    "expected": {
+                        "data": null
+                    }
+                }
+            }
+        }
+    ]
+}
+    
+
+
+
+

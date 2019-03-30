@@ -100,23 +100,21 @@ router.get('/:name', (req, res) => {
     const user = users.find(user => user.name === username)
     res.send(user)
 })
-router.delete('/user/delete:name', function (req, res) {
-    var query = { name:req.param.name };
-
+ const deleteUser = function(name){
+    var query = {name };
+     
     Users.deleteOne(query, function (err, result) {
               
         if (err) {
+                return err
 
-            console.log("error query");
-
-        } else {
-            res.send(req.param.name)
-
-            console.log(result);
-
-        }
+        } return name
 
     });
+ }
+router.delete('/user/delete:name', function (req, res) {
+            res.send(deleteUser(req.param.name) )
+   
   })
 
 router.put('/update/:name', (req, res) => {
