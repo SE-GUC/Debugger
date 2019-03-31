@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
+import AttendanceSheetSchema from AttendanceSheet;
 const AttendanceSheet = require('../../Models/AttendanceSheet')
+const validator = require('../../validations/attendancessheetsValidations');
 const attendacesheets = [
         new AttendanceSheet('seif','Sunday', '11/12/2018', true, true,false),
         new AttendanceSheet('ahmed', 'monday', '14/12/2018', true, false, true),
@@ -13,8 +15,10 @@ const attendacesheets = [
     ];
 
     
-    router.get('/', (req, res) => res.json({ data: attendacesheets}))
-
+    router.get('/', async (req,res) => {
+        const attendacesheets = await AttendanceSheet.find()
+        res.json({data: attendacesheets})
+    })
 
 router.put('/editAtt', (req, res) => {
         const memberEmail = req.body.email; 
