@@ -82,6 +82,24 @@
             }
         },
         {
+            "url": "/api/announcements/get",
+            "params": {},
+            "methods": {
+              "GET": {
+                "summary": "get all Announcements",
+                "body": {
+                    "!clubName" : "string().clubName()"
+                },
+      
+                "expected": {
+                  "data": {
+                    "!clubName" : "string().clubName()"
+                  }
+                }
+              }
+            }
+        },    
+        {
             "url": "/api/raise_vote/",
             "params": {},
             "methods": {
@@ -135,3 +153,4 @@
         }
     ]
 }
+     

@@ -33,5 +33,9 @@
   "bugs": {
     "url": "https://github.com/SE-GUC/Debugger/issues"
   },
-  "homepage": "https://github.com/SE-GUC/Debugger#readme"
+  "homepage": "https://github.com/SE-GUC/Debugger#readme",
+  "directories": {
+    "test": "tests"
+  },
+  "keywords": []
 }
