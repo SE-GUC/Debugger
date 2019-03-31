@@ -32,7 +32,7 @@ router.post('/', async (req,res) => {
  })
 
 
-router.get('/', async (req,res) => {
+router.get('/get', async (req,res) => {
     const announcem = await announce.find()
     res.json({data: announcem})
 })

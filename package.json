@@ -15,7 +15,8 @@
     "jest": "^24.5.0"
   },
   "scripts": {
-    "test": "jest",
+    "test":     "SET NODE_ENV=test & jest  --detectOpenHandles  --runInBand"
+    ,
     "start": "node index.js"
   },
   "engines": {
@@ -30,5 +31,9 @@
   "bugs": {
     "url": "https://github.com/SE-GUC/Debugger/issues"
   },
-  "homepage": "https://github.com/SE-GUC/Debugger#readme"
+  "homepage": "https://github.com/SE-GUC/Debugger#readme",
+  "directories": {
+    "test": "tests"
+  },
+  "keywords": []
 }
