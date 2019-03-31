@@ -82,11 +82,11 @@ router.get('/', async (req,res) => {
         const requests = await Request.find()
         //res.json({data: requests})
         
-             if ( req.body.Status = "true"){
+             if ( req.body.Status = true){
                 return(res.send(' your request is accepted '))
              }
              else if 
-                (req.body.Status = "true"){
+                (req.body.Status = false){
                     return(res.send('your request is rejected '))
              }
              

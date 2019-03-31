@@ -100,25 +100,25 @@ describe("/api/requests", () => {
             })
           }) 
 
-          /*describe('get by id', ()=> {
+          describe('get by id', ()=> {
             it("give the request with specific id", async () => {
               newReq = new Request({
                 sender_email: "samir",
                 reciever_email: "wael",
-                Status: "false",
+                Status: true ,
                 request_msg: "remove content"
              });
         
             await newReq.save();
-            const resu = await request(server).get('/api/requests' + newReq._id)
-            expect(result.text).toMatch(/your request is rejected/) 
+            const resu = await request(server).get('/api/requests/' + newReq._id)
+            expect(resu.text).toMatch(/your request is rejected/) 
             expect(resu.status).toBe(200)
             
             
             }) ;
         
            
-          })*/
+          })
 
     afterAll(async () => await mongoose.disconnect());
     afterAll(async () => {
