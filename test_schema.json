@@ -1,0 +1,38 @@
+{
+  "routes": [
+    {
+      "url": "/api/groups",
+      "params": {},
+      "methods": {
+        "POST": {
+          "summary": "Creating a new group",
+          "body": {
+            "!name": "string().min(3).max(100)",
+            "!createdBy": "string().email()",
+            "!members": ["string().email()"]
+          },
+          "expected": {
+            "data": {
+              "!name": "string().min(3).max(100)",
+              "!createdBy": "string().email()",
+              "!members": ["string().email()"]
+            }
+          }
+        },
+
+        "PUT": {
+          "summary": "Adding members to the group",
+          "body": {
+            "!name": "string().min(3).max(100)",
+            "!members": ["string().email()"]
+          },
+          "expected": {
+            "data": {
+              "!members": ["string().email()"]
+            }
+          }
+        }
+      }
+    }
+  ]
+}
