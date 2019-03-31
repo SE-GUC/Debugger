@@ -195,16 +195,6 @@ router.route("/application_form_update").put(async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
-  try {
-    const users = await VGS_User.find();
-    res.json({ data: users });
-  } catch (error) {
-    // We will be handling the error later
-    console.log(error);
-  }
-});
-
 router.post("/", async (req, res) => {
   try {
     const validation = validator.createValidation(req.body);
@@ -224,6 +214,26 @@ router.post("/", async (req, res) => {
     }
   } catch (error) {
     res.status(404).send(error.message);
+  }
+});
+
+router.get("/", async (req, res) => {
+  try {
+    const users = await VGS_User.find();
+    res.json({ data: users });
+  } catch (error) {
+    // We will be handling the error later
+    console.log(error);
+  }
+});
+
+router.get("/showuser", async (req, res) => {
+  try {
+    const users = await VGS_User.find();
+    res.json({ data: users });
+  } catch (error) {
+    // We will be handling the error later
+    console.log(error);
   }
 });
 
@@ -255,21 +265,37 @@ router.route("/deletefromcommity").delete(async (req, res) => {
       return res.status(400).send({ err: "email field is required" });
 
     if (!user) return res.status(400).send({ err: "invalid email" });
-    if (user.userType === "Head")
+    if (user.userType === "head")
       return res.status(404).send({ err: "you can not delete a head" });
     if (user.userType === "president")
       return res.status(404).send({ err: "you can not delete a president" });
-    if (user.userType === "Advisor")
+    if (user.userType === "advisor")
       return res.status(404).send({ err: "you can not delete an advisor" });
     if (user.userType === "Director")
       return res.status(404).send({ err: "you can not delete a president" });
-    if (user.clubCommittee === null)
-      return res.status(404).send({ err: "this member not in the commitee" });
+    if (user.userType === "applicant")
+      return res.status(404).send({ err: "you can not delete a applicant" });
     // hundle case eno fe nfs elcommite later 3lashan a7na msh 3rfen lesa men elly 3ml signin
 
-    user.clubCommittee = null;
+    await VGS_User.updateOne(
+      { email: req.body.email },
+      {
+        email: user.email,
+        hobbies: user.hobbies,
+        appliedPosition: user.appliedPosition,
+        gameName: user.gameName,
+        userType: user.userType,
+        clubCommittee: null,
+        appStatus: user.appStatus,
+        notes: user.notes,
+        gameScrSho: user.gameScrSho,
+        downloadLink: user.downloadLink,
+        boothMember: user.boothMember,
+        VGSYear: user.VGSYear
+      }
+    );
 
-    res.send(user);
+    res.send(await VGS_User.findOne({ email: req.body.email }));
   } catch (error) {
     res.send(`error, can't delete`);
   }
@@ -321,13 +347,16 @@ router.route("/addmemberincommity").put(async (req, res) => {
     res.send(`error, can't add member`);
   }
 });
+
 // prisedent can edit user
 router.route("/edituser").put(async (req, res) => {
   //vgsuser data
   try {
+    let user = await VGS_User.findOne({ email: req.body.email });
     if (!req.body.email)
       return res.status(400).send({ err: "email field is required" });
-    let user = await VGS_User.findOne({ email: req.body.email });
+    if (!user) return res.status(400).send({ err: "invalid email" });
+
     let newuserType = req.body.userType;
     let newclubCommittee = req.body.clubCommittee;
     let newhobbies = req.body.hobbies;
@@ -340,7 +369,6 @@ router.route("/edituser").put(async (req, res) => {
     let newdownloadLink = req.body.downloadLink;
     let newboothMember = req.body.boothMember;
     // to make sure that prisedent entered email
-    if (!user) return res.status(400).send({ err: "invalid email" });
 
     if (user.userType === "president")
       return res
@@ -393,22 +421,23 @@ router.route("/edituser").put(async (req, res) => {
       var boothmember = (user.boothMember = newboothMember);
     }
 
-    let x = {
-      email: req.body.email,
-      userType: type || user.userType,
-      clubCommittee: commitee || user.clubCommittee,
-      hobbies: hobbies || user.hobbies,
-      VGSYear: vYear || user.VGSYear,
-      appliedPosition: appliedPosition || user.appliedPosition,
-      notes: note || user.notes,
-      gameName: gamename || user.gameName,
-      gameScrSho: gamescreen || user.gamescreen,
-      downloadLink: link || user.downloadLink,
-      boothMember: boothmember || user.boothMember
-    };
-
-    await VGS_User.update({ email: req.body.email }, { x });
-    res.send(user);
+    await VGS_User.updateOne(
+      { email: req.body.email },
+      {
+        email: req.body.email,
+        userType: type || user.userType,
+        clubCommittee: commitee || user.clubCommittee,
+        hobbies: hobbies || user.hobbies,
+        VGSYear: vYear || user.VGSYear,
+        appliedPosition: appliedPosition || user.appliedPosition,
+        notes: note || user.notes,
+        gameName: gamename || user.gameName,
+        gameScrSho: gamescreen || user.gamescreen,
+        downloadLink: link || user.downloadLink,
+        boothMember: boothmember || user.boothMember
+      }
+    );
+    res.send(await VGS_User.findOne({ email: req.body.email }));
   } catch (error) {
     res.send(`error, cannot edit`);
   }
@@ -448,7 +477,6 @@ router.route("/note").put(async (req, res) => {
   } catch (error) {
     res.send(`error, can't add note`);
   }
-  res.send(us);
 });
 
 // sara's sprint one method without database

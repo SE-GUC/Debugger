@@ -64,6 +64,7 @@ const PORT = process.env.PORT || 8000;
 
 if (process.env.NODE_ENV !== "test") {
   const server = app.listen(PORT, () =>
-    console.log(`${PORT} is live and running...`))
-    module.exports = server;
+    console.log(`${PORT} is live and running...`)
+  );
+  module.exports = server;
 }
