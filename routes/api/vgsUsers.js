@@ -29,12 +29,13 @@ router
     .route('/application_form')
     .post(async (req, res) => {
         try {
-
+            const {error} = validator.createValidation(req.body)
+            if(error) return res.status(400).send(error.details[0].message)
             const applicant = await VGS_User.create(req.body);
             return res.send(applicant)
         }
-        catch (error) {
-            res.send(`error, we couldn't create the application form`)
+        catch (err) {
+            res.status(404).send('something went wrong')
         }
     })
 
@@ -45,10 +46,10 @@ router
         try{
             const accpetedApplicant = await VGS_User.findById(req.params.id)
             let status = accpetedApplicant.appStatus
-            return res.send(status)
+            return res.send('Application Status: '+status)
         }
         catch (error){
-            return res.send(`error, we couldn't find the application form`)
+            return res.status(500).send(`error, we couldn't find the application form`)
         }
     })
 
@@ -61,7 +62,7 @@ router
             return res.send(allApplicationForms)
         }
         catch (error){
-            return res.send(`error, we couldn't get the application forms`)
+            return res.status(404).send(`error, we couldn't get the application forms`)
         }
     })
 
@@ -70,22 +71,25 @@ router
     .route('/application_form_update')
     .put(async (req, res) => {
         try{
+            //const foundApplicant = await VGS_User.find(app => app.email == req.body.email)
+            if(!req.body.email) return res.status(400).send('email is required')
             let foundApplicant = (await VGS_User.findOne({email:req.body.email}))
             if(!foundApplicant) return res.status(400).send(`the applicant with this email is not found, check the email`)
             else{
-                await VGS_User.update({email:req.body.email}, 
-                  {
-                  email : (req.body.newEmail || foundApplicant.email),
-                  clubCommittee : (req.body.clubCommittee || foundApplicant.clubCommittee),
-                  hobbies: (req.body.hobbies  || foundApplicant.hobbies), 
-                  appliedPosition: (req.body.appliedPosition  || foundApplicant.appliedPosition),
-                  gameName : (req.body.gameName  || foundApplicant.gameName)
-                  })
+                await VGS_User.update({email:req.body.email},
+                    {
+                    email : (req.body.newEmail || foundApplicant.email),
+                    clubCommittee : (req.body.clubCommittee || foundApplicant.clubCommittee),
+                    hobbies: (req.body.hobbies  || foundApplicant.hobbies), 
+                    appliedPosition: (req.body.appliedPosition  || foundApplicant.appliedPosition),
+                    gameName : (req.body.gameName  || foundApplicant.gameName)
+                    }
+                )
             }
             return res.send(foundApplicant)
         }
         catch (error){
-            return res.send('error, failed to update')
+            return res.status(400).send('error, failed to update')
         }
     })
  
