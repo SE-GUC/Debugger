@@ -10,7 +10,6 @@
     "joi": "^14.3.1",
     "mongoose": "^5.4.20",
     "mongos": "0.0.0",
-    "supertest": "^4.0.2",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
