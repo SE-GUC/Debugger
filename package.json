@@ -12,11 +12,14 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "jest": "^24.5.0"
+    "jest": "^24.5.0" ,
+    "supertest" : "^4.0.2"
   },
   "scripts": {
-    "test": "jest",
-    "start": "node index.js"
+    
+    "start": "node index.js" ,
+    "test":"SET NODE_ENV=test & jest  --detectOpenHandles  --runInBand"
+     
   },
   "engines": {
     "node": "10.15.1"
