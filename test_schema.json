@@ -100,7 +100,7 @@
             }
         },
         {
-            "url": "/api/editUsers/put",
+            "url": "/api/editUsers/update",
             "params": {},
             "methods": {
               "PUT": {
