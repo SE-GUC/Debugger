@@ -82,6 +82,42 @@
             }
         },
         {
+            "url": "/api/announcements/get",
+            "params": {},
+            "methods": {
+              "GET": {
+                "summary": "get all Announcements",
+                "body": {
+                    "!clubName" : "string().clubName()"
+                },
+      
+                "expected": {
+                  "data": {
+                    "!clubName" : "string().clubName()"
+                  }
+                }
+              }
+            }
+        },
+        {
+            "url": "/api/editUsers/update",
+            "params": {},
+            "methods": {
+              "PUT": {
+                "summary": "Edit user",
+                "body": {
+                    "!email" : "string().email()"
+                },
+      
+                "expected": {
+                  "data": {
+                    "!email" : "string().email()"
+                  }
+                }
+              }
+            }
+        },    
+        {
             "url": "/api/raise_vote/",
             "params": {},
             "methods": {
@@ -135,3 +171,4 @@
         }
     ]
 }
+     
