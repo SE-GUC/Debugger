@@ -105,7 +105,7 @@ describe("/api/requests", () => {
               newReq = new Request({
                 sender_email: "samir",
                 reciever_email: "wael",
-                Status: true ,
+                Status: false ,
                 request_msg: "remove content"
              });
         
