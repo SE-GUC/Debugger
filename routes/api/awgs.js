@@ -163,7 +163,18 @@ router.post("/", (req, res) => {
   res.send(newMessage);
 
   //   return res.json({ data: newMessage });
+<<<<<<< HEAD
 
 });*/
+=======
+});
+/* Get about us page for logged in/ not logged in user  */
+router.get('/', function(req, res, next) {
+  AWG.find(function (err, aboutUs) {
+    if (err) return next(err);
+    res.json(aboutUs);
+  });
+});
+>>>>>>> AWG
 
 module.exports = router;
