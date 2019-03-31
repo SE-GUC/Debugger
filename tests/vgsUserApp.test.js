@@ -84,6 +84,10 @@ describe('/api/VGS', ()=>{
 
   describe('put /application_form_update', ()=>{
     it('should return the application after it has been updated', async()=>{
+      let newUpdateUser = new VGS_User({
+        email: "testingonrepo@gr.com"
+      })
+      await newUpdateUser.save()
       const result = await request(server)
         .put('/api/VGS/application_form_update')
         .send({
