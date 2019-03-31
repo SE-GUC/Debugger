@@ -1,19 +1,35 @@
-const uuid= require('uuid')
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-class Announcement
-{
-    constructor(clubName, sentTo, sentFrom, image, text, pdfFile, eventId )
-    {
-        this.clubName = clubName;
-        this.sentTo = sentTo;
-        this.sentFrom = sentFrom;
-        this.image = image;
-        this.text = text;
-        this.pdfFile = pdfFile;
-        this.eventId = eventId;
-        this.id = uuid.v4();
+// Create the schema
+const AnnouncementSchema = new Schema({
+    clubName:{
+        type: String,
+        required: true
+    },
+    sentTo:{
+        type: String,
+        required: true
+    },
+    sentFrom:{
+        type: String,
+        required : true
+    },
+    image:{
+        type: image,
+        required: true
+    },
+    text:{
+        type: String,
+        required: true
+    },
+    pdfFile:{
+        type: pdfFile,
+        required: true
+    },
+    eventId:{
+        type: String,
+        required: true
     }
-
-}
-
-module.exports= Announcement;
+})
+module.exports = Announcement = mongoose.model('announcements' , AnnouncementSchema)

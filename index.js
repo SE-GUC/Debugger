@@ -10,6 +10,9 @@ const eventforms  = require('./routes/api/eventforms')
 const interviews = require ('./routes/api/interviews')
 const headFreeSlots = require ('./routes/api/headFreeSlots')
 const FAQfile = require('./routes/api/faq')
+const editUsers = require('./routes/api/editUsers')
+const interviewSlots = require('./routes/api/interviewSlots')
+const announcements = require('./routes/api/announcements')
 const faq = require('./routes/api/faq')
 //const db = require('./node_modules/.env').mongoURI
 const votes = require('./routes/api/votes')
@@ -50,6 +53,9 @@ app.use('/api/eventforms', eventforms)
 app.use('/api/Events/filleventforms', events)
 app.use('/api/interviews', interviews)
 app.use('/api/headFreeSlots', headFreeSlots)
+app.use('/api/editUsers', editUsers)
+app.use('/api/interviewSlots' , interviewSlots )
+app.use('/api/announcemnts' , announcements)
 app.use('/api/faq', faq)
 app.use('/api/requests', requests)
 app.use('/api/raise_vote', votes)
@@ -61,5 +67,13 @@ app.use((req, res) => {
     res.status(404).send({err: 'We can not find what you are looking for'});
 })
 
- const port= process.env.PORT || 8000 ;
- app.listen(port, () => console.log(`${port} is live and running...`))
+ const PORT= process.env.PORT || 8000 ;
+
+ if(process.env.NODE_ENV !== 'test'){
+    const server = app.listen(PORT, () => console.log(`${PORT} is live and running...`))
+    module.exports = server
+}
+/* const port= process.env.PORT || 8000 ;
+ const server =app.listen(port, () => console.log(`${port} is live and running...`))
+ //app.listen(port, ()=> console.log(`${PORT} is live and running`))
+ module.exports=server*/

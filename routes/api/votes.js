@@ -22,7 +22,7 @@ router
         return res.send(vote)
     }
     catch(err) {
-        return res.json({ error: `Error, couldn't raise the vote`})
+        return res.status(400).json({ error: `Error, couldn't raise the vote`})
     }
 
 })
@@ -33,14 +33,14 @@ router
     .route('/:voteId')
     .get(async (req, res)=>{
         try{
-
             let foundVote = await Vote.findById(req.params.voteId)
+            if(!foundVote) return res.status(404).send('The vote with the given id is not found')
             let AccepetedVotes = foundVote.voters.filter(x=>x.Decision==true).length;
             let RejectedVotes = foundVote.voters.filter(x=>x.Decision==false).length;
             return res.json({For:AccepetedVotes,Against:RejectedVotes});
         }
         catch(error){
-            return res.send(`error, vote not found`)
+            return res.status(500).send(error.message)
         }
 
     })
@@ -65,24 +65,31 @@ router
                 const voterFound = foundVote.voters.findIndex(x => x.voterID == voterID)
                 if(voterFound !=-1) {
                     foundVote.voters[voterFound].Decision = req.body.decision;
-                    await Vote.updateOne(foundVote)
+                    let votersNewArray = foundVote.voters
+                    await foundVote.update({$set: {voters: votersNewArray}})
+                    //await Vote.updateOne(foundVote)
                 }
                 else if(voterFound ==-1 && req.body.decision == true){
+                  //  foundVote.accept++
                     foundVote.voters.push({voterID:voterID,Decision:req.body.decision})
-                    await Vote.updateOne(foundVote)
+                    let votersNewArray = foundVote.voters
+                    await foundVote.update({$set: {voters: votersNewArray}})
+                    //await Vote.updateOne(foundVote)
                 }
                 else if (voterFound ==-1 && req.body.decision == false){
+                  //  foundVote.reject++
                     foundVote.voters.push({voterID:voterID, Decision:req.body.decision})
-                    await Vote.updateOne(foundVote)
+                    let votersNewArray = foundVote.voters
+                    await foundVote.update({$set: {voters: votersNewArray}})
+                    //await Vote.updateOne(foundVote)
                 }
             }
             res.send(`your vote has been successfully submitted`)
         }
         catch(error){
-            return res.send('error')
+            return res.status(404).send('error, vote id not correct')
         }
     })
-
 module.exports = router
 
 
