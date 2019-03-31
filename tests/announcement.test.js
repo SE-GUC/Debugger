@@ -1,10 +1,3 @@
-const Announcement = require('../Models/Announcement')
-const clubName = 'VGS'
-
-beforeEach(() => {
-    jest.setTimeout(30000);
-  });
-
 //  test('All freeSlots related to that specific Head should be shown', async (done) => {
   //  const reset = await Announcement.deleteMany()
     //const create = await Announcement.create(requestBody)
