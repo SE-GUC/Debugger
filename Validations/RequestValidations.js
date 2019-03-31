@@ -14,7 +14,7 @@ module.exports = {
 
             Status: Joi.boolean() ,
 
-            request_msg: Joi.string()
+            request_msg: Joi.string().required()
 
         }
 
@@ -22,5 +22,22 @@ module.exports = {
 
         return Joi.validate(request, createSchema)
 
+ 
     },
+
+   /* updateValidation: request => {
+        const updateSchema = {
+            sender_email: Joi.string().min(3).max(500) ,
+
+            reciever_email: Joi.string().min(3).max(100),
+
+            Status: Joi.boolean() ,
+
+            request_msg: Joi.string()
+        }
+
+        return Joi.validate(request, updateSchema)
+    }, */
+
 }
+
