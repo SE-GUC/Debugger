@@ -109,6 +109,6 @@ describe("/api/VGS", () => {
       expect(notMember.status).toBe(404);
       expect(response.status).toBe(200);
       expect(find.boothMember).toBe(true);
-    });
+    },10000);
   });
 });
