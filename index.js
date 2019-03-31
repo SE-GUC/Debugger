@@ -16,8 +16,8 @@ const votes = require('./routes/api/votes')
 const groups = require('./routes/api/groups')
 const requests = require('./routes/api/requests')
 //mongoose.connect(process.env.mongo)
-mongoose.connect(process.env.MONGO, {dbName:"test"})
-//mongoose.connect('mongodb+srv://mahamekdad:6gfvF79hbKVh124X@cluster0-mlucg.mongodb.net/test?retryWrites=true')
+//mongoose.connect(process.env.MONGO, {dbName:"test"})
+mongoose.connect('mongodb+srv://mahamekdad:6gfvF79hbKVh124X@cluster0-mlucg.mongodb.net/test?retryWrites=true')
 
 const app = express()
 
