@@ -98,6 +98,24 @@
                 }
               }
             }
+        },
+        {
+            "url": "/api/editUsers/put",
+            "params": {},
+            "methods": {
+              "PUT": {
+                "summary": "Edit user",
+                "body": {
+                    "!email" : "string().email()"
+                },
+      
+                "expected": {
+                  "data": {
+                    "!email" : "string().email()"
+                  }
+                }
+              }
+            }
         },    
         {
             "url": "/api/raise_vote/",

@@ -6,7 +6,7 @@ const validator = require('../../validations/userValidations')
 
 
 
-router.put('/:email', async (req,res) => {
+router.put('/update:email', async (req,res) => {
     try {
      const email = req.params.email
      const x = await user.findOne({email})
