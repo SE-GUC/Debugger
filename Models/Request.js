@@ -1,11 +1,9 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-const Schema = mongoose.Schema
-
-
+const Schema = mongoose.Schema;
 
 // Create the schema
-class Request {
+/*class Request {
 
     constructor () {
 
@@ -29,53 +27,26 @@ class Request {
     
     }
 
-}
+}*/
 
 const RequestSchema = new Schema({
+  sender_email: {
+    type: String,
+    required: true
+  },
 
-    sender_email: {
+  reciever_email: {
+    type: String,
+    required: true
+  },
 
-        type: String,
+  Status: {
+    type: Boolean
+  },
 
-        required: true
+  request_msg: {
+    type: String
+  }
+});
 
-    },
-
-    reciever_email: {
-
-        type: String,
-
-        required: true
-
-    },
-
-    Status : {
-
-        type:Boolean,
-
-       
-
-    },
-
-    request_msg : {
-
-        type: String ,
-
-        
-
-    },
- 
-
-})
-
-
-
-
-
-
-
-
-
-
-
-module.exports = Request = mongoose.model('requests', RequestSchema)
+module.exports = Request = mongoose.model("requests", RequestSchema);
