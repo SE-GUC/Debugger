@@ -35,14 +35,15 @@ router.post('/', async (req, res) => {
   try {
     const isValidated = validator.createValidation(req.body)
     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-    const event_eventName = EventSchema.event_eventName;
+    const event_id = EventSchema.id;
     const user_id = UserSchema.id;
     const attendeeName = req.body.attendeeName;
     const phoneNumber = req.body.phoneNumber;
     const email = req.body.email;
     const IdCardNumber = req.body.IdCardNumber;
    
-    if (!studentId)
+
+  if (!user_id)
     return res.status(400).send({ err: "please enter your id number" });
 
   if (typeof attendeeName !== "string")
@@ -52,7 +53,7 @@ router.post('/', async (req, res) => {
     return res.status(400).send({ err: "Invalid value for phonenumber" });
   
     const newresponse = {
-      event_eventName,
+      event_id,
       user_id,
       attendeeName,
       phoneNumberl,
