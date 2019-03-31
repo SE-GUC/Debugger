@@ -83,8 +83,8 @@ router.delete('/:id', (req, res) => {
 router.post('/filleventforms', async (req,res) => {
 
   try {
-    let studentID = (await EventForm.findOne({student_id:req.body.student_id}))
-    if(!studentID) return res.status(400).send(`please enter your national id number `)
+    //let studentID = (await EventForm.findOne({student_id:req.body.student_id}))
+    //if(!studentID) return res.status(400).send(`please enter your national id number `)
    const newEventForm = await EventForm.create(req.body)
 
    res.json({msg:'Response submitted successfully', data: newEventForm})
