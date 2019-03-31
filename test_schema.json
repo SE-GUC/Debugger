@@ -1,0 +1,150 @@
+{
+  "routes": [
+    {
+      "url": "/api/headFreeSlots/add",
+      "params": {},
+      "methods": {
+        "POST": {
+          "summary": "create a new headFreeSlot",
+          "body": {
+            "!email": "string().email()",
+            "!day": "string()",
+            "!date": "date()",
+            "!slot": "string()"
+          },
+
+          "expected": {
+            "data": {
+              "!_id": "string().length(24)",
+              "!headEmail": "string().email()",
+              "!day": "string()",
+              "!date": "date()",
+              "!slot": "string()"
+            }
+          }
+        }
+      }
+    },
+
+    {
+      "url": "/api/headFreeSlots/:email",
+      "params": {
+        "!email": "string().email()"
+      },
+      "methods": {
+        "GET": {
+          "summary": "get list of all headFreeSlots for a certain Head",
+
+          "expected": {
+            "data": [
+              {
+                "!_id": "string().length(24)",
+                "!headEmail": "string().email()",
+                "!day": "string()",
+                "!date": "date()",
+                "!slot": "string()"
+              }
+            ]
+          }
+        }
+      }
+    },
+
+    {
+      "url": "/api/headFreeSlots/update/",
+
+      "params": {},
+
+      "methods": {
+        "PUT": {
+          "summary": "edit a certain Head freeSlots",
+
+          "body": {
+            "!email": "string().email()",
+            "!oldDayToBeChanged": "string()",
+            "!oldDateToBeChanged": "date()",
+            "!oldSlotToBeChanged": "string()",
+            "!newDay": "string()",
+            "!newDate": "date()",
+            "!newSlot": "string()"
+          },
+
+          "expected": {
+            "data": {
+              "!_id": "string().length(24)",
+              "!headEmail": "string().email()",
+              "!day": "string()",
+              "!date": "date()",
+              "!slot": "string()"
+            }
+          }
+        }
+      }
+    },
+
+    {
+      "url": "/api/interviews/",
+
+      "params": {},
+
+      "methods": {
+        "GET": {
+          "summary": "get list of all interviews",
+
+          "expected": {
+            "data": [
+              {
+                "!_id": "string().length(24)",
+                "!interviewerEmail": "string().email()",
+                "!intervieweeEmail": "string().email()",
+                "!day": "string()",
+                "!date": "date()",
+                "!interviewslot": "string()",
+                "!startTime": "string()",
+                "!endTime": "string()",
+                "!interview": "bool()"
+              }
+            ]
+          }
+        }
+      }
+    },
+
+    {
+      "url": "/api/interviews/edit",
+
+      "params": {},
+
+      "methods": {
+        "PUT": {
+          "summary": "update a single interview",
+
+          "body": {
+            "!interviewerEmail": "string().email()",
+            "!day": "string()",
+            "!date": "date()",
+            "!slot": "string()",
+            "!intervieweeEmail": "string().email()",
+            "!startTime": "string()",
+            "!endTime": "string()",
+            "!interview": "bool()"
+          },
+
+          "expected": {
+            "data": {
+              "!_id": "string().length(24)",
+              "!interviewerEmail": "string().email()",
+              "!intervieweeEmail": "string().email()",
+              "!day": "string()",
+              "!date": "date()",
+              "!interviewslot": "string()",
+              "!startTime": "string()",
+              "!endTime": "string()",
+              "!interview": "bool()"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
