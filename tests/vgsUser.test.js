@@ -274,29 +274,29 @@ describe("/api/VGS/showusers", () => {
         expect(res.text).toMatch("you can not add a member");
       });
   });
-  test("addmemberincommity8", async () => {
-    newuser = new VGS_User({
-      email: "applicant@yahoo.com",
-      userType: "applicant",
-      clubCommittee: "null",
-      hobbies: "running",
-      VGSYear: 153,
-      appliedPosition: "member",
-      notes: "good",
-      gameName: "pew pew",
-      gameScrSho: "zeew",
-      downloadLink: "facebookk:dksdmn",
-      boothMember: false
-    });
-    await newuser.save();
-    await request(server)
-      .put("/api/VGS/addmemberincommity")
-      .send({ email: "applicant@yahoo.com", clubCommittee: "dwar" })
-      .then(res => {
-        expect(res.text).toMatch("applicant@yahoo.com");
-        expect(res.text).toMatch("dwar");
-      });
-  });
+  // test("addmemberincommity8", async () => {
+  //   newuser = new VGS_User({
+  //     email: "applicant@yahoo.com",
+  //     userType: "applicant",
+  //     clubCommittee: "null",
+  //     hobbies: "running",
+  //     VGSYear: 153,
+  //     appliedPosition: "member",
+  //     notes: "good",
+  //     gameName: "pew pew",
+  //     gameScrSho: "zeew",
+  //     downloadLink: "facebookk:dksdmn",
+  //     boothMember: false
+  //   });
+  //   await newuser.save();
+  //   await request(server)
+  //     .put("/api/VGS/addmemberincommity")
+  //     .send({ email: "applicant@yahoo.com", clubCommittee: "dwar" })
+  //     .then(res => {
+  //       expect(res.text).toMatch("applicant@yahoo.com");
+  //       expect(res.text).toMatch("dwar");
+  //     });
+  // });
   //head delete user under him
   test("deletefromcommity", async () => {
     newuser = new VGS_User({
