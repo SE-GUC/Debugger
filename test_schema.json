@@ -1,0 +1,21 @@
+{
+  "routes": [
+    {
+      "url": "/api/VGS/assign",
+      "params": {},
+      "methods": {
+        "PUT": {
+          "summary": "Assign a booth member",
+          "body": {
+            "!email": "string().email()"
+          },
+          "expected": {
+            "data": {
+              "!boothMember": "bool()"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

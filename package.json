@@ -15,7 +15,7 @@
     "jest": "^24.5.0"
   },
   "scripts": {
-    "test": "jest",
+    "test": "SET NODE_ENV=test & jest  --detectOpenHandles  --runInBand",
     "start": "node index.js"
   },
   "engines": {
