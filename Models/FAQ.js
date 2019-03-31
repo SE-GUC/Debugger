@@ -1,23 +1,26 @@
-const uuid= require('uuid')
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-class FAQs 
-{
-    // askedBy attribute will contain the email of the person who asked the question.
-    // answeredBy attribute will contain the email of the person who answered the question.
+// Create the schema
+const FAQsSchema = new Schema({
+    question: {
+        type: String
+    },
+    askedBy: {
+        type: String
+    },
+    noOfTimes: {
+        type: Number
+    },
+    answer: {
+        type: String
+    },
+    answeredBy: {
+        type: String
+    },
+    date: {
+        type: Date
+    }
+})
 
-    // rank attribute?
-    constructor( question, askedBy, answer, answeredBy, date, noOfTimes)
-    {
-        this.id = uuid.v4();
-        this.question = question;
-        this.askedBy = askedBy;
-        this.answer = answer;
-        this.askedBy = answeredBy;
-        this.date = date;
-        this.noOfTimes = noOfTimes;
-
-
-    };
-};
-
-module.exports = FAQs
+module.exports = mongoose.model('FAQ', FAQsSchema, 'FAQ')
