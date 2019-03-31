@@ -67,3 +67,7 @@ app.use((req, res) => {
     const server = app.listen(PORT, () => console.log(`${PORT} is live and running...`))
     module.exports = server
 }
+/* const port= process.env.PORT || 8000 ;
+ const server =app.listen(port, () => console.log(`${port} is live and running...`))
+ //app.listen(port, ()=> console.log(`${PORT} is live and running`))
+ module.exports=server*/
