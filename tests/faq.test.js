@@ -106,7 +106,7 @@ describe ('post /', () =>{
 //         expect(result.status).toBe(200)
 //     expect(result.body).not.toBeUndefined()
 //     }catch(err){
-//         console.log(err.message)
+//         console.log(err.uumessage)
 //     }
     
     })
