@@ -1,0 +1,1 @@
+ MONGO = 'mongodb+srv://mahamekdad:6gfvF79hbKVh124X@cluster0-mlucg.mongodb.net/test?retryWrites=true'
