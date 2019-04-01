@@ -1,15 +1,27 @@
-const uuid= require('uuid')
 
 
-class Event 
-{
-    constructor( eventType, description, date)
-    {
-        this.id = uuid.v4();
-        this.eventType =  eventType;
-        this.description = description;
-        this.date = date;
-    };
-};
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-module.exports = Event
+const EventSchema = new Schema({
+    eventName : {
+        type: String,
+        required: true
+    },
+    eventType : {
+        type: String,
+        required: true
+    },
+    description : {
+        type: String,
+        required: true
+    },
+    date : {
+        type: Date,
+        required: true
+    }
+
+})
+
+
+module.exports = mongoose.model('Events', EventSchema, "Event")
