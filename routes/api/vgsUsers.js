@@ -122,22 +122,24 @@ router.put("/assign", async (req, res) => {
 
 });
 //const applicants = [];
-const eventsList = [
+/*const eventsList = [
 
   new Event ('public', 'recruitment booth','1/2/2019'),
   new Event ('private', 'general meeting ','1/3/2019'),
   new Event ('public', 'career advising','1/6/2019'),
  
-];
+];*/
 var applicant = new VGS_User();
-
-router.get("/", (req, res) => {
-  res.send(`<a href="/api/Application Form">Application Form</a>
+router.get('/', async (req,res) => {
+	res.send(`<a href="/api/Application Form">Application Form</a>
             <a href="/api/Events">Events</a>`);
-});
-router.get('/Events', (req, res) => {
-  res.json({ data: eventsList }) 
-});
+  })
+
+
+router.get('/', async (req,res) => {
+	const events = await Event.find()
+	res.json({data: events})
+  })
 
 // user filling an application form and we create new VGS user
 router

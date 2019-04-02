@@ -1,19 +1,39 @@
-const uuid= require('uuid')
 
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-class EventForm 
-{
-    constructor(eventId, studentId, attendeeName, phoneNumber, email, IdCardNumber)
-    {
-        this.id = uuid.v4();
-        this.eventId = eventId;
-        this.studentId = studentId;
-        this.attendeeName = attendeeName;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.IdCardNumber = IdCardNumber;
-    };
+const EventFormSchema = new Schema({
 
-};
+    event_eventName : {
+        type: String,
+        required: true
+    },
+    event_id : {
+        type : String ,
+           ref : 'Event' ,
+           required : true
+    } ,
+    student_id : {
+        type: String
+    
+    },
+    attendeeName : {
+        type: String,
+        required: true
+    },
+    phoneNumber : {
+        type: Number,
+        required: true
+    },
+    email : {
+        type: String,
+        required: true
+    },
+    nationalidCardNumber : {
+        type: Number
+        
+    }
 
-module.exports = EventForm
+})
+
+module.exports = mongoose.model('EventForm', EventFormSchema, "EventForm") 
