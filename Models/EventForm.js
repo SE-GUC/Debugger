@@ -3,16 +3,18 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const EventFormSchema = new Schema({
-
-    event_eventName : {
-        type: String,
-        required: true
-    },
+    
     event_id : {
         type : String ,
            ref : 'Event' ,
            required : true
     } ,
+    user_id : {
+        type: String,
+        ref : 'User' ,
+        required: true
+    },
+
     student_id : {
         type: String
     
