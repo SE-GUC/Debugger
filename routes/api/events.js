@@ -6,16 +6,10 @@ const router = express.Router();
 const Event = require("../../Models/Event");
 const EventForm = require("../../Models/EventForm");
 
-/*const events = [
-  new Event("public", "recruitment booth", "1/2/2019"),
-  new Event("private", "general meeting ", "1/3/2019"),
-  new Event("public", "career advising", "1/6/2019")
-];*/
+router.get("/", async (req, res) => res.json({ data: await Event.find() }));
 
-router.get('/', async (req,res) => {
-  const events = await Event.find()
-  res.json({data: events})
-})
+
+
 //res.send(`<a href="/api/EventForm">EventForm</a>`)
 
 router.get("/eventform", async(req, res) => {
@@ -28,58 +22,118 @@ router.get("/eventform", async(req, res) => {
 
 
 // Create a new event
-router.post("/", (req, res) => {
-  const eventType = req.body.eventType;
-  const description = req.body.description;
-  const date = req.body.date;
+router.post("/", async (req, res) => {
+  try {
+    const isValidated = validator.createValidation(req.body);
+    if (isValidated.error)
+      return res
+        .status(400)
+        .send({ error: isValidated.error.details[0].message });
 
-  if (!description)
-    return res.status(400).send({ err: "description field is required" });
-  if (typeof description !== "string")
-    return res.status(400).send({ err: "Invalid value for description" });
+    const eventName = req.body.eventName;
+    const eventType = req.body.eventType;
+    const description = req.body.description;
+    const date = req.body.date;
 
-  if (!date) return res.status(400).send({ err: "date field is required" });
-  if (typeof date !== "string")
-    return res.status(400).send({ err: "Invalid value for date" });
+    if (!eventName)
+      return res.status(400).send({ err: "event Name field is required" });
+    if (typeof description !== "string")
+      return res.status(400).send({ err: "Invalid value for event Name" });
 
-  if (!eventType)
-    return res.status(400).send({ err: "Event Type field is required" });
-  if (typeof eventType !== "string")
-    return res.status(400).send({ err: "Invalid value for Event Type" });
+    if (!description)
+      return res.status(400).send({ err: "description field is required" });
+    if (typeof description !== "string")
+      return res.status(400).send({ err: "Invalid value for description" });
 
-  const newEvent = {
-    eventType,
-    description,
-    date,
-    id: uuid.v4()
-  };
-  events.push(newEvent);
-  res.send(events);
+    if (!date) return res.status(400).send({ err: "date field is required" });
+    if (typeof date !== "date")
+      return res.status(400).send({ err: "Invalid value for date" });
 
-  //   return res.json({ data: newEvent });
+    if (!eventType)
+      return res.status(400).send({ err: "Event Type field is required" });
+    if (typeof eventType !== "string")
+      return res.status(400).send({ err: "Invalid value for Event Type" });
+
+    const newEvent = {
+      eventName,
+      eventType,
+      description,
+      date
+    };
+    events.push(newEvent);
+    res.send(events);
+
+    return res.json({ data: newEvent });
+  } catch (error) {
+    res.status(404).send(error.message);
+  }
 });
+
 
 // Delete an Event
-router.delete('/:id', (req, res) => {
-    const eventId = req.params.id 
-    const event = events.find(event => event.id === eventId)
-    const index = events.indexOf(event)
-    events.splice(index,1)
-    res.send(events)
-});
+router.delete("/", async (req, res) =>
+  res.json({ data: await Event.splice(index, 1) })
+);
+
 
 // Update an event's info
-// router.put('/:id', (req, res) => {
-//   const eventId = req.params.id 
-//   const updatedEventType = req.body.eventType
-//   const updatedDescription = req.body.description
-//   const updatedDate = req.body.date
-//   const event = events.find(event => event.id === eventId)
-//   event.eventType = updatedEventType
-//   event.description = updatedDescription
-//   event.date = updatedDate
-//   res.send(events)
-// });
+router.put("/", async (req, res) => {
+  try {
+    const validation = validator.updateValidation(req.body);
+    if (validation.error)
+      return res
+        .status(400)
+        .send({ error: validation.error.details[0].message });
+
+    const foundEvent = await Event.findOne({ eventName: eventName });
+    if (foundEvent == false || !foundEvent)
+      return res.status(404).send({ error: "Event does not exist" });
+
+    const newEventName = { eventName: { $eq: req.body.eventName } };
+    const nwqEventType = { eventType: { $eq: req.body.eventType } };
+    const newDescription = { description: { $eq: req.body.description } };
+    const newDate = { date: { $eq: req.body.date } };
+
+    if (!newEventName)
+      return res.status(400).send({ err: "event Name field is required" });
+    if (typeof newEventName !== "string")
+      return res.status(400).send({ err: "Invalid value for event Name" });
+
+    if (!nwqEventType)
+      return res.status(400).send({ err: "Event Type field is required" });
+    if (typeof nwqEventType !== "string")
+      return res.status(400).send({ err: "Invalid value for Event Type" });
+
+    if (!newDescription)
+      return res.status(400).send({ err: "description field is required" });
+    if (typeof newDescription !== "string")
+      return res.status(400).send({ err: "Invalid value for description" });
+
+    if (!newDate)
+      return res.status(400).send({ err: "date field is required" });
+    if (typeof newDate !== "date")
+      return res.status(400).send({ err: "Invalid value for date" });
+
+    const updated = await Event.updateOne(
+      newEventName,
+      nwqEventType,
+      newDescription,
+      newDate,
+      (err, result) => {
+        if (err) res.status(404).send(err.message);
+      }
+    );
+
+    const newEvent = await Event.findOne({ eventName: eventName });
+    res.json({ msg: "Event Updated.", data: newEvent });
+  } catch (error) {
+    res.status(404).send(error.message);
+  }
+});
+
+
+
+
 router.post('/filleventforms', async (req,res) => {
 
   try {
