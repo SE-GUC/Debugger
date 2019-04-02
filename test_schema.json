@@ -1,6 +1,8 @@
 {
     "routes": [
         {
+    "routes": [
+        {
             "url": "/api/VGS/application_form",
             "params": {},
             "methods": {
@@ -132,6 +134,265 @@
                     }
                 }
             }
+        } ,{
+            "url": "/api/requests",
+            "params": {},
+            "methods": {
+                "POST": {
+                    "summary": "create a new Request ",
+                    "body": {
+                        "sender_email": "string().min(3).required()",
+                        "reciever_email" : "string().min(3).required()",
+                        "Status": "boolean().optional" ,
+                        "request_msg": "string().optional()"
+                    },
+                    "expected": {
+                        "data": {
+                            "_id": "string().length(24)",
+                            "sender_email": "string().min(3).required()",
+                        "reciever_email" : "string().min(3).required()",
+                        "Status": "boolean().optional" ,
+                        "request_msg": "string().optional()" ,
+                        "msg":"Request was created successfully"
+                        }
+                    }
+                }
+            }
+
+        },
+        {
+            "url": "/api/requests/edit_requests/:id",
+            "params": {"_id": "string().length(24)"},
+            "methods": {
+                "PUT": {
+                    "summary": "director can edit a request status",
+                    "body": {
+                        "sender_email": "string().min(3).required()",
+                        "reciever_email" : "string().min(3).required()",
+                        "Status": "boolean().required" ,
+                        "request_msg": "string().optional()"
+                    },
+                    "expected": {
+                        "data": {"_id": "string().length(24)",
+                            "sender_email": "string().min(3).required()",
+                        "reciever_email" : "string().min(3).required()",
+                        "Status": "boolean().optional" ,
+                        "request_msg": "string().optional()" ,
+                        "msg": "Request updated successfully"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "url": "/api/requests",
+            "params": {},
+            "methods": {
+                "GET": {
+                    "summary": "viewing all the created requests",
+                    "body": {},
+                    "expected": {
+                        "data": [
+                            {
+                                "_id": "string().length(24)",
+                            "sender_email": "string().min(3).required()",
+                        "reciever_email" : "string().min(3).required()",
+                        "Status": "boolean().optional" ,
+                        "request_msg": "string().optional()"
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "url": "/api/requests/:id",
+            "params": {"_id": "string().length(24)"},
+            "methods": {
+                "GET": {
+                    "summary": "view a specific request ",
+                    "body": {
+                       
+                    },
+                    "expected": {
+                        "data": [
+                            {
+                                "_id": "string().length(24)",
+                                "sender_email": "string().min(3).required()",
+                            "reciever_email" : "string().min(3).required()",
+                            "Status": "boolean().optional" ,
+                            "request_msg": "string().optional()"
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "url": "/api/Events",
+            "params": {},
+            "methods": {
+                "GET": {
+                    "summary": "view all events",
+                    "body": {
+                       
+                    },
+                    "expected": {
+                        "data": [
+                            {
+                                "!_id": "string().length(24)",
+                                "eventName": "string().length(24).required",
+                                "eventType": "string().length(24).required",
+                                "description": "string().length(50).required" ,
+                                "date" : "Date ().length(24).required"
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "url": "/api/Events/eventform",
+            "params": {},
+            "methods": {
+                "GET": {
+                    "summary": "directs to event form page from events page ",
+                    "body": {},
+                    "expected": {
+                        "data": [
+                            {
+                                "URL": "`<a href="/api/EventForm">EventForm</a>`"
+                            
+                            }
+                        ]
+                   
+                 } 
+                }
+
+            }
+        },
+
+        {
+            "url": "/api/Events/filleventforms",
+            "params": {},
+            "methods": {
+                "POST": {
+                    "summary": "create new response by filling even form from event page ",
+                    "body": { 
+                         "event_eventName": "string().length(24).required" ,
+                                
+                                "event_id": "string().length(24).ref(Event).required",
+                                "eventType": "string().length(24).required",
+                                "student_id": "string().length(50)" ,
+                                "attendeeName" : "string ().length(24).required" ,
+                                "phoneNumber": "Number().length(50) . required"  ,
+                                "email " :"string ().length(24).required" ,
+                                "nationalidCardNumber" : "Number().length(50) " 
+                    },
+                    "expected": {
+                        "data": [
+                            {   "_id": "string().length(24)",
+                                "event_eventName": "string().length(24).required" ,
+                                
+                                "event_id": "string().length(24).ref(Event).required",
+                                "eventType": "string().length(24).required",
+                                "student_id": "string().length(50)" ,
+                                "attendeeName" : "string ().length(24).required" ,
+                                "phoneNumber": "Number().length(50) . required"  ,
+                                "email " :"string ().length(24).required" ,
+                                "nationalidCardNumber" : "Number().length(50)" ,
+                                "msg":"Response submitted successfully"
+                            }
+                        ]
+                   
+                 } 
+                }
+
+            }
+        },
+        {
+            "url": "/api/eventforms/eventforms",
+            "params": {},
+            "methods": {
+                "POST": {
+                    "summary": "create new response by filling event form  ",
+                    "body": { 
+                         "event_eventName": "string().length(24).required" ,
+                                
+                                "event_id": "string().length(24).ref(Event).required",
+                                "eventType": "string().length(24).required",
+                                "student_id": "string().length(50)" ,
+                                "attendeeName" : "string ().length(24).required" ,
+                                "phoneNumber": "Number().length(50) . required"  ,
+                                "email " :"string ().length(24).required" ,
+                                "nationalidCardNumber" : "Number().length(50) " 
+                    },
+                    "expected": {
+                        "data": [
+                            {   "_id": "string().length(24)",
+                                "event_eventName": "string().length(24).required" ,
+                                
+                                "event_id": "string().length(24).ref(Event).required",
+                                "eventType": "string().length(24).required",
+                                "student_id": "string().length(50)" ,
+                                "attendeeName" : "string ().length(24).required" ,
+                                "phoneNumber": "Number().length(50) . required"  ,
+                                "email " :"string ().length(24).required" ,
+                                "nationalidCardNumber" : "Number().length(50)" ,
+                                "msg":"Response submitted successfully"
+                            }
+                        ]
+                   
+                 } 
+                }
+
+            }
+        },
+        {
+            "url": "/api/eventforms/eventform",
+            "params": {},
+            "methods": {
+                "GET": {
+                    "summary": " view all event form responses  ",
+                    "body": { 
+                         "event_eventName": "string().length(24).required" ,
+                                
+                                "event_id": "string().length(24).ref(Event).required",
+                                "eventType": "string().length(24).required",
+                                "student_id": "string().length(50)" ,
+                                "attendeeName" : "string ().length(24).required" ,
+                                "phoneNumber": "Number().length(50) . required"  ,
+                                "email " :"string ().length(24).required" ,
+                                "nationalidCardNumber" : "Number().length(50) " 
+                    },
+                    "expected": {
+                        "data": [
+                            {   "_id": "string().length(24)",
+                                "event_eventName": "string().length(24).required" ,
+                                
+                                "event_id": "string().length(24).ref(Event).required",
+                                "eventType": "string().length(24).required",
+                                "student_id": "string().length(50)" ,
+                                "attendeeName" : "string ().length(24).required" ,
+                                "phoneNumber": "Number().length(50) . required"  ,
+                                "email " :"string ().length(24).required" ,
+                                "nationalidCardNumber" : "Number().length(50)" 
+                                
+                            }
+                        ]
+                   
+                 } 
+                }
+
+            }
         }
+
+        
+        
+        
+    ]
+}
+ 
+
     ]
 }
