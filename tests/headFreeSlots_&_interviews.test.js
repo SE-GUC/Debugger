@@ -45,7 +45,6 @@ describe("/api/headFreeSlots & /api/interviews", () => {
         interviewerEmail: "tamer@gmail.com"
       });
 
-      console.log(check);
       expect(response.status).toBe(200);
       expect(check.headEmail).toBe("tamer@gmail.com");
       expect(interview.interviewerEmail).toBe("tamer@gmail.com");
@@ -56,11 +55,10 @@ describe("/api/headFreeSlots & /api/interviews", () => {
     it("Returning a list of all free slots of a Head using his email and a status of 200", async () => {
 
         await HeadFreeSlot.deleteMany({}, (err, result) => {
-          if (err) res.status(404).send(err.message);
-        });
+          if (err) expect(err).toBeTruthy() })
+        
 
         const cr = await HeadFreeSlot.create(requestBody);
-        console.log(cr);
 
         const response = await request(server).get(
           "/api/headFreeSlots/" + email
@@ -75,12 +73,12 @@ describe("/api/headFreeSlots & /api/interviews", () => {
     it("updating freeSlot of a Head by his email", async () => {
 
         await HeadFreeSlot.deleteMany({}, (err, result) => {
-            if (err) res.status(404).send(err.message);
-          })
+          if (err) expect(err).toBeTruthy() })
+          
 
         await Interview.deleteMany({}, (err, result) => {
-            if (err) res.status(404).send(err.message);
-          })
+          if (err) expect(err).toBeTruthy() })
+          
 
           await HeadFreeSlot.create({
             headEmail: "dodo@gmail.com",
@@ -115,8 +113,6 @@ describe("/api/headFreeSlots & /api/interviews", () => {
       const check = await HeadFreeSlot.findOne({
         headEmail: "dodo@gmail.com"
       });
-
-      console.log(check);
       expect(response.status).toBe(200);
       expect(check.day).toBe("Tuesday");
     });
@@ -156,8 +152,6 @@ describe("/api/headFreeSlots & /api/interviews", () => {
       const check = await HeadFreeSlot.findOne({
         headEmail: "fawzy@gmail.com"
       });
-
-      console.log(check);
       expect(response.status).toBe(404);
       expect(check.slot).not.toBe("4th");
     });
@@ -173,8 +167,7 @@ describe("/api/headFreeSlots & /api/interviews", () => {
       await HeadFreeSlot.create(requestBody);
 
       await Interview.deleteMany({}, (err, result) => {
-        if (err) res.status(404).send(err.message);
-      });
+        if (err) expect(err).toBeTruthy() })
 
       await Interview.create({
         interviewerEmail: "ahmed@gmail.com",
@@ -188,7 +181,6 @@ describe("/api/headFreeSlots & /api/interviews", () => {
       });
 
       const response = await request(server).get("/api/interviews/");
-      console.log(response);
       expect(response.body[0].intervieweeEmail).toEqual(
         "mohamed@gmail.com"
       );
@@ -200,12 +192,10 @@ describe("/api/headFreeSlots & /api/interviews", () => {
     it("A booth member can book interviews", async () => {
 
         await HeadFreeSlot.deleteMany({}, (err, result) => {
-            if (err) res.status(404).send(err.message);
-          })
+          if (err) expect(err).toBeTruthy() })
 
         await Interview.deleteMany({}, (err, result) => {
-            if (err) res.status(404).send(err.message);
-          })
+          if (err) expect(err).toBeTruthy() })
 
           await HeadFreeSlot.create({
             headEmail: "dodo@gmail.com",
@@ -242,7 +232,6 @@ describe("/api/headFreeSlots & /api/interviews", () => {
         intervieweeEmail: "lobna@gmail.com"
       });
     
-      console.log(check);
       expect(response.status).toBe(200);
       expect(check.interview).toBe(true);
     });

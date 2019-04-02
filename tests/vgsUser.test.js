@@ -21,13 +21,16 @@ describe("/api/VGS", () => {
   afterEach(async () => {
     if (server) await server.close();
   });
-
-  describe("As a Head I acn assign booth member", () => {
+  
+  beforeAll(async ()=>{
+      await VGS_User.deleteMany({}, (err, result) => {
+          if (err) expect(err).toBeTruthy() })
+  }) 
+  /*describe("As a Head I acn assign booth member", () => {
     it("To assign a booth member, this person should not be a booth member already, a rejected person or not in the position of a member", async () => {
-      
-      await VGS_User.deleteOne({ email: "dodo@gmail.com" }, (err, result) => {
-        if (err) res.status(404).send(err.message);
-      });
+    //   await VGS_User.deleteOne({ email: "dodo@gmail.com" }, (err, result) => {
+    //     if (err) res.status(404).send(err.message);
+    //   });
 
       await VGS_User.create({
         email: "dodo@gmail.com",
@@ -115,9 +118,9 @@ describe("/api/VGS", () => {
       expect(notMember.status).toBe(404);
       expect(response.status).toBe(200);
       expect(find.boothMember).toBe(true);
-    },10000)
-  })
-});
+    },30000)
+  })*/
+})
 
 
 describe("/api/VGS/showusers", () => {
@@ -488,3 +491,4 @@ describe("/api/VGS/showusers", () => {
       });
   });
 });
+

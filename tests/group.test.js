@@ -33,7 +33,6 @@ describe("/api/groups", () => {
         name: "Amarena"
       });
 
-      console.log(check);
       expect(response.status).toBe(200);
       expect(check.name).toBe("Amarena");
     }, 10000);
@@ -53,7 +52,6 @@ describe("/api/groups", () => {
         name: "Amarena"
       });
 
-      console.log(check);
       expect(response.status).toBe(200);
       expect(check.members).toContain("fatma@gmail.com");
     });
