@@ -27,7 +27,7 @@ describe("/api/VGS", () => {
           if (err) expect(err).toBeTruthy() })
   }) 
   // Async problem
-  /*describe("As a Head I acn assign booth member", () => {
+  describe("As a Head I acn assign booth member", () => {
     it("To assign a booth member, this person should not be a booth member already, a rejected person or not in the position of a member", async (done) => {
     //   await VGS_User.deleteOne({ email: "dodo@gmail.com" }, (err, result) => {
     //     if (err) res.status(404).send(err.message);
@@ -120,7 +120,7 @@ describe("/api/VGS", () => {
       expect(response.status).toBe(200);
       expect(find.boothMember).toBe(true);
     },10000)
-  })*/
+  })
 })
 
 
