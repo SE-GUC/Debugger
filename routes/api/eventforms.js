@@ -2,35 +2,32 @@ const express = require("express");
 
 const router = express.Router();
 
-// We will be connecting using database
 
-const EventForm = require("../../models/EventForm");
 
-const eventforms = [
-  new EventForm("15e516bf-dad0-4421-accb-dc20f9806275", "15e0dfa1-ae7c-4d18-9115-5254c686942d", "Amina Sedky", "55555", "aminasedky@gmail.com","29765452110034"),
-  new EventForm("15e516bf-dad0-4421-accb-dc20f9806275", "25b0ffa4-fe0d-4642-9686-e7209bf7758b", "Sara Walid", "665555", "sara@gmail.com","28165562145034"),
-  new EventForm("8a36c3b8-7b7b-4c53-9dd2-f5af5345f15f", "15e0dfa1-ae7c-4d18-9115-5254c686942d", "Amina Sedky", "55555", "aminasedky@gmail.com","29765452110034")
-];
+const EventForm = require("../../Models/EventForm");
 
-router.get('/', (req, res) => {
-  res.json({ data: eventforms })
-  });
 
-  router.get('/:id', (req, res) => {
-    const filteredEventId = req.params.id
-    const filteredForms = eventforms.filter(filteredForms => filteredForms.eventId === filteredEventId)
-    res.send(filteredForms)
-})
 
-router.post("/eventforms", (req, res) => {
-  const eventId = req.body.eventId;
-  const studentId = req.bosy.studentId;
-  const attendeeName = req.body.attendeeName;
-  const phoneNumber = req.body.phoneNumber;
-  const email = req.body.email;
-  const IdCardNumber = req.body.IdCardNumber;
+router.get("/", async (req, res) => res.json({ data: await EventForm.find() }));
 
-  if (!studentId)
+
+router.get("/:id", async (req, res) => res.json({ data: await EventForm.findOne({id : id}) }));
+
+
+router.post('/:id', async (req, res) => {
+
+  try {
+    const isValidated = validator.createValidation(req.body)
+    if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+    const event_id = req.body.id;
+    const user_id = req.params.id;
+    const attendeeName = req.body.attendeeName;
+    const phoneNumber = req.body.phoneNumber;
+    const email = req.body.email;
+    const IdCardNumber = req.body.IdCardNumber;
+   
+
+  if (!user_id)
     return res.status(400).send({ err: "please enter your id number" });
 
   if (typeof attendeeName !== "string")
@@ -38,17 +35,48 @@ router.post("/eventforms", (req, res) => {
 
   if (typeof phoneNumber !== "number")
     return res.status(400).send({ err: "Invalid value for phonenumber" });
+  
+    const newresponse = {
+      event_id,
+      user_id,
+      attendeeName,
+      phoneNumberl,
+      email,
+      IdCardNumber
+    };
+    
+ return res.json({ data: newresponse });
 
-  const newresponse = {
-    id: uuid.v4(),
-    eventId,
-    studentId,
-    attendeeName,
-    phoneNumberl,
-    email,
-    IdCardNumber
-  };
+  }
+  catch (error) {
+    res.status(404).send(error.message)
+ }
 
-  return res.json({ data: newresponse });
-});
+})
+
+
+
+router.post('/eventforms', async (req,res) => {
+
+  try {
+
+    let studentID = (await EventForm.findOne({student_id:req.body.student_id}))
+    if(!studentID) return res.status(400).send(`please enter your national id number `)
+   const newEventForm = await EventForm.create(req.body)
+
+   res.json({msg:'Response submitted successfully', data: newEventForm})
+
+  }
+
+  catch(error) {
+
+      
+
+    res.send(`error, can't submit response`)
+
+  }  
+
+})
+
+
 module.exports = router;
