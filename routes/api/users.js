@@ -69,4 +69,44 @@ const User= require('../../Models/User')
 // })
 
 module.exports=router;
+const joi =  require("joi");
+const express = require('express')
+const mongoose = require('mongoose')
+const router = express.Router();
+const User = require('./routes/api/users')
+const app = express()
+const db = require('./config/keys').mongoURI
+.connect(db)
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.log(err))
 
+    router.post('/', async (req, res) => {
+        try {
+
+            const validation = validator.createValidation(req.body)
+            if (validation.error)
+               return res.status(400).send({ error: validation.error.details[0].message })
+               const username = req.body.name
+               const phoneNumber = req.body.phoneNumber
+               const email = req.body.email
+               const password = req.body.password
+               const birthday = req.body.birthday
+               const studyYear = req.body.studyYear
+               const modeOfTran = req.body.modeOfTran
+               const generalAddress = req.body.generalAddress
+               const clubName = req.body.clubName
+
+
+
+      const User = await User.findOne({ name: user })
+    
+      if (username)
+         return res.status(400).json({ error: 'Name already exists' })
+
+      await User.create(req.body)
+      const users = await User.find()
+    
+    
+     res.json({ msg: 'User is created successfully', data: users })}
+     catch (error) {
+        res.status(404).send(error.message)}})
