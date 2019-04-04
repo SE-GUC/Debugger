@@ -41,7 +41,6 @@ router.get('/:name', (req, res) => {
 
 router.put('/update/:name', (req, res) => {
     const username = req.params.name 
-
     const updatedname = req.body.name;
     const updatedphoneNumber = req.body.phoneNumber;
     const updatedemail = req.body.email;
