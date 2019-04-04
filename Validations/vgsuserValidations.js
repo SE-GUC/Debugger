@@ -14,7 +14,7 @@ module.exports = {
             gameName: Joi.string().min(3).max(500),
             gameScrSho: Joi.string().min(3).max(500),
             downloadLink:Joi.string().min(3).max(500),
-            boothMember:Joi.boolean(),
+            boothMember:Joi.boolean()
             
            
         }
@@ -35,7 +35,7 @@ module.exports = {
             gameName:Joi.string().min(3).max(500).optional(),
             gameScrSho: Joi.string().min(3).max(500),
             downloadLink:Joi.string().min(3).max(500).optional(),
-            boothMember:Joi.boolean().required().required()
+            boothMember:Joi.boolean()
         }
 
         return Joi.validate(request, createSchema)
