@@ -1,14 +1,32 @@
-const uuid= require('uuid')
+const mongoose = require('mongoose')
 
-class Vote {
+const Schema = mongoose.Schema
 
-    constructor(issuerId, endTime, accept, reject){
-        this.id = uuid.v4();
-        this.issuerId = issuerId;
-        this.VoteEndTime = endTime;
-        this.accept = accept;
-        this.reject =  reject;
+const VoteSchema = new Schema(
+    {
+        issuerId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'VGS_User',
+            required: true
+        },
+        nomineeId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'VGS_User',
+            required: true
+        },
+        voteEndTime: {
+            type: Date,
+            required: true
+        },
+        accept: {
+            type: Number
+        },
+        reject: {
+            type: Number
+        },
+        voters: {
+            type: Array
+        }
     }
-}
-
-module.exports = Vote
+)
+module.exports = mongoose.model('Vote', VoteSchema, 'Vote')

@@ -1,6 +1,71 @@
 const express = require('express')
 const router=express.Router()
 const User= require('../../Models/User')
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+
+mongoose.connect('mongodb://localhost:27017/myapp', {useNewUrlParser: true});
+const newUser = {
+        name:'passant',
+       email:'passant.nasr@email.com',
+}
+
+// Create the schema
+const UserSchema = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    phoneNumber: {
+        type: String,
+        required: false
+    },
+    password: {
+        type: String, 
+        required: false
+    },
+    birthday: {
+        type: Date,
+        required: false
+    },
+    
+    studyYear: {
+        type: Date,
+        required: false
+    },
+    
+    modeOfTran: {
+        type: String,
+        required: false
+    },
+    
+    generalAddress: {
+        type: String,
+        required: false
+    },
+    
+    clubName: {
+        type: String,
+        required: false
+    }
+})
+
+module.exports = Users = mongoose.model('Users', UserSchema)
+        const addUser = new Users(newUser)
+        addUser.save(function (err, addUser) {
+                    if (err) return console.error(err);
+                  });
+
+                  Users.find(function (err, users) {
+                    if (err) return console.error(err);
+                  })
+
+
+
 
 const users = [
    new User (
@@ -27,8 +92,6 @@ const users = [
     )
     ];
 
-   
-
 
 router.get('/', (req, res) => res.json({users}));
 
@@ -37,7 +100,22 @@ router.get('/:name', (req, res) => {
     const user = users.find(user => user.name === username)
     res.send(user)
 })
+ const deleteUser = function(name){
+    var query = {name };
+     
+    Users.deleteOne(query, function (err, result) {
+              
+        if (err) {
+                return err
 
+        } return name
+
+    });
+ }
+router.delete('/user/delete:name', function (req, res) {
+            res.send(deleteUser(req.param.name) )
+   
+  })
 
 router.put('/update/:name', (req, res) => {
     const username = req.params.name 
