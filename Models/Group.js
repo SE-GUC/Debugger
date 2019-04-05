@@ -1,17 +1,30 @@
-const uuid= require('uuid')
+const uuid = require('uuid')
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-class Group {
 
-    // Groups have unique names.
-    // name can be repeated for different rows if it has the same createdBy attribute value (created
-    // by the same person).
-
-    constructor () {
-        this.name = name;
-        this.createdBy = createdBy;
-        this.member = member; 
-        this.id = uuid.v4();
+// Groups have unique names?
+const GroupSchema = new Schema({
+    //id: {  type: String
+    // ,  default: uuid.v4
+    // }
+    //,
+    name: {
+        type: String
+        , required: true
     }
-} 
+    ,
+    createdBy: {
+        type: String
+        , required: true
+    }
+    ,
+    members: {
+        type: [String]
+        // removed required: true
+    }
 
-module.exports = Group
+
+})
+
+module.exports = Group = mongoose.model('groups', GroupSchema)

@@ -1,20 +1,39 @@
-const express = require('express')
-const router = express.Router()
- 
-const AWG = require('../../models/AWG')
+const express = require("express");
+const router = express.Router();
 
-const awgs = [
-new AWG
-    ( clubDescription=  'Determined to fulfill a dream, a dream of being the change',clubName =  'MUN'),
-new AWG
-    ( clubDescription ='Vector Game Studio is an AWG aimimg to develop and sustain a game development community in Egypt.We do this by giving game art design (GAD) and game designand development (GDD) sessions to our recruits. We also host VGS exclusive events and public events such as game jams and meetups to help create a platform where people with a passion for game development can meet, work together, and exchange ideas.', clubName = 'VGS'),
- new AWG
-    ( clubDescription ='First Worlds style debate club in Egypt and North Africa. Established and located in the German University in Cairo', clubName = 'TIQ'),  
- new AWG
-    (clubDescription='Nebny GUC is a branch of Nebny Foundation, a non-profitable/non-governmental organization.We are a new AWG in the GUC',clubName =  'Nebny')
-    ];
+const mongoose = require("mongoose");
+
+const AWG = require("../../Models/AWG");
+const Message = require("../../Models/Message");
 
 
-router.get('/', (req, res) => res.json({awgs}));
+
+router.get("/", async (req, res) => res.json({ data: await AWG.find() }));
+
+
+
+// Send contact us Message
+router.post("/", async (req, res) => {
+  try {
+    const isValidated = validator.createValidation(req.body);
+    if (isValidated.error)
+      return res
+        .status(400)
+        .send({ error: isValidated.error.details[0].message });
+    const newMessage = await Message.create(req.body);
+    res.json({ msg: "Message sent successfully", data: newMessage });
+  } catch (error) {
+    //       // We will be handling the error later
+    console.log(error);
+  }
+});
+
+/* Get about us page for logged in/ not logged in user  */
+router.get("/", function(req, res, next) {
+  AWG.find(function(err, aboutUs) {
+    if (err) return next(err);
+    res.json(aboutUs);
+  });
+});
 
 module.exports = router;
