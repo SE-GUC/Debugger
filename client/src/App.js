@@ -1,25 +1,64 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+//import logo from './logo.svg';
+import "./App.css";
+//import TestCom from "./components/testCom";
+import VGS_User from "./models/VGS_User";
+//import AppFormShit from "./components/AppFormShit"
+import AppForm from "./components/AppForm"
 
 class App extends Component {
+  //   this.
+
+  //   this.changingEmail = this.changingEmail.bind(this);
+  constructor(props) {
+    super(props);
+    this.state = {
+      VGS_User,
+      Applicants: []
+    };
+  }
+
+  vgs = new VGS_User();
+  //VGS_User = new  VGS_User('lol@jf.com',1,'tre2ak a5dar','eating',3,'NA')
+  switchNameHandler = () => {
+    console.log("Hola!");
+    console.log(this.VGS_User.email);
+  };
+
+  changingEmail = event => {
+    this.setState({
+      VGS_User: (this.vgs.email = event.target.value)
+    });
+    //  this.VGS_User.email=event.target.value;
+    //  console.log(VGS_User.email=event.target.value)
+  };
+
+  printobject(user) {
+    // console.log(user);
+    //this.setState({
+      //Applicants: 
+      this.state.Applicants.concat(user)
+    //});
+
+    //Applicants.push(user)
+    console.log(this.Applicants);
+    console.log(this.Applicants.length);
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <h1>Yelloo</h1>
+        {/* <button onClick={this.switchNameHandler}>Switch Name</button> */}
+        {/* <TestCom
+          user={this.vgs}
+          addObject={this.printobject}
+          Changed={this.changingEmail}
+        /> */}
+        {/* <TestCom obj={this.VGS_User} ass={this.VGS_User.email} Changed={this.changingEmail}></TestCom> */}
+        {/* <div>abc {VGS_User.email}</div> */}
+        {/* <div>{this.obj.name}</div> */}
+        <AppForm/>
       </div>
     );
   }
