@@ -1,18 +1,24 @@
 var React = require('react');
+import {Link} from 'react-router-dom'
 
-var buttonStyle = {
-  margin: '10px 10px 10px 0'
-};
+function Header(){
+    return(
+        <header style = {headerStyle}>
+            <h1>Home</h1>
+            <Link style = {linkStyle} to ="/announcementPage">Announcements</Link>
+        </header>
+    )
+}
+const headerStyle ={
+    background: '#333',
+    color: '#fff',
+    textAlign: 'center',
+    padding:'10px'
+}
 
-var Button = React.createClass({
-  render: function () {
-    return (
-      <button
-        className="btn btn-default"
-        style={buttonStyle}
-        onClick={this.props.handleClick}>{this.props.Announcement}</button>
-    );
-  }
-});
+const linkStyle = {
+    color: '#fff',
+    textDecoraction: 'none'
+}
 
-module.exports = Button;
+export default Header
