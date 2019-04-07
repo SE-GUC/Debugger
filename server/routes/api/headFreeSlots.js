@@ -75,44 +75,12 @@ router.post('/add', async (req, res) => {
 
 //Showing the whole free slots table
 router.get('/:email', async (req, res) => {
-
+   
     try {
-
-        const exist = HeadFreeSlot.find()
-        if (exist == false) {
-
-            await HeadFreeSlot.create({
-
-                headEmail: 'ahmed@gmail.com'
-                , day: 'Monday'
-                , date: '11-09-2019'
-                , slot: '2nd'
-
-            })
-
-            await HeadFreeSlot.create({
-
-                headEmail: 'ahmed@gmail.com'
-                , day: 'Monday'
-                , date: '11-09-2019'
-                , slot: '3rd'
-
-            })
-
-            await HeadFreeSlot.create({
-
-                headEmail: 'tamer@gmail.com'
-                , day: 'Monday'
-                , date: '11-09-2019'
-                , slot: '3rd'
-
-            })
-
-        }
-
+        
         const userEmail = req.params.email
         const freeSlots = await HeadFreeSlot.find({ headEmail: userEmail })
-        res.send({ data: freeSlots })
+        res.send(freeSlots)
 
     }
 
