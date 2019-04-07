@@ -1,10 +1,7 @@
-
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-
 const UserSchema = new Schema({
-    
     name : {
         type: String,
         required: true
@@ -18,7 +15,7 @@ const UserSchema = new Schema({
         required: true
     },
     birthDay : {
-        type: Date,
+        type: String,
         required: true
     },
     studyYear : {
@@ -40,4 +37,4 @@ const UserSchema = new Schema({
 
 })
 
-module.exports = mongoose.model('User', UserSchema, "User")
+module.exports = mongoose.model("User", UserSchema)

@@ -2,9 +2,10 @@
   "name": "debugger",
   "version": "1.0.0",
   "description": "AWG Hub's connection server.",
-  "main": "index.js",
+  "main": "server.js",
   "dependencies": {
     "axios": "^0.18.0",
+    "cors": "^2.8.5",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "joi": "^14.3.1",
@@ -17,8 +18,12 @@
     "supertest": "^4.0.2"
   },
   "scripts": {
+    "client-install": "npm install --prefix client",
+    "start": "node server",
+    "server": "nodemon server",
     "test": "SET NODE_ENV=test & jest  --detectOpenHandles  --runInBand",
-    "start": "node index.js"
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "engines": {
     "node": "10.15.1"
