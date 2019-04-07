@@ -1,26 +1,41 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter as Router, Route} from 'react-router-dom'
+import HeadFreeSlots from './components/HeadFreeSlots';
+import axios from 'axios'
 
+import './App.css';
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
+
+const email = 'ahmed@gmail.com'
 class App extends Component {
+  
+  state = {
+    freeSlots: []
+  }
+
+  
+ 
+  viewSlots= (email) => {
+
+   axios.get('http://localhost:8000/api/headFreeSlots/' + email)
+   .then(res => this.setState({freeSlots: res.data }))
+   .catch(function(error) {
+    console.log("Failed!", error);
+  })
+  
+}
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Router>
+       <div className="App">
+        <p>Welcome</p>
+        <p>
+          <button onClick={() => this.viewSlots(email)}>My Free Slots </button>
+        </p>
+        <HeadFreeSlots headFreeSlots = {this.state.freeSlots}/>
+       </div>
+      </Router>
     );
   }
 }
