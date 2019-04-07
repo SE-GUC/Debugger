@@ -10,7 +10,7 @@ const UserSchema = new Schema({
         required: true
     },
     PhoneNumber : {
-        type: Number,
+        type: String,
         required: true
     },
     email : {
@@ -26,7 +26,7 @@ const UserSchema = new Schema({
         required: true
     },
     modeOfTran : {
-        type: Number,
+        type: String,
         required: true
     },
     generalAddress : {
