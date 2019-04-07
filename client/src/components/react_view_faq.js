@@ -9,8 +9,9 @@ import PropTypes from 'prop-types';
 
 class react_view_faq extends Component {
     render() {
+      console.log(this.state.react_view_faq)
       return this.props.react_view_faq.map((question) => (
-        <react_view_faq_items key={question._id} faq= {faq}/>
+        <react_view_faq_items key={question._id} react_view_faq= {react_view_faq}/>
       ))
     }
   }
