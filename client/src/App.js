@@ -13,7 +13,7 @@ class App extends Component {
           <header className="App-header">
           <Route exact path= '/' render ={props =>(
             <React.Fragment>
-              <announcementButton announcementButton={this.announcementButton}/>
+              <announcementButton announcementButton={this.state.announcementButton}/>
               <img src={logo} className="App-logo" alt="logo" />
             <p>
               Edit <code>src/App.js</code> and save to reload.
