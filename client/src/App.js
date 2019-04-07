@@ -1,26 +1,38 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import{BrowserRouter as Router, Route} from 'react-router-dom'
+import Awg from './components/Awg' 
+import About from './components/pages/About'
+
+import More from './components/More'
+
 import './App.css';
 
+
 class App extends Component {
+  state={
+    clubs:[
+        <div>
+          <p> Welcome to Awg</p>
+        </div>
+    ]
+  }
+ 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Router>
+      <div className="App"></div>
+      <Route exact path='/' render={props =>(
+         <React.Fragment>
+         <Awg  clubs={this.state.clubs}/>
+         <More/>
+         
+         </React.Fragment>
+        
+         
+      )}/>
+    <Route path='/about' component={About}/> 
+      
+      </Router>
     );
   }
 }
