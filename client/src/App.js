@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-//import logo from './logo.svg';
 import "./App.css";
-//import TestCom from "./components/testCom";
+import { Route, Switch } from "react-router-dom";
 import VGS_User from "./models/VGS_User";
-//import AppFormShit from "./components/AppFormShit"
-import AppForm from "./components/AppForm"
+import AppForm from "./components/AppForm";
 
 class App extends Component {
   //   this.
@@ -36,8 +34,8 @@ class App extends Component {
   printobject(user) {
     // console.log(user);
     //this.setState({
-      //Applicants: 
-      this.state.Applicants.concat(user)
+    //Applicants:
+    this.state.Applicants.concat(user);
     //});
 
     //Applicants.push(user)
@@ -48,17 +46,22 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Yelloo</h1>
-        {/* <button onClick={this.switchNameHandler}>Switch Name</button> */}
-        {/* <TestCom
+        <switch>
+          <h1>Yelloo</h1>
+          {/* <button onClick={this.switchNameHandler}>Switch Name</button> */}
+          {/* <TestCom
           user={this.vgs}
           addObject={this.printobject}
           Changed={this.changingEmail}
         /> */}
-        {/* <TestCom obj={this.VGS_User} ass={this.VGS_User.email} Changed={this.changingEmail}></TestCom> */}
-        {/* <div>abc {VGS_User.email}</div> */}
-        {/* <div>{this.obj.name}</div> */}
-        <AppForm/>
+          {/* <TestCom obj={this.VGS_User} ass={this.VGS_User.email} Changed={this.changingEmail}></TestCom> */}
+          {/* <div>abc {VGS_User.email}</div> */}
+          {/* <div>{this.obj.name}</div> */}
+          <a href="/AppForm">Application Form</a>
+          <Route path="/AppForm" component={AppForm} />
+          <Route path="/" component={App} />
+          {/* <AppForm/> */}
+        </switch>
       </div>
     );
   }

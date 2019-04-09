@@ -90,6 +90,18 @@ router
             return res.status(404).send('error, vote id not correct')
         }
     })
+
+router
+    .route('/createUserTypes')
+    .post(async (res, req)=>{
+        try{
+            const userType = await UserTypes.create(req.body)
+            return res.send(userType)
+        }
+        catch(error){
+            return res.status(400).json({ error: `Error, couldn't create the user types`})
+        }
+    })
 module.exports = router
 
 

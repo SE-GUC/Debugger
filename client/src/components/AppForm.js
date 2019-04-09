@@ -32,7 +32,7 @@ export class AppForm extends Component {
     
     async componentDidMount() {
       const AppForms = await axios.get('http://localhost:8000/api/VGS/application_forms_view');
-      //console.log(AppForms.data)
+      console.log(AppForms.data)
     }
 
   handleApplicant(event) {
