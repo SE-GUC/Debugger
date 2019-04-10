@@ -24,8 +24,7 @@ mongoose.connect(process.env.MONGO, {dbName:"test"})
 
 const app = express()
 app.use(cors({  
-    origin:"http://localhost:3000",
-    methods: "PUT,DELETE",
+    origin:"http://localhost:3000"
 }))
 
 app.use(express.json())

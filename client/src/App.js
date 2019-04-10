@@ -3,6 +3,7 @@ import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import VGS_User from "./models/VGS_User";
 import AppForm from "./components/AppForm";
+import Vote from "./components/Vote";
 
 class App extends Component {
   //   this.
@@ -46,7 +47,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <switch>
+        
           <h1>Yelloo</h1>
           {/* <button onClick={this.switchNameHandler}>Switch Name</button> */}
           {/* <TestCom
@@ -58,10 +59,14 @@ class App extends Component {
           {/* <div>abc {VGS_User.email}</div> */}
           {/* <div>{this.obj.name}</div> */}
           <a href="/AppForm">Application Form</a>
+          <br/>
+          <a href="/Vote">Create Vote</a>
+          <Switch>
           <Route path="/AppForm" component={AppForm} />
-          <Route path="/" component={App} />
+          <Route path="/Vote" component={Vote} />
+          </Switch>
           {/* <AppForm/> */}
-        </switch>
+        
       </div>
     );
   }
