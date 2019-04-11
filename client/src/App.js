@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HeadFreeSlots from "./components/HeadFreeSlots";
 import axios from "axios";
 import "./App.css";
