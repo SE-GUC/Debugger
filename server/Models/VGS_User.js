@@ -4,12 +4,12 @@ const Schema = mongoose.Schema
 
 const VgsUserSchema = new Schema(
     {
-        email: {
+        userId: {
             type: String,
             required: true
         },
         userType: {
-            type: String,
+            type: Number,
         },
         clubCommittee: {
             type: String,
@@ -24,8 +24,8 @@ const VgsUserSchema = new Schema(
             type: String
         },
         appStatus: {
-            type: String,
-            default: 'pending'
+            type: Number,
+            default: 1
         },
         notes: {
             type: String

@@ -5,6 +5,9 @@ const VGS_User = require("../../Models/VGS_User");
 const events = require("./events");
 const Event = require('../../Models/Event')
 const validator = require('../../Validations/vgsuserValidations')
+const UserType = require('../../Models/Lookups/UserTypes')
+const appStatusEnum = require('../../Models/Enums/Enums').Enum_appStatus;
+const userTypeEnum = require('../../Models/Enums/Enums').Enum_userType;
 
 
 // Assigning the booth member
@@ -15,12 +18,12 @@ router.put("/assign", async (req, res) => {
     if (exist == false) {
       await VGS_User.create({
         email: "ghada@gmail.com",
-        userType: "Member",
+        userType: userTypeEnum.Member.value,
         clubCommittee: "HR",
         hobbies: "Playing Volleyball",
         VGSYear: "2016",
         appliedPosition: "HR Member",
-        appStatus: "Accepted",
+        appStatus: appStatusEnum.Accepted.value,
         notes: null,
         gameName: null,
         gameScrSho: null,
@@ -30,12 +33,12 @@ router.put("/assign", async (req, res) => {
 
       await VGS_User.create({
         email: "amany@hotmail.com",
-        userType: "Member",
+        userType: userTypeEnum.Member.value,
         clubCommittee: "GDD",
         hobbies: "Developing games",
         VGSYear: "2014",
         appliedPosition: "GDD Member",
-        appStatus: "Accepted",
+        appStatus: appStatusEnum.Accepted.value,
         notes: null,
         gameName: null,
         gameScrSho: null,
@@ -50,7 +53,7 @@ router.put("/assign", async (req, res) => {
         hobbies: null,
         VGSYear: null,
         appliedPosition: null,
-        appStatus: "Rejected",
+        appStatus: appStatusEnum.Rejected.value,
         notes: null,
         gameName: null,
         gameScrSho: null,
@@ -58,20 +61,20 @@ router.put("/assign", async (req, res) => {
         boothMember: false
       });
 
-      await VGS_User.create({
-        email: "ehab@hotmail.com",
-        userType: "Advisor",
-        clubCommittee: "GDD",
-        hobbies: "Coding",
-        VGSYear: "2012",
-        appliedPosition: "GDD Advisor",
-        appStatus: "Accepted",
-        notes: null,
-        gameName: null,
-        gameScrSho: null,
-        downloadLink: null,
-        boothMember: false
-      });
+    //   await VGS_User.create({
+    //     email: "ehab@hotmail.com",
+    //     userType: "Advisor",
+    //     clubCommittee: "GDD",
+    //     hobbies: "Coding",
+    //     VGSYear: "2012",
+    //     appliedPosition: "GDD Advisor",
+    //     appStatus: "Accepted",
+    //     notes: null,
+    //     gameName: null,
+    //     gameScrSho: null,
+    //     downloadLink: null,
+    //     boothMember: false
+    //   });
     }
 
     console.log(await VGS_User.find());
@@ -94,13 +97,13 @@ router.put("/assign", async (req, res) => {
       return res.status(404).send({ err: "This member is already a booth member" });
 
     // checking if he is even accepted
-    if (user.appStatus === "Rejected")
+    if (user.appStatus == appStatusEnum.Rejected.value)
       return res.status(404).send({
         err: "This applicant was rejected and is not a member in the club"
       });
 
     // checking if he is a member
-    if (user.userType !== "Member" && user.userType !== "Recruit")
+    if (user.userType !== userTypeEnum.Member.value)
       return res
         .status(404)
         .send({ err: "This person position is not member" });
@@ -121,20 +124,11 @@ router.put("/assign", async (req, res) => {
   }
 
 });
-//const applicants = [];
-/*const eventsList = [
 
-  new Event ('public', 'recruitment booth','1/2/2019'),
-  new Event ('private', 'general meeting ','1/3/2019'),
-  new Event ('public', 'career advising','1/6/2019'),
- 
-];*/
-var applicant = new VGS_User();
 router.get('/', async (req,res) => {
 	res.send(`<a href="/api/Application Form">Application Form</a>
             <a href="/api/Events">Events</a>`);
   })
-
 
 router.get('/', async (req,res) => {
 	const events = await Event.find()
@@ -162,7 +156,7 @@ router
     .get(async (req, res) => {
         try{
             const accpetedApplicant = await VGS_User.findById(req.params.id)
-            let status = accpetedApplicant.appStatus
+            let status = appStatusEnum.getKey(accpetedApplicant.appStatus)
             return res.send('Application Status: '+status)
         }
         catch (error){
@@ -175,7 +169,7 @@ router
     .route('/application_forms_view')
     .get(async (req, res) => {
         try {
-            const allApplicationForms = await VGS_User.find({appStatus: 'pending'})
+            const allApplicationForms = await VGS_User.find({appStatus: appStatusEnum.Pending.value})
             return res.send(allApplicationForms)
         }
         catch (error){
@@ -189,21 +183,28 @@ router
     .put(async (req, res) => {
         try{
             //const foundApplicant = await VGS_User.find(app => app.email == req.body.email)
-            if(!req.body.email) return res.status(400).send('email is required')
-            let foundApplicant = (await VGS_User.findOne({email:req.body.email}))
-            if(!foundApplicant) return res.status(400).send(`the applicant with this email is not found, check the email`)
+            //if(!req.body.email) return res.status(400).send('email is required')
+            //let foundApplicant = (await VGS_User.findOne({userId:req.body.id}))
+            let foundApplicant = (await VGS_User.findById(req.body.id))
+            if(!foundApplicant) return res.status(400).send(`the applicant with this id is not found, check the id`)
+            // if(req.body.newEmail.trim()!='' || req.body.newEmail){
+            //   let foundApplicantWithNewEmail = (await VGS_User.findOne({email:req.body.newEmail}))
+            //   if(foundApplicantWithNewEmail)
+            //    return res.status(500).send(`This email is already used`)
+            // }
             else{
-                await VGS_User.update({email:req.body.email},
+                await VGS_User.update({_id:req.body.id},
                     {
-                    email : (req.body.newEmail || foundApplicant.email),
+                    //email : (req.body.newEmail || foundApplicant.email),
                     clubCommittee : (req.body.clubCommittee || foundApplicant.clubCommittee),
                     hobbies: (req.body.hobbies  || foundApplicant.hobbies), 
                     appliedPosition: (req.body.appliedPosition  || foundApplicant.appliedPosition),
-                    gameName : (req.body.gameName  || foundApplicant.gameName)
+                    gameName : (req.body.gameName  || foundApplicant.gameName),
+                    appStatus : appStatusEnum.Pending.value
                     }
                 )
             }
-            return res.send(foundApplicant)
+            return res.send('Updated')
         }
         catch (error){
             return res.status(400).send('error, failed to update')
@@ -222,37 +223,40 @@ try{
 	}  
 	})
 
-
-	router.post('/', async (req, res) => {
+  //#region commented method not needed
+  // TODO  CHECK WITH OTHERS
+	// router.post('/', async (req, res) => {
  
-		try {
+	// 	try {
 		 
-			 const validation = validator.createValidation(req.body)
-			 if (validation.error) 
-				return res.status(400).send({ error: validation.error.details[0].message })
+	// 		 const validation = validator.createValidation(req.body)
+	// 		 if (validation.error) 
+	// 			return res.status(400).send({ error: validation.error.details[0].message })
 			 
-			 const newemail = req.body.email
-			 const uniqueemail = await VGS_User.findOne({email: newemail})
-			 if(uniqueemail) 
-				return res.status(400).json({error: 'user already exists'})
-			else{
+	// 		 const newemail = req.body.email
+	// 		 const uniqueemail = await VGS_User.findOne({email: newemail})
+	// 		 if(uniqueemail) 
+	// 			return res.status(400).json({error: 'user already exists'})
+	// 		else{
 				
-				await VGS_User.create(req.body)
-				const users = await VGS_User.find()
-				res.json({data: users})
-			}
+	// 			await VGS_User.create(req.body)
+	// 			const users = await VGS_User.find()
+	// 			res.json({data: users})
+	// 		}
 	 
 	 
-		 }
+	// 	 }
 	 
-		 catch (error) {
-			 res.status(404).send(error.message)
-		 }
+	// 	 catch (error) {
+	// 		 res.status(404).send(error.message)
+	// 	 }
 		 
 	 
-	 })
+  //  })
+  //#endregion
 
 
+//TODO test
 // prisedent delete account
 router
 	.route('/deleteuser')
@@ -263,7 +267,7 @@ router
 			if (!user) return res.status(400).send({ err: 'invalid email' });
 				
 
-			if (user.userType === "president" ) return res.status(404).send({err:('you can not delete a president')});
+			if (user.userType === userTypeEnum.President.value ) return res.status(404).send({err:('you can not delete a president')});
 			else{
 				await VGS_User.deleteOne({email:req.body.email})
 			}
@@ -274,23 +278,23 @@ router
 		}
 });
 
-
+//TODO test
  // head delete user under him
  router
 	.route('/deletefromcommity')
  	.delete(async(req,res)=>{
 	try{
 		let user = await VGS_User.findOne({email:req.body.email})
-
+    //const _userTypes = await UserType.find();
 		if (!req.body.email) return res.status(400).send({ err: 'email field is required' });
 
 		if (!user) return res.status(400).send({ err: 'invalid email' });
-		if (user.userType === "head" ) return res.status(404).send({err:('you can not delete a head')});
-		if (user.userType === "president" ) return res.status(404).send({err:('you can not delete a president')});
-		if (user.userType === "advisor" ) return res.status(404).send({err:('you can not delete an advisor')});
-		if (user.userType === "Director" ) return res.status(404).send({err:('you can not delete a president')});
-		if (user.userType === "applicant" ) return res.status(404).send({err:('you can not delete a applicant')});
-		// hundle case eno fe nfs elcommite later 3lashan a7na msh 3rfen lesa men elly 3ml signin
+		if (user.userType === userTypeEnum.President.value) return res.status(404).send({err:('you can not delete a president')});
+    if (user.userType === userTypeEnum.Director.value) return res.status(404).send({err:('you can not delete an director')});
+		if (user.userType === userTypeEnum.Head.value) return res.status(404).send({err:('you can not delete a head')});
+	  if (user.userType === userTypeEnum.Applicant.value) return res.status(404).send({err:('you can not delete a applicant')});
+    
+    // hundle case eno fe nfs elcommite later 3lashan a7na msh 3rfen lesa men elly 3ml signin
     
 		await VGS_User.updateOne({email:req.body.email},{
 			
@@ -327,12 +331,11 @@ router
  
 	if (!user) return res.status(400).send({ err: 'invalied user' });
 	if (typeof req.body.clubCommittee != 'string') return res.status(400).send({ err: 'Invalid value for clubCommittee' });
-	// check eno applicant
-    if (user.userType === "president" ) return res.status(404).send({err:('you can not add a president')});
-    if (user.userType === "advisor" ) return res.status(404).send({err:('you can not add an advisor')});
-    if (user.userType === "director" ) return res.status(404).send({err:('you can not add a president')});
-    if (user.userType === "member" ) return res.status(404).send({err:('you can not add a member')});
-    if (user.userType === "head" ) return res.status(404).send({err:('you can not add a head')});
+  // check eno applicant
+    if (user.userType === userTypeEnum.President.value ) return res.status(404).send({err:('you can not add a president')});
+    if (user.userType === userTypeEnum.Director.value ) return res.status(404).send({err:('you can not add an director')});
+    if (user.userType === userTypeEnum.Head.value ) return res.status(404).send({err:('you can not add a head')});
+    if (user.userType === userTypeEnum.Member.value ) return res.status(404).send({err:('you can not add a member')});
 
 	await VGS_User.update({email: req.body.email},
 		{
@@ -377,7 +380,7 @@ router.route("/edituser").put(async (req, res) => {
     let newboothMember = req.body.boothMember;
     // to make sure that prisedent entered email
 
-    if (user.userType === "president")
+    if (user.userType === userTypeEnum.President.value)
       return res
         .status(404)
         .send({ err: "you can not edit a president account" });
