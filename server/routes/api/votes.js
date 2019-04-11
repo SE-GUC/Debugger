@@ -45,6 +45,18 @@ router
 
     })
 
+router
+    .route('/getting/votes')
+    .get(async (req, res)=>{
+        try{
+            let votes = await Vote.find()
+            return res.send(votes)
+        }
+        catch(error){
+            return res.status(404).send('could not get the votes')
+        }
+    })
+
 // The user is providing his decision about the vote (yes:true or no:false).
 // First, we check if the vote's end time was reached so it's closed.
 // Second, we check if he/she already voted before then this means that they want to
