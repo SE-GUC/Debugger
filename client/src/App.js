@@ -1,25 +1,25 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import { Route, Switch } from "react-router-dom";
+import VGS_User from "./models/VGS_User";
+import AppForm from "./components/AppForm";
+import Vote from "./components/Vote";
 
 class App extends Component {
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        
+          <h1>Yelloo</h1>
+          <a href="/AppForm">Application Form</a>
+          <br/>
+          <a href="/Vote">Create Vote</a>
+          <Switch>
+          <Route path="/AppForm" component={AppForm} />
+          <Route path="/Vote" component={Vote} />
+          </Switch>
+        
       </div>
     );
   }
