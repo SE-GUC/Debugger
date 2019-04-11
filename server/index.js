@@ -15,7 +15,7 @@ const faq = require('./routes/api/faq')
 const votes = require('./routes/api/votes')
 const groups = require('./routes/api/groups')
 const requests = require('./routes/api/requests')
-const userTypes = require('./routes/api/userTypes')
+const lookups = require('./routes/api/Lookups/lookupsData')
 const cors = require('cors')
 
 //mongoose.connect(process.env.mongo)
@@ -60,7 +60,7 @@ app.use('/api/faq', faq)
 app.use('/api/requests', requests)
 app.use('/api/raise_vote', votes)
 app.use('/api/groups', groups)
-app.use('/api/lockups', userTypes)
+app.use('/api/lookups', lookups)
 
 
 // Handling 404

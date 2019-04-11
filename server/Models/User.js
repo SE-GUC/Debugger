@@ -17,12 +17,16 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    password : {
+        type: String,
+        required: true
+    },
     birthDay : {
         type: Date,
         required: true
     },
     studyYear : {
-        type: String,
+        type: Number,
         required: true
     },
     modeOfTran : {
@@ -34,9 +38,8 @@ const UserSchema = new Schema({
         required: true
     },
     clubName : {
-        type: String,
-        required: true
-    }
+        type: Array,
+     }
 
 })
 
