@@ -33,86 +33,86 @@ describe("/api/VGS", () => {
     //     if (err) res.status(404).send(err.message);
     //   });
 
-      await VGS_User.create({
-        email: "dodo@gmail.com",
-        userType: "Member",
-        clubCommittee: "HR",
-        hobbies: "Playing Volleyball",
-        VGSYear: "2016",
-        appliedPosition: "HR Member",
-        appStatus: "Accepted",
-        notes: null,
-        gameName: null,
-        gameScrSho: null,
-        downloadLink: null,
-        boothMember: false
-      });
+    await VGS_User.create({
+      userId: "5ca96a2ylaamk6d4cbcd231",
+      userType: userTypeEnum.Member.value,
+      clubCommittee: "HR",
+      hobbies: "Playing Volleyball",
+      VGSYear: "2016",
+      appliedPosition: "HR Member",
+      appStatus: appStatusEnum.Accepted.value,
+      notes: null,
+      gameName: null,
+      gameScrSho: null,
+      downloadLink: null,
+      boothMember: false
+    });
 
-      await VGS_User.create({
-        email: "amany@hotmail.com",
-        userType: "Member",
-        clubCommittee: "GDD",
-        hobbies: "Developing games",
-        VGSYear: "2014",
-        appliedPosition: "GDD Member",
-        appStatus: "Accepted",
-        notes: null,
-        gameName: null,
-        gameScrSho: null,
-        downloadLink: null,
-        boothMember: true
-      });
+    await VGS_User.create({
+      userId: "5ca9rrdalaamk6d4cbcd231",
+      userType: userTypeEnum.Member.value,
+      clubCommittee: "GDD",
+      hobbies: "Developing games",
+      VGSYear: "2014",
+      appliedPosition: "GDD Member",
+      appStatus: appStatusEnum.Accepted.value,
+      notes: null,
+      gameName: null,
+      gameScrSho: null,
+      downloadLink: null,
+      boothMember: true
+    });
 
-      await VGS_User.create({
-        email: "Jim@yahoo.com",
-        userType: null,
-        clubCommittee: null,
-        hobbies: null,
-        VGSYear: null,
-        appliedPosition: null,
-        appStatus: "Rejected",
-        notes: null,
-        gameName: null,
-        gameScrSho: null,
-        downloadLink: null,
-        boothMember: false
-      });
+    await VGS_User.create({
+      userId: "5tt328hylaamk6d4cbcd231",
+      userType: null,
+      clubCommittee: null,
+      hobbies: null,
+      VGSYear: null,
+      appliedPosition: null,
+      appStatus: appStatusEnum.Rejected.value,
+      notes: null,
+      gameName: null,
+      gameScrSho: null,
+      downloadLink: null,
+      boothMember: false
+    });
 
-      await VGS_User.create({
-        email: "ehab@hotmail.com",
-        userType: "Advisor",
-        clubCommittee: "GDD",
-        hobbies: "Coding",
-        VGSYear: "2012",
-        appliedPosition: "GDD Advisor",
-        appStatus: "Accepted",
-        notes: null,
-        gameName: null,
-        gameScrSho: null,
-        downloadLink: null,
-        boothMember: false
-      });
+    await VGS_User.create({
+      userId: "5cate45haaamk6d4cbcd231",
+      userType: userTypeEnum.Director.value,
+      clubCommittee: "GDD",
+      hobbies: "Coding",
+      VGSYear: "2012",
+      appliedPosition: "GDD Advisor",
+      appStatus: appStatusEnum.Accepted.value,
+      notes: null,
+      gameName: null,
+      gameScrSho: null,
+      downloadLink: null,
+      boothMember: false
+    });
 
       //case 1 if he is already a booth member
       const boothMember = await request(server)
         .put("/api/VGS/assign/")
-        .send({ email: "amany@hotmail.com" });
+        .send({ userId: "5ca9rrdalaamk6d4cbcd231" });
 
       //case 2 if he is rejected
       const rejected = await request(server)
         .put("/api/VGS/assign/")
-        .send({ email: "Jim@yahoo.com" });
+        .send({ userId: "5tt328hylaamk6d4cbcd231" });
 
       //case 3 if he is not member
       const notMember = await request(server)
         .put("/api/VGS/assign/")
-        .send({ email: "ehab@hotmail.com" });
+        .send({ userId: "5cate45haaamk6d4cbcd231" });
 
       const response = await request(server)
         .put("/api/VGS/assign/")
-        .send({ email: "dodo@gmail.com" });
+        .send({ userId: "5ca96a2ylaamk6d4cbcd231" });
 
-      const find = await VGS_User.findOne({ email: "dodo@gmail.com" });
+      const find = await VGS_User.findOne({ userId: "5ca96a2ylaamk6d4cbcd231" });
 
       expect(boothMember.status).toBe(404);
       expect(rejected.status).toBe(404);
