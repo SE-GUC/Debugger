@@ -6,6 +6,7 @@ const events = require("./events");
 const Event = require('../../Models/Event')
 const validator = require('../../Validations/vgsuserValidations')
 const UserType = require('../../Models/Lookups/UserTypes')
+const UserTable = require('../../Models/User')
 const appStatusEnum = require('../../Models/Enums/Enums').Enum_appStatus;
 const userTypeEnum = require('../../Models/Enums/Enums').Enum_userType;
 
@@ -13,7 +14,6 @@ const userTypeEnum = require('../../Models/Enums/Enums').Enum_userType;
 // Assigning the booth member
 router.put("/assign", async (req, res) => {
   try {
-
     const exist = await VGS_User.find();
     if (exist == false) {
       await VGS_User.create({
@@ -141,23 +141,25 @@ router
     .post(async (req, res) => {
         try {
             const {error} = validator.createValidation(req.body)
-            if(error) return res.status(400).send(error.details[0].message)
+            if(error) return res.status(500).send(error.details[0].message)
             const applicant = await VGS_User.create(req.body);
             return res.send(applicant)
         }
         catch (err) {
-            res.status(404).send('something went wrong')
+            res.status(500).send('something went wrong')
         }
     })
 
 // viewing the application form for a user to see his/her status
 router
-    .route('/application_form_view/:id')
+    .route('/status/application_form_view/:id')
     .get(async (req, res) => {
         try{
             const accpetedApplicant = await VGS_User.findById(req.params.id)
             let status = appStatusEnum.getKey(accpetedApplicant.appStatus)
-            return res.send('Application Status: '+status)
+            return res.status(200).json({
+                appStatus:status
+            })
         }
         catch (error){
             return res.status(500).send(`error, we couldn't find the application form`)
@@ -169,14 +171,52 @@ router
     .route('/application_forms_view')
     .get(async (req, res) => {
         try {
-            const allApplicationForms = await VGS_User.find({appStatus: appStatusEnum.Pending.value})
-            return res.send(allApplicationForms)
+            let user=null
+            const allApplicationForms = await VGS_User.find({appStatus: appStatusEnum.Pending.value,userType:userTypeEnum.Applicant.value})
+            if(allApplicationForms.length >0){
+              let pendingApps=[]
+              for(let i = 0 ; i < allApplicationForms.length ; i++){
+                user = await UserTable.findOne({_id: allApplicationForms[i].userId})
+                if(user != null){
+                  pendingApps.push({
+                    ApplicantName: user.name,
+                    AppFormId: allApplicationForms[i].id,
+                    clubCommittee: allApplicationForms[i].clubCommittee,
+                    userType: allApplicationForms[i].userType,
+                    hobbies: allApplicationForms[i].hobbies,
+                    VGSYear: allApplicationForms[i].VGSYear,
+                    gameName: allApplicationForms[i].gameName,
+                    appStatus: allApplicationForms[i].appStatus
+                  })
+                }
+              }
+              return res.send(pendingApps)
+            }
+            else return res.status(203).send('no pending applications')
+
         }
         catch (error){
-            return res.status(404).send(`error, we couldn't get the application forms`)
+            return res.status(500).send(`error, we couldn't get the application forms`)
         }
     })
 
+router 
+    .route('/update/AppForm')
+    .post(async (req,res)=>{
+      try{
+        const findAppForm = await VGS_User.findById({_id: req.body.AppId})
+        if(findAppForm){
+          await VGS_User.update({_id:req.body.AppId},{
+            appStatus: req.body.appStatus
+          })
+          return res.status(200).send("updated")
+        }
+      }
+      catch(err){
+        return res.status(500).send('unexpected error')
+      }
+
+    })
 // update applicant fields
 router
     .route('/application_form_update')
@@ -495,5 +535,29 @@ router.route("/edituser").put(async (req, res) => {
     
     router.get('/getusers', (req, res) => res.json({ data: userProfile}))
     
+router.get('/getDirectors', async (req, res)=>{
+  try{
+    let _user
+    let directorsData = []
+    const directors = await VGS_User.find({userType: userTypeEnum.Director.value})
+    if (directors){
+      for(i = 0 ; i < directors.length ; i++){
+        let userid = directors[i].userId
+         _user = await UserTable.findById(userid)
+         if(_user){
+           directorsData.push({
+             vgsUserId: directors[i].id,
+             directorName: _user.name
+           })
+         }
+         else return (res.status(500).send('unexpected error'))
+      }
+    }
+    return res.json({Directors: directorsData})
+  }
+  catch(error){
+    return res.send(error.message)
+  }
+})
 
 module.exports = router;
