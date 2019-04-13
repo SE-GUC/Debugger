@@ -5,6 +5,11 @@ import axios from "axios";
 import "./App.css";
 import AppForm from "./components/AppForm";
 import Vote from "./components/Vote";
+import Login from "./components/Login"
+import Registration from "./components/Registration";
+import Navbar from "./components/customComponents/Navbar";
+import SubmitVote from "./components/SubmitVote"
+import ViewAppForms from "./components/ViewAppForms"
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 
 const email = "ahmed@gmail.com";
@@ -33,13 +38,21 @@ class App extends Component {
             </button>
           </p>
           <HeadFreeSlots headFreeSlots={this.state.freeSlots} />
-          <h1>Yelloo</h1>
-          <a href="/AppForm">Application Form</a>
+          <Navbar/>
+          {/* <a href="/AppForm">Application Form</a>
           <br />
           <a href="/Vote">Create Vote</a>
+          <br />
+          <a href="/Login">Login</a>
+          <br />
+          <a href="/Registration">Registration</a> */}
           <Switch>
             <Route path="/AppForm" component={AppForm} />
             <Route path="/Vote" component={Vote} />
+            <Route path="/Login" component={Login} />
+            <Route path="/Registration" component={Registration} />
+            <Route path="/SubmitVote" component={SubmitVote} />
+            <Route path="/viewApplications" component={ViewAppForms} />
           </Switch>
         </div>
       </Router>
