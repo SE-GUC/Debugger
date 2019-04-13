@@ -15,12 +15,17 @@ const faq = require('./routes/api/faq')
 const votes = require('./routes/api/votes')
 const groups = require('./routes/api/groups')
 const requests = require('./routes/api/requests')
+const lookups = require('./routes/api/Lookups/lookupsData')
+const cors = require('cors')
 
 //mongoose.connect(process.env.mongo)
 mongoose.connect(process.env.MONGO, {dbName:"test"})
 //mongoose.connect('mongodb+srv://mahamekdad:6gfvF79hbKVh124X@cluster0-mlucg.mongodb.net/test?retryWrites=true')
 
 const app = express()
+app.use(cors({  
+    //origin:"http://localhost:3000"
+}))
 
 app.use(express.json())
 
@@ -55,12 +60,16 @@ app.use('/api/faq', faq)
 app.use('/api/requests', requests)
 app.use('/api/raise_vote', votes)
 app.use('/api/groups', groups)
+app.use('/api/lookups', lookups)
 
 
 // Handling 404
 app.use((req, res) => {
     res.status(404).send({err: 'We can not find what you are looking for'});
 })
+
+
+
 
  const PORT= process.env.PORT || 8000 ;
 
