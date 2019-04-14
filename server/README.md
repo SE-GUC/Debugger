@@ -2,7 +2,7 @@
 
 Heroku:
 https://debugger-vgs.herokuapp.com/ 
-**i've tried to deploy on heroku and even start a new app but it didn't work however our frontend is on merged to the master branch**
+**i've tried to deploy on heroku and even start a new app but it didn't work however, our frontend is merged to the master branch**
 **Our Apologies to the client**
 
 Note:
