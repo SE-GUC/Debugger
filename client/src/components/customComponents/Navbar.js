@@ -94,6 +94,12 @@ export class Navbar extends Component {
               My Free Slots
                 </a>
               </li> 
+
+              <li>
+              <a className="nav-link" style={fontStyle} href="/ShowEvents">
+              Events
+                </a>
+              </li> 
       
               <li className="nav-item" style={{fontSize:"15px",color:"#0FB91B"}}>
                 {this.props.vgsUsrId!==null?this.getAppStatusValue(this.props.appStatus):""}

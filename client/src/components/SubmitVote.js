@@ -37,13 +37,20 @@ export class SubmitVote extends Component {
       this.setState({ noActiveVote: true });
     } else {
       this.getVoteStatistics(voteInfo.data.voteId);
+      let lastVote;
+      if(voteInfo.data.lastVote){
+        lastVote = voteInfo.data.lastVote === true ? "Yes" : "No"
+      }
+      else{
+        lastVote =null
+      }
       this.setState(
         {
           noActiveVote: false,
           nomineeName: voteInfo.data.nominee,
           voteId: voteInfo.data.voteId,
           voteEndTime: voteInfo.data.endTime,
-          lastVoteDecision: voteInfo.data.lastVote === true ? "Yes" : "No"
+          lastVoteDecision: lastVote
         },
         () => console.log(this.state)
       );
