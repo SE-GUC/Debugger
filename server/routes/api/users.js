@@ -3,6 +3,73 @@ const router = express.Router();
 const User = require("../../Models/User");
 const VGsUser = require("../../Models/VGS_User");
 const validator = require('../../Validations/userValidations')
+const usersValidator = require('../../Validations/usersValidations')
+
+//Cruds for users
+//get all users
+router.get('/', async (req,res) =>{
+    const users = await User.find()
+    res.json({
+        data : users
+    })
+});
+
+//get a specific user
+router.get('/:id', async (req,res) =>{
+    const userID = req.params.id
+    const users = await User.findById(userID)
+    res.json({
+        data : users
+    })
+});
+
+//create a user
+router.post('/', async (req,res) =>{
+    try {
+        const isValidated = usersValidator.createValidation(req.body)
+        if (isValidated.error) return res.status(400).send({error: isValidated.error.details[0].message})
+        const newUser = await User.create(req.body)
+        res.json({msg: 'User was created successfully', data:newUser})
+    }
+    catch(error) {
+        //we will be handling the error later
+        console.log(error)
+    }
+});
+//update a specific user
+router.put('/:id', async (req,res) => {
+    try {
+     const id = req.params.id
+     const user = await Book.findOne({id})
+     if(!user) return res.status(404).send({error: 'User does not exist'})
+     const isValidated = validator.updateValidation(req.body)
+     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+     const updatedUser = await User.updateOne(req.body)
+     res.json({msg: 'user updated successfully', data:updatedUser})
+    }
+    catch(error) {
+        // We will be handling the error later
+        console.log(error)
+    }  
+ })
+//delete a specific user
+router.delete('/:id', async (req,res) => {
+    try {
+     const id = req.params.id
+     const deletedUser = await User.findByIdAndRemove(id)
+     res.json({msg:'User was deleted successfully', data: deletedUser})
+    }
+    catch(error) {
+        // We will be handling the error later
+        console.log(error)
+    }  
+ })
+
+// router.delete('/:name', (req, res) => {
+//     const username = req.params.name
+//     const user = users.find(user => user.name === username)
+//     res.send(user)
+// })
 
 // const users = [
 //    new User (
