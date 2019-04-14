@@ -17,6 +17,8 @@ import Note from './components/Note'
 import HeadAddMember from './components/HeadAddMember'
 import CreateFaq from './components/CreateFaq'
 import GetFaq from './components/GetFaq'
+import ViewEventForms from './components/ViewEventForms'
+import ViewEvents from './components/ViewEvents'
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 
 class App extends Component {
@@ -46,6 +48,8 @@ class App extends Component {
             <Route path="/headAddMember" component={HeadAddMember} />
             <Route path="/CreateFaq" component={CreateFaq} />
             <Route path="/GetFaq" component={GetFaq} />
+            <Route path="/ViewEventForms" component={ViewEventForms} />
+            <Route path="/ViewEvents" component={ViewEvents} />
           
           </Switch>
         </div>

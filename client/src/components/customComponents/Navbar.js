@@ -104,6 +104,18 @@ export class Navbar extends Component {
                 </a>
               </li> 
 
+              <li>
+              <a className="nav-link" href="/ViewEventForms">
+              View EventForms
+                </a>
+              </li> 
+
+              <li>
+              <a className="nav-link" href="/ViewEvents">
+              View Events
+                </a>
+              </li> 
+
             { this.props.usrId!==null?
               <li className="nav-item">
               <a className="nav-link" href="/">
