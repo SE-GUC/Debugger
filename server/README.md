@@ -3,7 +3,7 @@
 Heroku:
 https://debugger-vgs.herokuapp.com/ 
 **i've tried to deploy on heroku and even start a new app but it didn't work however, our frontend is merged to the master branch**
-**Our Apologies to the client**
+**... Our Apologies to the client**
 
 Note:
 Dr.Aysha approved for BI teams to submmit the rest of the work by 11:59 (2/4/2019)
