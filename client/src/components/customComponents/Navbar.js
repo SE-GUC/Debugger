@@ -78,6 +78,12 @@ export class Navbar extends Component {
                  {this.props.vgsUsrId!==null?this.getAppStatusValue(this.props.appStatus):""}
               </li> 
 
+              <li className="nav-item">
+              <a className="nav-link" href="/vgs_features_page">
+              President-Head-Features
+                </a>
+              </li>
+
             { this.props.usrId!==null?
               <li className="nav-item">
               <a className="nav-link" href="/">

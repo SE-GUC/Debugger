@@ -297,19 +297,19 @@ try{
 
 
 //TODO test
-// prisedent delete account
+// president delete account
 router
-	.route('/deleteuser')
+	.route('/deleteuser/:email')
 	.delete(async (req,res)=>{
 		try{ 
-			const user = await VGS_User.findOne({email:req.body.email}) 
-			if (!req.body.email) return res.status(400).send({ err: 'email field is required' }); 
-			if (!user) return res.status(400).send({ err: 'invalid email' });
-				
-
-			if (user.userType === userTypeEnum.President.value ) return res.status(404).send({err:('you can not delete a president')});
+			const user = await UserTable.findOne({email:req.params.email}) 
+			if (!req.params.email) return res.status(500).send({ err: 'email field is required' }); 
+			if (!user) return res.status(600).send({ err: 'invalid email' });
+			const vgsuser =await VGS_User.findOne({userId:user.id})	
+      if (!vgsuser) return res.status(500).send({ err: 'invalid email' });
+			if (vgsuser.userType === userTypeEnum.President.value ) return res.status(203).send({err:('you can not delete a president')});
 			else{
-				await VGS_User.deleteOne({email:req.body.email})
+				await VGS_User.deleteOne({userId:user.id})
 			}
 			res.send('user deleted')
 		}
@@ -321,38 +321,40 @@ router
 //TODO test
  // head delete user under him
  router
-	.route('/deletefromcommity')
+	.route('/deletefromcommity/:email')
  	.delete(async(req,res)=>{
 	try{
-		let user = await VGS_User.findOne({email:req.body.email})
-    //const _userTypes = await UserType.find();
-		if (!req.body.email) return res.status(400).send({ err: 'email field is required' });
-
-		if (!user) return res.status(400).send({ err: 'invalid email' });
-		if (user.userType === userTypeEnum.President.value) return res.status(404).send({err:('you can not delete a president')});
-    if (user.userType === userTypeEnum.Director.value) return res.status(404).send({err:('you can not delete an director')});
-		if (user.userType === userTypeEnum.Head.value) return res.status(404).send({err:('you can not delete a head')});
-	  if (user.userType === userTypeEnum.Applicant.value) return res.status(404).send({err:('you can not delete a applicant')});
+		let user = await UserTable.findOne({email:req.params.email})
+		if (!req.params.email) return res.status(500).send({ err: 'email field is required' });
+    if (!user) return res.status(500).send({ err: 'invalid email' });
+    const vgsuser=await VGS_User.findOne({userId:user.id})
+    if (!vgsuser) return res.status(500).send({ err: 'invalid email' });
+   
+    if (vgsuser.userType === userTypeEnum.President.value) return res.status(501).send({err:('you can not delete a president')});
+    if (vgsuser.userType === userTypeEnum.Director.value) return res.status(501).send({err:('you can not delete an director')});
+		if (vgsuser.userType === userTypeEnum.Head.value) return res.status(501).send({err:('you can not delete a head')});
+	  if (vgsuser.userType === userTypeEnum.Applicant.value) return res.status(501).send({err:('you can not delete a applicant')});
     
     // hundle case eno fe nfs elcommite later 3lashan a7na msh 3rfen lesa men elly 3ml signin
     
-		await VGS_User.updateOne({email:req.body.email},{
+		await VGS_User.updateOne({userId:user.id},{
 			
-			email: user.email,
-			hobbies: user.hobbies,
-			appliedPosition: user.appliedPosition,
-			gameName: user.gameName,
-			userType: user.userType,
+			userId: vgsuser.userId,
+			hobbies: vgsuser.hobbies,
+			appliedPosition: vgsuser.appliedPosition,
+			gameName: vgsuser.gameName,
+			userType: vgsuser.userTypeEnum.Applicant.value,
 			clubCommittee: null,
-			appStatus: user.appStatus,
-			notes: user.notes,
-			gameScrSho: user.gameScrSho,
-			downloadLink: user.downloadLink,
-			boothMember: user.boothMember,
-			VGSYear: user.VGSYear
+			appStatus: vgsuser.appStatus,
+			notes: vgsuser.notes,
+			gameScrSho: vgsuser.gameScrSho,
+			downloadLink: vgsuser.downloadLink,
+			boothMember: vgsuser.boothMember,
+			VGSYear: vgsuser.VGSYear
 		})
 	   
-		res.send(await VGS_User.findOne({email:req.body.email}))
+    //res.send(await VGS_User.findOne({userId:user.id}))
+    res.send('user deleted')
 	}
 	catch (error) {
 		res.send(`error, can't delete`)
@@ -365,37 +367,40 @@ router
     .route('/addmemberincommity') 
     .put(async(req,res)=>{
 	try{
-	let user =await VGS_User.findOne({email:req.body.email})
-	if (!req.body.email) return res.status(400).send({ err: 'email field is required' });
-	if (!req.body.clubCommittee) return res.status(400).send({ err: 'club committee field is required' });
+	let user =await UserTable.findOne({email:req.body.email})
+	if (!req.body.email) return res.status(500).send({ err: 'email field is required' });
+  if (!user) return res.status(500).send({ err: 'invalied user' });
+  const vgsuser =await VGS_User.findOne({userId:user.id})
+  if (!vgsuser) return res.status(500).send({ err: 'invalied user' });
+	
+  if (!req.body.clubCommittee) return res.status(500).send({ err: 'club committee field is required' });
  
-	if (!user) return res.status(400).send({ err: 'invalied user' });
-	if (typeof req.body.clubCommittee != 'string') return res.status(400).send({ err: 'Invalid value for clubCommittee' });
+	if (typeof req.body.clubCommittee != 'string') return res.status(500).send({ err: 'Invalid value for clubCommittee' });
   // check eno applicant
-    if (user.userType === userTypeEnum.President.value ) return res.status(404).send({err:('you can not add a president')});
-    if (user.userType === userTypeEnum.Director.value ) return res.status(404).send({err:('you can not add an director')});
-    if (user.userType === userTypeEnum.Head.value ) return res.status(404).send({err:('you can not add a head')});
-    if (user.userType === userTypeEnum.Member.value ) return res.status(404).send({err:('you can not add a member')});
+    if (vgsuser.userType === userTypeEnum.President.value ) return res.status(500).send({err:('you can not add a president')});
+    if (vgsuser.userType === userTypeEnum.Director.value ) return res.status(500).send({err:('you can not add an director')});
+    if (vgsuser.userType === userTypeEnum.Head.value ) return res.status(500).send({err:('you can not add a head')});
+    if (vgsuser.userType === userTypeEnum.Member.value ) return res.status(500).send({err:('you can not add a member')});
 
-	await VGS_User.update({email: req.body.email},
+	await VGS_User.update({userId:user.id},
 		{
-			email: user.email,
-			hobbies: user.hobbies,
-			appliedPosition: user.appliedPosition,
-			gameName: user.gameName,
-			userType: user.appliedPosition,
+			userId: vgsuser.userId,
+			hobbies: vgsuser.hobbies,
+			appliedPosition: vgsuser.appliedPosition,
+			gameName: vgsuser.gameName,
+			userType: userTypeEnum.Member.value,
 			clubCommittee: req.body.clubCommittee,
-			appStatus: user.appStatus,
-			notes: user.notes,
-			gameScrSho: user.gameScrSho,
-			downloadLink: user.downloadLink,
-			boothMember: user.boothMember,
-			VGSYear: user.VGSYear
+			appStatus: vgsuser.appStatus,
+			notes: vgsuser.notes,
+			gameScrSho: vgsuser.gameScrSho,
+			downloadLink: vgsuser.downloadLink,
+			boothMember: vgsuser.boothMember,
+			VGSYear: vgsuser.VGSYear
 		})
-	 res.send(await VGS_User.findOne({email:req.body.email}))
+	 res.send(await VGS_User.findOne({userId:user.id}))
 	}
 	catch(error){
-		res.send(`error, can't add member`)
+		res.status(500).send(`error, can't add member`)
 	}
    })
 // prisedent can edit user
@@ -403,10 +408,12 @@ router
 router.route("/edituser").put(async (req, res) => {
   //vgsuser data
   try {
-    let user = await VGS_User.findOne({ email: req.body.email });
-    if (!req.body.email)
-      return res.status(400).send({ err: "email field is required" });
-    if (!user) return res.status(400).send({ err: "invalid email" });
+    let user = await UserTable.findOne({ email: req.body.email });
+    if (!req.body.email)return res.status(500).send({ err: "email field is required" });
+    if (!user) return res.status(500).send({ err: "invalid email" });
+    const vgsuser=await VGS_User.findOne({userId:user.id})
+    if (!vgsuser) return res.status(500).send({ err: "invalid email" });
+   
     let newuserType = req.body.userType;
     let newclubCommittee = req.body.clubCommittee;
     let newhobbies = req.body.hobbies;
@@ -420,74 +427,73 @@ router.route("/edituser").put(async (req, res) => {
     let newboothMember = req.body.boothMember;
     // to make sure that prisedent entered email
 
-    if (user.userType === userTypeEnum.President.value)
+    if (vgsuser.userType === userTypeEnum.President.value)
       return res
-        .status(404)
+        .status(500)
         .send({ err: "you can not edit a president account" });
 
     // data that the prisedent want to change
 
     if (newuserType) {
-      var type = (user.userType = newuserType);
+      var type = (vgsuser.userType = newuserType);
     }
 
     if (newclubCommittee) {
-      var commitee = (user.clubCommittee = newclubCommittee);
+      var commitee = (vgsuser.clubCommittee = newclubCommittee);
     }
 
     if (newhobbies) {
-      var hobbies = (user.hobbies = newhobbies);
+      var hobbies = (vgsuser.hobbies = newhobbies);
     }
 
     if (newVGSYear) {
-      var vYear = (user.VGSYear = newVGSYear);
+      var vYear = (vgsuser.VGSYear = newVGSYear);
     }
 
     if (newappliedPosition) {
-      var appliedPosition = (user.appliedPosition = newappliedPosition);
+      var appliedPosition = (vgsuser.appliedPosition = newappliedPosition);
     }
 
     if (newappStatus) {
-      var status = (user.appStatus = newappStatus);
+      var status = (vgsuser.appStatus = newappStatus);
     }
 
     if (newnotes) {
-      var note = (user.notes = newnotes);
+      var note = (vgsuser.notes = newnotes);
     }
 
     if (newgameName) {
-      var gamename = (user.gameName = newgameName);
+      var gamename = (vgsuser.gameName = newgameName);
     }
 
     if (newgameScrSho) {
-      var gamescreen = (user.gameScrSho = newgameScrSho);
+      var gamescreen = (vgsuser.gameScrSho = newgameScrSho);
     }
 
     if (newdownloadLink) {
-      var link = (user.downloadLink = newdownloadLink);
+      var link = (vgsuser.downloadLink = newdownloadLink);
     }
 
     if (newboothMember) {
-      var boothmember = (user.boothMember = newboothMember);
+      var boothmember = (vgsuser.boothMember = newboothMember);
     }
 
     await VGS_User.updateOne(
-      { email: req.body.email },
+      { userId:user.id },
       {
-        email: req.body.email,
-        userType: type || user.userType,
-        clubCommittee: commitee || user.clubCommittee,
-        hobbies: hobbies || user.hobbies,
-        VGSYear: vYear || user.VGSYear,
-        appliedPosition: appliedPosition || user.appliedPosition,
-        notes: note || user.notes,
-        gameName: gamename || user.gameName,
-        gameScrSho: gamescreen || user.gamescreen,
-        downloadLink: link || user.downloadLink,
-        boothMember: boothmember || user.boothMember
+        userType: type || vgsuser.userType,
+        clubCommittee: commitee || vgsuser.clubCommittee,
+        hobbies: hobbies || vgsuser.hobbies,
+        VGSYear: vYear || vgsuser.VGSYear,
+        appliedPosition: appliedPosition || vgsuser.appliedPosition,
+        notes: note || vgsuser.notes,
+        gameName: gamename || vgsuser.gameName,
+        gameScrSho: gamescreen || vgsuser.gamescreen,
+        downloadLink: link || vgsuser.downloadLink,
+        boothMember: boothmember || vgsuser.boothMember
       }
     );
-    res.send(await VGS_User.findOne({ email: req.body.email }));
+    res.send(await VGS_User.findOne({ userId:user.id }));
   } catch (error) {
     res.send(`error, cannot edit`);
   }
@@ -498,30 +504,33 @@ router.route("/edituser").put(async (req, res) => {
 	.put(async(req, res) => {
 		try{
 			// lazm a hundle case elly by3ml add msh member aw applicant
-		let user =await VGS_User.findOne({email:req.body.email})
-	    if (!req.body.email) return res.status(400).send({ err: 'email field is required' });
-	    if (!req.body.notes) return res.status(400).send({ err: 'note field is required' });
-		if (!user) return res.status(400).send({ err: 'invalid email' });
-		if (typeof req.body.notes !== 'string') return res.status(400).send({ err: 'Invalid value for note' });
+		let user =await UserTable.findOne({email:req.body.email})
+	    if (!req.body.email) return res.status(500).send({ err: 'email field is required' });
+	    if (!req.body.notes) return res.status(500).send({ err: 'note field is required' });
+    if (!user) return res.status(500).send({ err: 'invalid email' });
+    const vgsuser=await VGS_User.findOne({userId:user.id})
+    if (!vgsuser) return res.status(500).send({ err: 'invalid email' });
+
+    if (typeof req.body.notes !== 'string') return res.status(500).send({ err: 'Invalid value for note' });
 	    //if(user.userType==='member')return res.status(404).send({err:('you can not add notes')});
 	    //if(user.userType==='applicant')return res.status(404).send({err:('you can not add notes')}),
-	await VGS_User.updateOne({email:req.body.email},
+	await VGS_User.updateOne({userId:user.id},
 	      {
 		
-	    	email: user.email,
-			hobbies: user.hobbies,
-			appliedPosition: user.appliedPosition,
-			gameName: user.gameName,
-			userType: user.appliedPosition,
-			clubCommittee: user.clubCommittee,
-			appStatus: user.appStatus,
-			notes: user.notes + ' and ' + req.body.notes,
-			gameScrSho: user.gameScrSho,
-			downloadLink: user.downloadLink,
-			boothMember: user.boothMember,
-			VGSYear: user.VGSYear
+	    	userId: vgsuser.userId,
+			hobbies: vgsuser.hobbies,
+			appliedPosition: vgsuser.appliedPosition,
+			gameName: vgsuser.gameName,
+			userType: vgsuser.userType,
+			clubCommittee: vgsuser.clubCommittee,
+			appStatus: vgsuser.appStatus,
+			notes: vgsuser.notes + ' and ' + req.body.notes,
+			gameScrSho: vgsuser.gameScrSho,
+			downloadLink: vgsuser.downloadLink,
+			boothMember: vgsuser.boothMember,
+			VGSYear: vgsuser.VGSYear
 	})
-	res.send(await VGS_User.findOne({email:req.body.email}))
+	res.send(await VGS_User.findOne({userId:user.id}))
 	}
 	catch(error){
 		res.send(`error, can't add note`)
@@ -560,4 +569,29 @@ router.get('/getDirectors', async (req, res)=>{
   }
 })
 
+// VGS_User.create({
+ 
+// appStatus:1,
+// userId:"5cb0c80b3b744f424817553d",
+// userType:2,
+// clubCommittee:null,
+// hobbies:"swimmming",
+// VGSYear:2018,
+// appliedPosition:null,
+// notes:
+// "verygood",
+// gameName
+// :
+// "candy cruch",
+// gameScrSho
+// :
+// null,
+
+// downloadLink
+// :
+// "asldfkkffjjf",
+// boothMember
+// :
+// true
+// })
 module.exports = router;

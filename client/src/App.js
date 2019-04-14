@@ -10,6 +10,12 @@ import Registration from "./components/Registration";
 import Navbar from "./components/customComponents/Navbar";
 import SubmitVote from "./components/SubmitVote"
 import ViewAppForms from "./components/ViewAppForms"
+import VgsFeaturesPage from './components/VgsFeaturesPage'
+import PresidentDelete from './components/PresidentDelete'
+import HeadDelete from './components/HeadDelete'
+import Note from './components/Note'
+import HeadAddMember from './components/HeadAddMember'
+
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 
 const email = "ahmed@gmail.com";
@@ -53,6 +59,12 @@ class App extends Component {
             <Route path="/Registration" component={Registration} />
             <Route path="/SubmitVote" component={SubmitVote} />
             <Route path="/viewApplications" component={ViewAppForms} />
+            <Route path="/vgs_features_page" component={VgsFeaturesPage}/>
+
+            <Route path="/president" component={PresidentDelete} />
+            <Route path="/head" component={HeadDelete} />
+            <Route path="/note" component={Note} />
+            <Route path="/headAddMember" component={HeadAddMember} />
           </Switch>
         </div>
       </Router>
