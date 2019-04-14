@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
-import {BrowserRouter as Router, Route} from 'react-router-dom'
 import Events from "./Events" ;
-import FillEventForm from './FillEventForm';
-import EventsItem from './EventsItem' ;
 import axios from 'axios'
 
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
