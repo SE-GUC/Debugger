@@ -1,47 +1,61 @@
 import React, { Component } from "react";
-import axios from 'axios'
+import axios from "axios";
+import {connect} from "react-redux";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-
 
 export class AppForm extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       applicant: {
-        email: "",
-        userType: "",
+        userId: "5ca907226acc0810b46d84dc",
+        userType: -1,
         clubCommittee: "",
         hobbies: "",
         VGSYear: null,
-        appliedPosition: ""
-      }
-      
-      //errors: {}
+        appliedPosition: "",
+        gameName: ""
+      },
+      allUserTypes: []
     };
     this.handleApplicant = this.handleApplicant.bind(this);
+    this.handleSubmitd = this.handleSubmit.bind(this);
     this.logApplicant = this.logApplicant.bind(this);
+    this.getAllLookups = this.getAllLookups.bind(this);
+    this.handleRedux = this.handleRedux.bind(this);
   }
-  
-  // handleErrors = () =>{
-    //   const errors = {}
-    //   if(this.applicant.email.trim() === '')
-    //     errors.email= 'Email is required'
-    //   return Object.keys(errors).length === 0 ? null : errors
-    // }
-    
-    async componentDidMount() {
-      const AppForms = await axios.get('http://localhost:8000/api/VGS/application_forms_view');
-      console.log(AppForms.data)
-    }
+
+  parseUserTypes(userTypes) {
+    return userTypes.map(_userType => {
+      return { label: _userType.UserType, value: _userType.UserTypeCode };
+    });
+  }
+
+  componentDidMount() {
+    this.getAllLookups();
+  }
+
+  handleRedux(){
+    console.log(this.props.usrId)
+    console.log(this.props.vgsUsrId)
+  }
+
+  async getAllLookups() {
+    await axios.get("http://localhost:8000/api/lookups/Usertypes").then(res => {
+      this.setState(
+        {
+          allUserTypes: this.parseUserTypes(res.data)
+        },
+        () => {
+          console.log(this.state);
+        }
+      );
+    });
+  }
 
   handleApplicant(event) {
     event.persist();
-    // const error = this.handleErrors();
-    // this.setState({error});
-    // if(error) return
-
-
     var name = event.target.name;
     // var applicantState= this.state.applicant;
     // applicantState[name]= event.target.value;
@@ -49,14 +63,17 @@ export class AppForm extends Component {
       previousState.applicant[name] = event.target.value;
       return previousState;
     });
-    // console.log( this.state.applicant);
   }
 
-  handleSubmit= async ()=>{
-    const SubmittedApp = await axios.post('http://localhost:8000/api/VGS/application_form',this.state.applicant)
-    console.log(SubmittedApp)
+  handleSubmit = async () => {
+    console.log(this.state.applicant)
+    const SubmittedApp = await axios.post(
+      "http://localhost:8000/api/VGS/application_form",
+      this.state.applicant
+    );
+    console.log(SubmittedApp);
     //<div className="alert alert-success">Submitted</div>
-  }
+  };
 
   logApplicant() {
     console.log(this.state.applicant);
@@ -64,69 +81,128 @@ export class AppForm extends Component {
   render() {
     return (
       <div>
-        <form>
-          <div>
-            <span className="badge badge-primary m-2">Email</span>
-            {/* <input name="email" type="text" onChange={(e)=>{this.handleApplicant(e)}} /> */}
-            {/* <input name="email" type="text" onChange={this.handleApplicant} /> */}
-            <input name="email" type="text" onChange={this.handleApplicant} />
-          </div>
+         <div>USERID : {this.props.usrId}</div>
+        <div>VGSUSERID: {this.props.vgsUsrId}</div>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-3" />
+            <div className="col-md-6 center-block" align="center">
+              <table className="table">
+                <thead />
+                <tbody>
+                  <tr>
+                    <td>User Type</td>
+                    <td>
+                      <select
+                        className="form-control"
+                        name="userType"
+                        onChange={this.handleApplicant}
+                      >
+                        <option value="-1">please select</option>
+                        {this.state.allUserTypes.map((type, i) => (
+                          <option key={i} value={type.value}>
+                            {type.label}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                  </tr>
 
-          <div>
-            <span>User Type</span>
-            <input
-              name="userType"
-              type="text"
-              onChange={this.handleApplicant}
-            />
-          </div>
+                  <tr>
+                    <td>Committee</td>
+                    <td>
+                      <input
+                        className="form-control"
+                        name="clubCommittee"
+                        type="text"
+                        onChange={this.handleApplicant}
+                      />
+                    </td>
+                  </tr>
 
-          <div>
-            <span>Committee</span>
-            <input
-              name="clubCommittee"
-              type="text"
-              onChange={this.handleApplicant}
-            />
-          </div>
+                  <tr>
+                    <td>Hobbies</td>
+                    <td>
+                      <input
+                        className="form-control"
+                        name="hobbies"
+                        type="text"
+                        onChange={this.handleApplicant}
+                      />
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td>VGS Year</td>
+                    <td>
+                      <input
+                        className="form-control"
+                        name="VGSYear"
+                        type="number"
+                        onChange={this.handleApplicant}
+                      />
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>Applied Position</td>
+                    <td>
+                      <input
+                        className="form-control"
+                        name="appliedPosition"
+                        type="text"
+                        onChange={this.handleApplicant}
+                      />
+                    </td>
+                  </tr>
+      
+                  <tr>
+                    <td>Game Name</td>
+                    <td>
+                      <input
+                        className="form-control"
+                        name="gameName"
+                        type="text"
+                        onChange={this.handleApplicant}
+                      />
+                    </td>
+                  </tr>
+      
+                  <tr>
+                    <td>
+                      <button
+                        type="button"
+                        className="btn btn-danger"
+                        onClick={this.handleSubmit}
+                      >
+                        Submit
+                      </button>
 
-          <div>
-            <span>Hobbies</span>
-            <input name="hobbies" type="text" onChange={this.handleApplicant} />
-          </div>
+                      <button
+                        type="button"
+                        className="btn btn-danger"
+                        onClick={this.handleRedux}>
+                        show redux
+                      </button>
+                    </td>
+                  </tr>
 
-          <div>
-            <span>VGS Year</span>
-            <input
-              name="VGSYear"
-              type="number"
-              onChange={this.handleApplicant}
-            />
+                </tbody>
+              </table>
+            </div>
+            <div className="col-md-3" />
           </div>
-
-          <div>
-            <span>Applied Position</span>
-            <input
-              name="appliedPosition"
-              type="text"
-              onChange={this.handleApplicant}
-            />
-          </div>
-
-          <div>
-            <button type="button" onClick={this.logApplicant}>
-              show me applicant object
-            </button>
-          </div>
-          {/* {this.state.errors && (
-            <div className="alert.alert-dange">{this.state.errors}</div>
-          )} */}
-          <div>
-            <button type="button" onClick={this.handleSubmit}>Submit</button>
-          </div>
-        </form>
+        </div>
       </div>
     );
   }
 }
-export default AppForm;
+const mapStateToProps = (state)=>{
+  return {
+    usrId:state.userId,
+    vgsUsrId:state.VGSUserId
+  }
+}
+export default connect(mapStateToProps)(AppForm)
+// export default AppForm;
+
