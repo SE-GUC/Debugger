@@ -169,7 +169,7 @@
         "PUT": {
           "summary": "Assign a booth member",
           "body": {
-            "!email": "string().email()"
+            "!userId": "string()"
           },
           "expected": {
             "data": {
