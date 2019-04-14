@@ -83,7 +83,13 @@ export class Navbar extends Component {
               President-Head-Features
                 </a>
               </li>
-
+             
+              <li>
+              <a className="nav-link" href="/CreateFaq">
+              Faq Section
+                </a>
+              </li> 
+             
               <li>
               <a className="nav-link" href="/ShowFreeSlots">
               My Free Slots
