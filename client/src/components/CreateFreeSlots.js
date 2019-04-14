@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import {BrowserRouter as Router, Route} from 'react-router-dom'
-import HeadFreeSlots from './HeadFreeSlots';
+// import {BrowserRouter as Router, Route} from 'react-router-dom'
+// import HeadFreeSlots from './HeadFreeSlots';
 import axios from 'axios'
 
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
-const email = 'ahmed@gmail.com'
+//const email = 'ahmed@gmail.com'
 
 export class CreateFreeSlots extends Component {
     state = {

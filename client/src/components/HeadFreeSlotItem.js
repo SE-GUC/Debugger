@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import {Link} from 'react-router-dom'
+//import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+//import {Link} from 'react-router-dom'
 import EditFreeSlots from "./EditFreeSlots"
 
 

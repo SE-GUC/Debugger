@@ -61,7 +61,7 @@ router.post('/add', async (req, res) => {
 
         const freeSlots = await HeadFreeSlot.find({headEmail: email})
         const interviews = await Interview.find()
-        console.log(interviews)
+        //console.log(interviews)
         res.send(freeSlots)
 
     }
@@ -199,7 +199,7 @@ router.put('/update/', async (req, res) => {
 
         const freeSlots = await HeadFreeSlot.find({ headEmail: headEmail })
         const showInterview = await Interview.find()
-        console.log(showInterview)
+       // console.log(showInterview)
         res.send(freeSlots)
 
     }
