@@ -18,7 +18,7 @@ export class Navbar extends Component {
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <span className="navbar-brand">
-            AWG
+            VGS
           </span>
           <button
             className="navbar-toggler"
@@ -34,75 +34,77 @@ export class Navbar extends Component {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">              
            
+            {this.props.usrId!==null?
               <li className="nav-item">
-                <a className="nav-link" href="/AppForm">
+                <a className="nav-link" style={fontStyle} href="/AppForm">
                 Application Form
                 </a>
-              </li>
+              </li>:null}
             
+              {this.props.usrId!==null?
               <li className="nav-item">
-                <a className="nav-link" href="/Vote">
+                <a className="nav-link" style={fontStyle} href="/Vote">
                 Create Vote
                 </a>
-              </li>
-
-            {this.props.usrId===null?
-              <li className="nav-item">
-                <a className="nav-link" href="/Login">
-                Login
-                </a>
               </li>:null}
-
+          
             {this.props.usrId===null?
               <li className="nav-item">
-              <a className="nav-link" href="/Registration">
+              <a className="nav-link" style={fontStyle} href="/Registration">
               Registration
                 </a>
               </li>:null}
 
+              {this.props.usrId!==null?
               <li className="nav-item">
-              <a className="nav-link" href="/SubmitVote">
+              <a className="nav-link" style={fontStyle} href="/SubmitVote">
               Give your Vote
                 </a>
               </li>
+              :null}
             
             {this.props.usrType === (Enum_userType.President.value||Enum_userType.Director.value||Enum_userType.Head.value )? 
               <li>
-              <a className="nav-link" href="/viewApplications">
+              <a className="nav-link" style={fontStyle} href="/viewApplications">
               View Applications
                 </a>
               </li> : null}
              
-            <li className="nav-item">
-
-                 {this.props.vgsUsrId!==null?this.getAppStatusValue(this.props.appStatus):""}
-              </li> 
-
               <li className="nav-item">
-              <a className="nav-link" href="/vgs_features_page">
+              <a className="nav-link" style={fontStyle} href="/vgs_features_page">
               President-Head-Features
                 </a>
               </li>
              
               <li>
-              <a className="nav-link" href="/CreateFaq">
+              <a className="nav-link" style={fontStyle} href="/CreateFaq">
               Faq Section to ask
                 </a>
               </li>
 
 
               <li>
-              <a className="nav-link" href="/GetFaq">
+              <a className="nav-link" style={fontStyle} href="/GetFaq">
               Faq Section view
                 </a>
               </li>
 
-             
               <li>
-              <a className="nav-link" href="/ShowFreeSlots">
+              <a className="nav-link" style={fontStyle} href="/ShowFreeSlots">
               My Free Slots
                 </a>
               </li> 
+      
+              <li className="nav-item" style={{fontSize:"15px",color:"#0FB91B"}}>
+                {this.props.vgsUsrId!==null?this.getAppStatusValue(this.props.appStatus):""}
+              </li> 
+
+              {this.props.usrId===null?
+              <li className="nav-item">
+                <a className="btn btn-success nav-link" style={{color:"white",fontSize:"15px"}} href="/Login">
+                Sign In
+                </a>
+              </li>:null}
 
             { this.props.usrId!==null?
               <li className="nav-item">
@@ -117,6 +119,10 @@ export class Navbar extends Component {
       </div>
     );
   }
+}
+
+const fontStyle={
+  fontSize:"15px"
 }
 
 const mapStateToProps = (state)=>{

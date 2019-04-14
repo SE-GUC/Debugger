@@ -59,7 +59,7 @@ router.post("/login", async (req, res) => {
       }
     }
     else{
-        res.send("Email or password are not correct");
+        res.status(203).send("Email or password are not correct");
     }
   } catch (err) {
     res.send("unexcpected error");
