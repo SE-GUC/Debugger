@@ -27,7 +27,7 @@ router.put('/interview/:interviewerEmail', async (req, res) => {
     catch (error) {
 
         // We will be handling the error later
-        console.log(error)
+        return res.send(error.message)
     }
 
 })
@@ -36,7 +36,8 @@ router.put('/interview/:interviewerEmail', async (req, res) => {
 router.get('/', async (req, res) => {
 
     try {
-
+        
+        
         const interviews = await Interview.find()
         res.send(interviews)
 
@@ -56,7 +57,7 @@ router.put('/edit', async (req, res) => {
     try {
 
         const exist = await Interview.find()
-        console.log(exist)
+        //console.log(exist)
         if (exist == false || !exist) {
             await Interview.create({
                 interviewerEmail: 'ahmed@gmail.com'
@@ -93,7 +94,7 @@ router.put('/edit', async (req, res) => {
 
         }
 
-        console.log(await Interview.find())
+        //console.log(await Interview.find())
 
         const interviewerEmail = req.body.interviewerEmail
         const day = req.body.day

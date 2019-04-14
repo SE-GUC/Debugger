@@ -10,14 +10,18 @@ const UserTable = require('../../Models/User')
 const appStatusEnum = require('../../Models/Enums/Enums').Enum_appStatus;
 const userTypeEnum = require('../../Models/Enums/Enums').Enum_userType;
 
+// Id in body not in params
+// email in creating
+// Testing
+// Ehab
+// return
+// email in headFreeSlots, interviews and groups
 
 // Assigning the booth member
 router.put("/assign", async (req, res) => {
   try {
-    const exist = await VGS_User.find();
-    if (exist == false) {
       await VGS_User.create({
-        email: "ghada@gmail.com",
+        userId: "5ca96a2ylaamk6d4cbcd231",
         userType: userTypeEnum.Member.value,
         clubCommittee: "HR",
         hobbies: "Playing Volleyball",
@@ -32,7 +36,7 @@ router.put("/assign", async (req, res) => {
       });
 
       await VGS_User.create({
-        email: "amany@hotmail.com",
+        userId: "5ca9rrdalaamk6d4cbcd231",
         userType: userTypeEnum.Member.value,
         clubCommittee: "GDD",
         hobbies: "Developing games",
@@ -47,7 +51,7 @@ router.put("/assign", async (req, res) => {
       });
 
       await VGS_User.create({
-        email: "Jim@yahoo.com",
+        userId: "5tt328hylaamk6d4cbcd231",
         userType: null,
         clubCommittee: null,
         hobbies: null,
@@ -61,28 +65,27 @@ router.put("/assign", async (req, res) => {
         boothMember: false
       });
 
-    //   await VGS_User.create({
-    //     email: "ehab@hotmail.com",
-    //     userType: "Advisor",
-    //     clubCommittee: "GDD",
-    //     hobbies: "Coding",
-    //     VGSYear: "2012",
-    //     appliedPosition: "GDD Advisor",
-    //     appStatus: "Accepted",
-    //     notes: null,
-    //     gameName: null,
-    //     gameScrSho: null,
-    //     downloadLink: null,
-    //     boothMember: false
-    //   });
-    }
+      await VGS_User.create({
+        userId: "5cate45haaamk6d4cbcd231",
+        userType: userTypeEnum.Director.value,
+        clubCommittee: "GDD",
+        hobbies: "Coding",
+        VGSYear: "2012",
+        appliedPosition: "GDD Advisor",
+        appStatus: appStatusEnum.Accepted.value,
+        notes: null,
+        gameName: null,
+        gameScrSho: null,
+        downloadLink: null,
+        boothMember: false
+      });
+    
 
     console.log(await VGS_User.find());
-    const memberEmail = req.body.email;
+    const memberId = req.body.userId;
 
     const schema = {
-      email: Joi.string()
-        .email()
+      userId: Joi.string()
         .required()
     };
 
@@ -90,7 +93,7 @@ router.put("/assign", async (req, res) => {
     if (result.error)
       return res.status(400).send({ error: result.error.details[0].message });
 
-    const user = await VGS_User.findOne({ email: memberEmail });
+    const user = await VGS_User.findOne({ userId: memberId });
 
     // checking if he is already a booth member
     if (user.boothMember === true)
@@ -109,14 +112,14 @@ router.put("/assign", async (req, res) => {
         .send({ err: "This person position is not member" });
 
     // Assigning the boothMember
-    const old = { email: { $eq: memberEmail } };
+    const old = { userId: { $eq: memberId } };
     const newR = { $set: { boothMember: true } };
 
     await VGS_User.updateOne(old, newR, (err, result) => {
       if (err) res.status(404).send(err.message);
     });
 
-    const boothMembr = await VGS_User.findOne({ email: memberEmail });
+    const boothMembr = await VGS_User.findOne({ userId: memberId });
     res.send(boothMembr);
 
   } catch (error) {

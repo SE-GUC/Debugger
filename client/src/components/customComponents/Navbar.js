@@ -84,6 +84,12 @@ export class Navbar extends Component {
                 </a>
               </li>
 
+              <li>
+              <a className="nav-link" href="/ShowFreeSlots">
+              My Free Slots
+                </a>
+              </li> 
+
             { this.props.usrId!==null?
               <li className="nav-item">
               <a className="nav-link" href="/">
