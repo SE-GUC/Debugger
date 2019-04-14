@@ -1,0 +1,585 @@
+{
+  "routes": [
+    {
+      "url": "/api/groups",
+      "params": {},
+      "methods": {
+        "POST": {
+          "summary": "Creating a new group",
+          "body": {
+            "!name": "string().min(3).max(100)",
+            "!createdBy": "string().email()",
+            "!members": ["string().email()"]
+          },
+          "expected": {
+            "data": {
+              "!name": "string().min(3).max(100)",
+              "!createdBy": "string().email()",
+              "!members": ["string().email()"]
+            }
+          }
+        },
+        "PUT": {
+          "summary": "Adding members to the group",
+          "body": {
+            "!name": "string().min(3).max(100)",
+            "!members": ["string().email()"]
+          },
+          "expected": {
+            "data": {
+              "!members": ["string().email()"]
+            }
+          }
+        }
+      }
+    },
+    {
+      "url": "/api/headFreeSlots/add",
+      "params": {},
+      "methods": {
+        "POST": {
+          "summary": "create a new headFreeSlot",
+          "body": {
+            "!email": "string().email()",
+            "!day": "string()",
+            "!date": "date()",
+            "!slot": "string()"
+          },
+          "expected": {
+            "data": {
+              "!_id": "string().length(24)",
+              "!headEmail": "string().email()",
+              "!day": "string()",
+              "!date": "date()",
+              "!slot": "string()"
+            }
+          }
+        }
+      }
+    },
+    {
+      "url": "/api/headFreeSlots/:email",
+      "params": {
+        "!email": "string().email()"
+      },
+      "methods": {
+        "GET": {
+          "summary": "get list of all headFreeSlots for a certain Head",
+          "expected": {
+            "data": [
+              {
+                "!_id": "string().length(24)",
+                "!headEmail": "string().email()",
+                "!day": "string()",
+                "!date": "date()",
+                "!slot": "string()"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "url": "/api/headFreeSlots/update/",
+      "params": {},
+      "methods": {
+        "PUT": {
+          "summary": "edit a certain Head freeSlots",
+          "body": {
+            "!email": "string().email()",
+            "!oldDayToBeChanged": "string()",
+            "!oldDateToBeChanged": "date()",
+            "!oldSlotToBeChanged": "string()",
+            "!newDay": "string()",
+            "!newDate": "date()",
+            "!newSlot": "string()"
+          },
+          "expected": {
+            "data": {
+              "!_id": "string().length(24)",
+              "!headEmail": "string().email()",
+              "!day": "string()",
+              "!date": "date()",
+              "!slot": "string()"
+            }
+          }
+        }
+      }
+    },
+    {
+      "url": "/api/interviews/",
+      "params": {},
+      "methods": {
+        "GET": {
+          "summary": "get list of all interviews",
+          "expected": {
+            "data": [
+              {
+                "!_id": "string().length(24)",
+                "!interviewerEmail": "string().email()",
+                "!intervieweeEmail": "string().email()",
+                "!day": "string()",
+                "!date": "date()",
+                "!interviewslot": "string()",
+                "!startTime": "string()",
+                "!endTime": "string()",
+                "!interview": "bool()"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "url": "/api/interviews/edit",
+      "params": {},
+      "methods": {
+        "PUT": {
+          "summary": "update a single interview",
+          "body": {
+            "!interviewerEmail": "string().email()",
+            "!day": "string()",
+            "!date": "date()",
+            "!slot": "string()",
+            "!intervieweeEmail": "string().email()",
+            "!startTime": "string()",
+            "!endTime": "string()",
+            "!interview": "bool()"
+          },
+          "expected": {
+            "data": {
+              "!_id": "string().length(24)",
+              "!interviewerEmail": "string().email()",
+              "!intervieweeEmail": "string().email()",
+              "!day": "string()",
+              "!date": "date()",
+              "!interviewslot": "string()",
+              "!startTime": "string()",
+              "!endTime": "string()",
+              "!interview": "bool()"
+            }
+          }
+        }
+      }
+    },
+    {
+      "url": "/api/VGS/assign",
+      "params": {},
+      "methods": {
+        "PUT": {
+          "summary": "Assign a booth member",
+          "body": {
+            "!userId": "string()"
+          },
+          "expected": {
+            "data": {
+              "!boothMember": "bool()"
+            }
+          }
+        }
+      }
+    },
+    {
+      "url": "/api/VGS/application_form",
+      "params": {},
+      "methods": {
+        "POST": {
+          "summary": "create a new vgs user by user filling application form",
+          "body": {
+            "!email": "string().min(3)",
+            "clubCommittee": "string().min(3).optional()",
+            "hobbies": "string().min(3).optional()",
+            "gameName": "string().min(3).optional()"
+          },
+          "expected": {
+            "data": {
+              "!_id": "string().length(24)",
+              "clubCommittee": "string().min(2)",
+              "hobbies": "string().length(10)",
+              "gameName": "string().min(3).optional()"
+            }
+          }
+        }
+      }
+    },
+    {
+      "url": "/api/VGS/application_form_view/:id",
+      "params": { "!_id": "string().length(24)" },
+      "methods": {
+        "GET": {
+          "summary": "viewing the application form for a user to see his/her status",
+          "body": {},
+          "expected": {
+            "data": {
+              "appStatus": "string()"
+            }
+          }
+        }
+      }
+    },
+    {
+      "url": "/api/VGS/application_forms_view",
+      "params": {},
+      "methods": {
+        "GET": {
+          "summary": "viewing all the application forms that are still not accepted nor rejected",
+          "body": {},
+          "expected": {
+            "data": [
+              {
+                "!_id": "string().length(24)",
+                "gameName": "string().min(3)",
+                "clubCommittee": "string().min(3)",
+                "appStatus": "string().min(3)"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "url": "/api/VGS/application_form_update",
+      "params": {},
+      "methods": {
+        "PUT": {
+          "summary": "update applicant's application form fields",
+          "body": {
+            "!email": "string().min(3)",
+            "hobbies": "string().min(3)"
+          },
+          "expected": {
+            "data": [
+              {
+                "!_id": "string().length(24)",
+                "email": "string().min(3)",
+                "hobbies": "string().min(3)"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "url": "/api/raise_vote/",
+      "params": {},
+      "methods": {
+        "POST": {
+          "summary": "raising or creating a vote",
+          "body": {
+            "!issuerId": "string().length(24)",
+            "!nomineeId": "string().length(24)",
+            "!voteEndTime": "Date()"
+          },
+          "expected": {
+            "data": [
+              {
+                "!_id": "string().length(24)",
+                "!issuerId": "string().length(24)",
+                "!nomineeId": "string().length(24)",
+                "!voteEndTime": "Date()"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "url": "/api/raise_vote/:voteId",
+      "params": { "!_id": "string().length(24)" },
+      "methods": {
+        "GET": {
+          "summary": "return how many voted yes and how many voted no",
+          "body": {},
+          "expected": {
+            "data": [
+              {
+                "For": "number()",
+                "Against": "number()"
+              }
+            ]
+          }
+        },
+        "POST": {
+          "summary": "user (director) can vote yes/no or change his/her vote",
+          "body": {
+            "voterID": "string().length(24)",
+            "decision": "boolean()"
+          },
+          "expected": {
+            "data": { "message": "your vote has been successfully submitted" }
+          }
+        }
+      }
+    },
+    {
+      "url": "/api/VGS/showusers",
+      "params": {},
+      "methods": {
+        "GET": {
+          "summary": "get all users in vgs",
+          "body": {},
+          "expected": {
+            "data": [
+              {
+                "email": "string()",
+                "userType":"string()",
+                "clubCommittee":"string()",
+                "hobbies":"string()",
+                "VGSYear":"integer()",
+                "appliedPosition":"string()",
+                "notes":"string()",
+                "gameName":"string()",
+                "gameScrSho":"string()",
+                "downloadLink":"string()",
+                "boothMember":"boolean()",
+
+                "hint":"all the users not just one"
+                
+              }
+            ]
+          }
+        }
+      }
+    }, {
+      "url": "/api/VGS/",
+      "params": {},
+      "methods": {
+        "post": {
+          "summary": "create new user",
+          "body": [
+            {
+              "email": "string()",
+              "userType":"string()",
+              "clubCommittee":"string()",
+              "hobbies":"string()",
+              "VGSYear":"integer()",
+              "appliedPosition":"string()",
+              "notes":"string()",
+              "gameName":"string()",
+              "gameScrSho":"string()",
+              "downloadLink":"string()",
+              "boothMember":"boolean()"
+              
+            }
+          ],
+          "expected": {
+            "data": [
+              {
+                "email": "string()",
+                "userType":"string()",
+                "clubCommittee":"string()",
+                "hobbies":"string()",
+                "VGSYear":"integer()",
+                "appliedPosition":"string()",
+                "notes":"string()",
+                "gameName":"string()",
+                "gameScrSho":"string()",
+                "downloadLink":"string()",
+                "boothMember":"boolean()",
+
+                "hint":"data for the one who just crated"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "url": "/api/VGS/deleteuser",
+      "params": {},
+      "methods": {
+        "delete": {
+          "summary": "president delete user by his/her email",
+          "body": [
+            {
+              "email": "string()"
+            }
+          ],
+          "expected": {
+            "data": [
+              {"message":"user deleted"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "url": "/api/VGS/deletefromcommity",
+      "params": {},
+      "methods": {
+        "delete": {
+          "summary": "head delete vgs user in hes/her commity",
+          "body": [
+            {
+              "email": "string()"
+            }
+          ],
+          "expected": {
+            "data": [
+              {"email": "string()",
+                "userType":"string()",
+                "clubCommittee":null,
+                "hobbies":"string()",
+                "VGSYear":"integer()",
+                "appliedPosition":"string()",
+                "notes":"string()",
+                "gameName":"string()",
+                "gameScrSho":"string()",
+                "downloadLink":"string()",
+                "boothMember":"boolean()"
+
+              }
+            ]
+          }
+        }
+      }
+    },    {
+      "url": "/api/VGS/addmemberincommity",
+      "params": {},
+      "methods": {
+        "put": {
+          "summary": "head add applicant in hes/her commity",
+          "body": [
+            {
+              "email": "string()",
+              "clubCommittee":"string()"
+            }
+          ],
+          "expected": {
+            "data": [
+              {"email": "string()",
+                "userType":"string()",
+                "clubCommittee":"string()",
+                "hobbies":"string()",
+                "VGSYear":"integer()",
+                "appliedPosition":"string()",
+                "notes":"string()",
+                "gameName":"string()",
+                "gameScrSho":"string()",
+                "downloadLink":"string()",
+                "boothMember":"boolean()",
+ 
+                 "hint":"usertype was applicant and become member also clubcommity was null and become clubcommity input"
+
+              }
+            ]
+          }
+        }
+      }
+    },
+    
+    {
+      "url": "/api/VGS/edituser",
+      "params": {},
+      "methods": {
+        "put": {
+          "summary": "prisedent edit vgs user",
+          "body": [
+            {"email": "string()",
+              "userType":"string()",
+              "clubCommittee":"string()",
+              "hobbies":"string()",
+              "VGSYear":"integer()",
+              "appliedPosition":"string()",
+              "notes":"string()",
+              "gameName":"string()",
+              "gameScrSho":"string()",
+              "downloadLink":"string()",
+              "boothMember":"boolean()",
+              "hint": "email is requierd but all ather inputs is optional"
+
+            }
+          ],
+          "expected": {
+            "data": [
+              {"email": "string()",
+                "userType":"string()",
+                "clubCommittee":"string()",
+                "hobbies":"string()",
+                "VGSYear":"integer()",
+                "appliedPosition":"string()",
+                "notes":"string()",
+                "gameName":"string()",
+                "gameScrSho":"string()",
+                "downloadLink":"string()",
+                "boothMember":"boolean()",
+ 
+                 "hint":"inputs that changes will be changed ather inputs will be old one"
+
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "url": "/api/VGS/addmemberincommity",
+      "params": {},
+      "methods": {
+        "put": {
+          "summary": "head add applicant in hes/her commity",
+          "body": [
+            {
+              "email": "string()",
+              "clubCommittee":"string()"
+            }
+          ],
+          "expected": {
+            "data": [
+              {"email": "string()",
+                "userType":"string()",
+                "clubCommittee":"string()",
+                "hobbies":"string()",
+                "VGSYear":"integer()",
+                "appliedPosition":"string()",
+                "notes":"string()",
+                "gameName":"string()",
+                "gameScrSho":"string()",
+                "downloadLink":"string()",
+                "boothMember":"boolean()",
+ 
+                 "hint":"usertype was applicant and become member also clubcommity was null and become clubcommity input"
+
+              }
+            ]
+          }
+        }
+      }
+    },
+    
+    {
+      "url": "/api/VGS/note",
+      "params": {},
+      "methods": {
+        "put": {
+          "summary": "",
+          "body": [
+            {"email": "string()",
+               "notes":"string()"
+            }
+          ],
+          "expected": {
+            "data": [
+              {"email": "string()",
+                "userType":"string()",
+                "clubCommittee":"string()",
+                "hobbies":"string()",
+                "VGSYear":"integer()",
+                "appliedPosition":"string()",
+                "notes":"string()",
+                "gameName":"string()",
+                "gameScrSho":"string()",
+                "downloadLink":"string()",
+                "boothMember":"boolean()",
+ 
+                 "hint":"old notes will be added to the new one"
+
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
