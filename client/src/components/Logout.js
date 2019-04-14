@@ -20,8 +20,8 @@ export class Logout extends Component {
       <div>
         {/* <div>USERID : {this.props.usrId}</div>
         <div>VGS ID :{this.props.vgsUsrId}</div> */}
-        <button type="button" className="btn btn-danger" onClick={this.Logout}>
-          Logout
+        <button type="button"  className="btn btn-sm btn-danger" onClick={this.Logout}>
+          Sign Out
         </button>
       </div>
     );
