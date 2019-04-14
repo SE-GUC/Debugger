@@ -16,6 +16,7 @@ import HeadDelete from './components/HeadDelete'
 import Note from './components/Note'
 import HeadAddMember from './components/HeadAddMember'
 import CreateFaq from './components/CreateFaq'
+import GetFaq from './components/GetFaq'
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 
 class App extends Component {
@@ -44,6 +45,8 @@ class App extends Component {
             <Route path="/note" component={Note} />
             <Route path="/headAddMember" component={HeadAddMember} />
             <Route path="/CreateFaq" component={CreateFaq} />
+            <Route path="/GetFaq" component={GetFaq} />
+          
           </Switch>
         </div>
       </Router>

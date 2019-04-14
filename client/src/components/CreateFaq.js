@@ -60,6 +60,7 @@ handledate(event){
      console.log(faq.data)
     }
 
+    
   render(){ 
     return (
       <div>
