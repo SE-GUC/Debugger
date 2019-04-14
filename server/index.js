@@ -19,8 +19,8 @@ const lookups = require('./routes/api/Lookups/lookupsData')
 const cors = require('cors')
 
 //mongoose.connect(process.env.mongo)
-mongoose.connect(process.env.MONGO, {dbName:"test"})
-//mongoose.connect('mongodb+srv://mahamekdad:6gfvF79hbKVh124X@cluster0-mlucg.mongodb.net/test?retryWrites=true')
+//mongoose.connect(process.env.MONGO, {dbName:"test"})
+mongoose.connect('mongodb+srv://mahamekdad:6gfvF79hbKVh124X@cluster0-mlucg.mongodb.net/test?retryWrites=true')
 
 const app = express()
 app.use(cors({  
