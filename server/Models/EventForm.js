@@ -6,14 +6,9 @@ const EventFormSchema = new Schema({
     
     event_id : {
         type : String ,
-           ref : 'Event' ,
-           required : true
+           ref : 'Event' 
     } ,
-    user_id : {
-        type: String,
-        ref : 'User' ,
-        required: true
-    },
+   
 
     student_id : {
         type: String

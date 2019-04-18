@@ -1,0 +1,36 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'start' ]
+2 info using npm@6.4.1
+3 info using node@v10.15.3
+4 verbose run-script [ 'prestart', 'start', 'poststart' ]
+5 info lifecycle client@0.1.0~prestart: client@0.1.0
+6 info lifecycle client@0.1.0~start: client@0.1.0
+7 verbose lifecycle client@0.1.0~start: unsafe-perm in lifecycle true
+8 verbose lifecycle client@0.1.0~start: PATH: C:\Program Files\nodejs\node_modules\npm\node_modules\npm-lifecycle\node-gyp-bin;C:\Users\merna\Documents\GitHub\Debugger\client\node_modules\.bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Common Files\lenovo\easyplussdk\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\;C:\Program Files\Microsoft SQL Server\140\Tools\Binn\;C:\Program Files\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Users\merna\AppData\Local\Microsoft\WindowsApps;C:\se\Microsoft VS Code\bin;C:\Users\merna\AppData\Local\GitHubDesktop\bin;C:\Users\merna\AppData\Roaming\npm
+9 verbose lifecycle client@0.1.0~start: CWD: C:\Users\merna\Documents\GitHub\Debugger\client
+10 silly lifecycle client@0.1.0~start: Args: [ '/d /s /c', 'react-scripts start' ]
+11 silly lifecycle client@0.1.0~start: Returned: code: 3221225786  signal: null
+12 info lifecycle client@0.1.0~start: Failed to exec start script
+13 verbose stack Error: client@0.1.0 start: `react-scripts start`
+13 verbose stack Exit status 3221225786
+13 verbose stack     at EventEmitter.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-lifecycle\index.js:301:16)
+13 verbose stack     at EventEmitter.emit (events.js:189:13)
+13 verbose stack     at ChildProcess.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-lifecycle\lib\spawn.js:55:14)
+13 verbose stack     at ChildProcess.emit (events.js:189:13)
+13 verbose stack     at maybeClose (internal/child_process.js:970:16)
+13 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:259:5)
+14 verbose pkgid client@0.1.0
+15 verbose cwd C:\Users\merna\Documents\GitHub\Debugger\client
+16 verbose Windows_NT 10.0.17134
+17 verbose argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "start"
+18 verbose node v10.15.3
+19 verbose npm  v6.4.1
+20 error code ELIFECYCLE
+21 error errno 3221225786
+22 error client@0.1.0 start: `react-scripts start`
+22 error Exit status 3221225786
+23 error Failed at the client@0.1.0 start script.
+23 error This is probably not a problem with npm. There is likely additional logging output above.
+24 verbose exit [ 3221225786, true ]
