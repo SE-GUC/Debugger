@@ -16,6 +16,9 @@ import HeadDelete from './components/HeadDelete'
 import Note from './components/Note'
 import HeadAddMember from './components/HeadAddMember'
 import CreateFaq from './components/CreateFaq'
+import ViewAllUsersAndDelete from './components/ViewAllUsersAndDelete'
+import ViewUserItem from './components/ViewUserItem'
+import ViewUsers from './components/ViewUsers'
 import GetFaq from './components/GetFaq'
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 
@@ -45,6 +48,7 @@ class App extends Component {
             <Route path="/note" component={Note} />
             <Route path="/headAddMember" component={HeadAddMember} />
             <Route path="/CreateFaq" component={CreateFaq} />
+            <Route path="/ViewAllUsersAndDelete" component={ViewAllUsersAndDelete} />
             <Route path="/GetFaq" component={GetFaq} />
           
           </Switch>
