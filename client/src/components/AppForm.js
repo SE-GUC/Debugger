@@ -9,7 +9,7 @@ export class AppForm extends Component {
 
     this.state = {
       applicant: {
-        userId: "5ca907226acc0810b46d84dc",
+        userId: this.props.usrId,
         userType: -1,
         clubCommittee: "",
         hobbies: "",
@@ -81,8 +81,9 @@ export class AppForm extends Component {
   render() {
     return (
       <div>
-         <div>USERID : {this.props.usrId}</div>
-        <div>VGSUSERID: {this.props.vgsUsrId}</div>
+         {/* <div>USERID : {this.props.usrId}</div>
+        <div>VGSUSERID: {this.props.vgsUsrId}</div> */}
+      {this.props.usrId !==null?
         <div className="container">
           <div className="row">
             <div className="col-md-3" />
@@ -178,12 +179,12 @@ export class AppForm extends Component {
                         Submit
                       </button>
 
-                      <button
+                      {/* <button
                         type="button"
                         className="btn btn-danger"
                         onClick={this.handleRedux}>
                         show redux
-                      </button>
+                      </button> */}
                     </td>
                   </tr>
 
@@ -193,7 +194,11 @@ export class AppForm extends Component {
             <div className="col-md-3" />
           </div>
         </div>
-      </div>
+    
+    :  <div className="alert alert-danger">
+     <strong>Warning !</strong> You are not allowed to view this page !!
+        </div> }
+     </div>
     );
   }
 }

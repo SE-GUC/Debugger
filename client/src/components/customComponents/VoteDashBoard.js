@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 
 export class VoteDashBoard extends Component {
 
-  // componentWillReceiveProps({someProp}) {
-  //   this.setState({...this.state,someProp})
-  // }
+  componentWillReceiveProps({someProp}) {
+    this.setState({...this.state,someProp})
+  }
 
   render() {
     return (

@@ -93,7 +93,7 @@ router
             else return res.status(203).send("there isn't any active vote")
         }
         catch(err){
-            return res.status(404).send('could not get the last active vote')
+            return res.status(501).send('could not get the last active vote')
         }
     })
 

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import CheckBox from "./customComponents/CheckBox";
 import axios from "axios";
+import {connect} from "react-redux";
 
 export class Registration extends Component {
   constructor(props) {
@@ -276,9 +277,8 @@ export class Registration extends Component {
             <div className="col-md-3" />
           </div>
         </div>
-           :<
-             div className="alert alert-danger">
-     <strong>Warning !</strong> You are not allowed to view this page !!
+           :<div className="alert alert-danger">
+                <strong>Warning !</strong> You are not allowed to view this page !!
       </div> }
      </div>
     );
@@ -292,4 +292,13 @@ const style = {
   display: "inline"
 };
 
-export default Registration;
+const mapStateToProps = (state)=>{
+  return {
+    usrId:state.userId,
+    vgsUsrId:state.VGSUserId,
+    usrType: state.userType,
+    appStatus: state.appStatus
+  }
+}
+
+export default connect(mapStateToProps)(Registration);

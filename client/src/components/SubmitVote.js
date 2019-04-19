@@ -37,13 +37,20 @@ export class SubmitVote extends Component {
       this.setState({ noActiveVote: true });
     } else {
       this.getVoteStatistics(voteInfo.data.voteId);
+      let lastVote;
+      if(voteInfo.data.lastVote){
+        lastVote = voteInfo.data.lastVote === true ? "Yes" : "No"
+      }
+      else{
+        lastVote =null
+      }
       this.setState(
         {
           noActiveVote: false,
           nomineeName: voteInfo.data.nominee,
           voteId: voteInfo.data.voteId,
           voteEndTime: voteInfo.data.endTime,
-          lastVoteDecision: voteInfo.data.lastVote === true ? "Yes" : "No"
+          lastVoteDecision: lastVote
         },
         () => console.log(this.state)
       );
@@ -67,18 +74,19 @@ export class SubmitVote extends Component {
   };
 
   submmittingVote = async () => {
-    const v = await axios.post(
+
+     const v = await axios.post(
       "http://localhost:8000/api/raise_vote/" + this.state.voteId,
       this.state.voteDecision
     );
-    //console.log(this.state.lastVoteDecision);
-    //const lastVote = this.state.lastVoteDecision === true ? "Yes" : "No";
-    // if (v.status === 200) {
-    //   this.setState({
-    //     lastVoteDecision: lastVote
-    //   });
-    // }
-    console.log(v);
+
+    if (v.status === 200) {
+    const lastVote = document.querySelectorAll('input')[0].checked===true ? "Yes" : "No";
+      this.setState({
+        lastVoteDecision: lastVote
+      });
+      this.getVoteStatistics(this.state.voteId);
+    }
   };
 
   handleChange = event => {
@@ -93,6 +101,7 @@ export class SubmitVote extends Component {
   render() {
     return (
       <div>
+      {this.props.usrId !==null?
         <div className="container">
           <div className="row">
             <div className="col-md-6 center-block" align="center">
@@ -135,7 +144,10 @@ export class SubmitVote extends Component {
             <div className="col-md-3" />
           </div>
         </div>
-      </div>
+      :<div className="alert alert-danger">
+      <strong>Warning !</strong> You are not allowed to view this page !!
+        </div> }
+     </div>
     );
   }
 }
@@ -148,6 +160,7 @@ const noStyle = {
 
 const mapStateToProps = state => {
   return {
+    usrId:state.userId,
     vgsUsrId: state.VGSUserId
   };
 };
