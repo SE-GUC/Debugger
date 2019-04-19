@@ -70,6 +70,7 @@ export class Vote extends Component {
   render() {
     return (
       <div>
+     {this.props.usrId !==null?
         <div className="container">
           <div className="row">
             <div className="col-md-3" />
@@ -128,13 +129,17 @@ export class Vote extends Component {
               <div className="col-md-3"></div>
           </div>
         </div>
-      </div>
+      :<div className="alert alert-danger">
+      <strong>Warning !</strong> You are not allowed to view this page !!
+</div> }
+     </div>
     );
   }
 }
 
 const mapStateToProps = (state)=>{
   return {
+    usrId:state.userId,
     vgsUsrId:state.VGSUserId
   }
 }

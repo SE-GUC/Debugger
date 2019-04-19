@@ -5,10 +5,13 @@ const router = express.Router();
 
 const Event = require("../../Models/Event");
 const EventForm = require("../../Models/EventForm");
+const validator = require('../../Validations/EventValidations')
 
 router.get("/", async (req, res) => res.json({ data: await Event.find() }));
 
 
+
+  
 
 //res.send(`<a href="/api/EventForm">EventForm</a>`)
 
@@ -25,57 +28,19 @@ router.get("/eventform", async(req, res) => {
 router.post("/", async (req, res) => {
   try {
     const isValidated = validator.createValidation(req.body);
+
     if (isValidated.error)
       return res
         .status(400)
         .send({ error: isValidated.error.details[0].message });
 
-    const eventName = req.body.eventName;
-    const eventType = req.body.eventType;
-    const description = req.body.description;
-    const date = req.body.date;
+    const newEvent = await Event.create(req.body);
 
-    if (!eventName)
-      return res.status(400).send({ err: "event Name field is required" });
-    if (typeof description !== "string")
-      return res.status(400).send({ err: "Invalid value for event Name" });
-
-    if (!description)
-      return res.status(400).send({ err: "description field is required" });
-    if (typeof description !== "string")
-      return res.status(400).send({ err: "Invalid value for description" });
-
-    if (!date) return res.status(400).send({ err: "date field is required" });
-    if (typeof date !== "date")
-      return res.status(400).send({ err: "Invalid value for date" });
-
-    if (!eventType)
-      return res.status(400).send({ err: "Event Type field is required" });
-    if (typeof eventType !== "string")
-      return res.status(400).send({ err: "Invalid value for Event Type" });
-
-    const newEvent = {
-      eventName,
-      eventType,
-      description,
-      date
-    };
-    events.push(newEvent);
-    res.send(events);
-
-    return res.json({ data: newEvent });
+    res.json({ msg: "Event was created successfully", data: newEvent });
   } catch (error) {
-    res.status(404).send(error.message);
+    res.send(`error, we couldn't create Event`);
   }
 });
-
-
-// Delete an Event
-router.delete("/", async (req, res) =>
-  res.json({ data: await Event.splice(index, 1) })
-);
-
-
 // Update an event's info
 router.put("/", async (req, res) => {
   try {

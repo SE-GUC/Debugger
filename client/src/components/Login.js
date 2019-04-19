@@ -16,25 +16,33 @@ export class Login extends Component {
         password: ""
       },
       userId: "",
-      VGSUserId: ""
+      VGSUserId: "",
+      invalidCredentials: false,
+      invalidCredMsg: "Wrong email or password"
     };
     this.Login = this.Login.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
   Login = async () => {
+    let userData;
     if(this.state.credentials.email.trim() !== ''||this.state.credentials.password.trim() !== '')
     {
       let status=null;
-      const userData = await axios.post("http://localhost:8000/api/profile/login",
+      userData = await axios.post("http://localhost:8000/api/profile/login",
       this.state.credentials);
-      console.log(userData.data.vgsUsedId)
-      if(userData.data.vgsUsedId){
-        const result = await axios.get("http://localhost:8000/api/VGS/status/application_form_view/"+userData.data.vgsUsedId)
-        status = result.data.appStatus
+      //console.log(userData.data.vgsUsedId)
+      if(userData.data.userId){
+        if(userData.data.vgsUsedId){
+          const result = await axios.get("http://localhost:8000/api/VGS/status/application_form_view/"+userData.data.vgsUsedId)
+          status = result.data.appStatus
+        }
+        this.handleAfterSuccessfulLogin(userData.data.userId, userData.data.vgsUsedId, userData.data.userType,status)
+      }
+      else  if(userData.status === 203){
+        this.setState({invalidCredentials: true})
       }
 
-      this.handleAfterSuccessfulLogin(userData.data.userId, userData.data.vgsUsedId, userData.data.userType,status)
 
     console.log(userData.data);
     }
@@ -50,6 +58,7 @@ export class Login extends Component {
     // applicantState[name]= event.target.value;
     this.setState(previousState => {
       previousState.credentials[name] = event.target.value;
+      previousState.invalidCredentials=false;
       return previousState;
     });
   }
@@ -67,8 +76,8 @@ export class Login extends Component {
   render() {
     return (
       <div>
-        <div>USERID : {this.props.usrId}</div>
-        <div>VGS ID :{this.props.vgsUsrId}</div>
+        {/* <div>USERID : {this.props.usrId}</div>
+        <div>VGS ID :{this.props.vgsUsrId}</div> */}
         {/* <div>USER TYPE :{this.props.usrType} ===== {this.props.appStatus}</div> */}
         <div></div>
         {this.props.usrId ===null?
@@ -120,6 +129,16 @@ export class Login extends Component {
         <div className="alert alert-danger">
           <strong>Warning !</strong> You are already logged in !!
         </div> }
+
+    {this.state.invalidCredentials===true?
+        <div className="row">
+        <div className="col-md-3" />
+        <div className="col-md-6">
+          <div className="alert alert-warning" align="center">{this.state.invalidCredMsg}</div>
+        </div>
+        <div className="col-md-3" />
+        </div>
+        :null}
       </div>
     );
   }
