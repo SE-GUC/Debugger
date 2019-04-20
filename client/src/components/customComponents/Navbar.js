@@ -17,9 +17,9 @@ export class Navbar extends Component {
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <span className="navbar-brand">
-            VGS
-          </span>
+          <a className="navbar-brand" href='/'>
+            VGS 
+          </a>
           <button
             className="navbar-toggler"
             type="button"

@@ -175,7 +175,7 @@ router
     .get(async (req, res) => {
         try {
             let user=null
-            const allApplicationForms = await VGS_User.find({appStatus: appStatusEnum.Pending.value,userType:userTypeEnum.Applicant.value})
+            const allApplicationForms = await VGS_User.find({appStatus: appStatusEnum.Pending.value/*,userType:userTypeEnum.Applicant.value*/})
             if(allApplicationForms.length >0){
               let pendingApps=[]
               for(let i = 0 ; i < allApplicationForms.length ; i++){
@@ -222,21 +222,21 @@ router
     })
 // update applicant fields
 router
-    .route('/application_form_update')
+    .route('/application_form_update/:id')
     .put(async (req, res) => {
         try{
             //const foundApplicant = await VGS_User.find(app => app.email == req.body.email)
             //if(!req.body.email) return res.status(400).send('email is required')
             //let foundApplicant = (await VGS_User.findOne({userId:req.body.id}))
-            let foundApplicant = (await VGS_User.findById(req.body.id))
-            if(!foundApplicant) return res.status(400).send(`the applicant with this id is not found, check the id`)
+            let foundApplicant = (await VGS_User.findById(req.params.id))
+            if(!foundApplicant) return res.status(500).send(`the applicant with this id is not found, check the id`)
             // if(req.body.newEmail.trim()!='' || req.body.newEmail){
             //   let foundApplicantWithNewEmail = (await VGS_User.findOne({email:req.body.newEmail}))
             //   if(foundApplicantWithNewEmail)
             //    return res.status(500).send(`This email is already used`)
             // }
             else{
-                await VGS_User.update({_id:req.body.id},
+                await VGS_User.update({_id:req.params.id},
                     {
                     //email : (req.body.newEmail || foundApplicant.email),
                     clubCommittee : (req.body.clubCommittee || foundApplicant.clubCommittee),
@@ -250,8 +250,30 @@ router
             return res.send('Updated')
         }
         catch (error){
-            return res.status(400).send('error, failed to update')
+            return res.status(501).send('error, failed to update')
         }
+    })
+
+router
+    .route('/returnApplicant/:id')
+    .get(async (req, res)=>{
+      try{
+        let foundApplication = await VGS_User.findById(req.params.id)
+        if(!foundApplication) return res.status(500).send(`there's no application with this id`)
+        let AppData = {
+          userType: foundApplication.userType,
+          clubCommittee: foundApplication.clubCommittee,
+          hobbies: foundApplication.hobbies,
+          VGSYear: foundApplication.VGSYear,
+          appliedPosition: foundApplication.appliedPosition,
+          gameName: foundApplication.gameName
+        }
+        return res.send(AppData)
+      }
+      catch(error){
+        return res.status(501).send(error.message)
+      }
+
     })
  
  router.get('/showusers', async (req,res) => {

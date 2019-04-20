@@ -22,12 +22,13 @@ export class Registration extends Component {
       shit: [],
       studyYearCodes: [],
       transportationCodes: [],
-      clubCodes: []
+      clubCodes: [],
+      registerMsg: false
     };
     //this.Register = this.Register.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleCheckBox = this.handleCheckBox.bind(this);
-    this.show = this.show.bind(this);
+    //this.show = this.show.bind(this);
   }
 
   parseStudyYears(studyYears) {
@@ -84,9 +85,9 @@ export class Registration extends Component {
     });
   }
 
-  show() {
-    console.log(this.state.UserData);
-  }
+  // show() {
+  //   console.log(this.state.UserData);
+  // }
 
   handleCheckBox(event) {
     const value = parseInt(event.target.value);
@@ -113,6 +114,9 @@ export class Registration extends Component {
       "http://localhost:8000/api/profile/register",
       this.state.UserData
     );
+    if(registerUser.status === 200){
+      this.setState({registerMsg: true})
+    }
     console.log(registerUser.data);
   };
 
@@ -148,6 +152,7 @@ export class Registration extends Component {
                         type="password"
                         className="form-control"
                         name="password"
+                        placeholder='minimum 6 characters'
                         onChange={this.handleChange}
                       />
                     </td>
@@ -168,7 +173,7 @@ export class Registration extends Component {
                   </tr>
 
                   <tr>
-                    <td>Name</td>
+                    <td>Name <span style={divStyle}>*</span></td>
                     <td>
                       <input
                         className="form-control"
@@ -179,7 +184,7 @@ export class Registration extends Component {
                   </tr>
 
                   <tr>
-                    <td>Study Year</td>
+                    <td>Study Year<span style={divStyle}>*</span></td>
                     <td>
                       <select
                         className="form-control"
@@ -197,7 +202,7 @@ export class Registration extends Component {
                   </tr>
 
                   <tr>
-                    <td>General Address</td>
+                    <td>General Address<span style={divStyle}>*</span></td>
                     <td>
                       <input
                         className="form-control"
@@ -208,7 +213,7 @@ export class Registration extends Component {
                   </tr>
 
                   <tr>
-                    <td>Phone Number</td>
+                    <td>Phone Number <span style={divStyle}>*</span></td>
                     <td>
                       <input
                         type="number"
@@ -220,7 +225,7 @@ export class Registration extends Component {
                   </tr>
 
                   <tr>
-                    <td>Mode of Transportation</td>
+                    <td>Mode of Transportation<span style={divStyle}>*</span></td>
                     <td>
                       <select
                         className="form-control"
@@ -262,13 +267,13 @@ export class Registration extends Component {
                       >
                         Register
                       </button>
-                      <button
+                      {/* <button
                         type="button"
                         className="btn btn-success"
                         onClick={this.show}
                       >
                         show
-                      </button>
+                      </button> */}
                     </td>
                   </tr>
                 </tbody>
@@ -276,6 +281,17 @@ export class Registration extends Component {
             </div>
             <div className="col-md-3" />
           </div>
+
+          {this.state.registerMsg === true ?
+          <div className="row">
+            <div className="col-md-3" />
+            <div className="col-md-6 center-block" align="center">
+                <div className="alert alert-success" align='center'>
+                    You have registered successfully.
+                </div>
+            </div>
+            <div className="col-md-3"/>
+          </div>:null}
         </div>
            :<div className="alert alert-danger">
                 <strong>Warning !</strong> You are not allowed to view this page !!
