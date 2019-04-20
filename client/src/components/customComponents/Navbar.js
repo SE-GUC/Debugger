@@ -100,6 +100,30 @@ export class Navbar extends Component {
               Events
                 </a>
               </li> 
+
+              <li>
+              <a className="nav-link" style={fontStyle} href="/ViewEvents">
+              View Events
+                </a>
+              </li> 
+
+              <li>
+              <a className="nav-link" style={fontStyle} href="/ViewEventForms">
+              View Event Forms
+                </a>
+              </li> 
+
+              <li>
+              <a className="nav-link" style={fontStyle} href="/ViewMessages">
+              View Messages
+                </a>
+              </li> 
+
+              <li>
+              <a className="nav-link" style={fontStyle} href="/ContactUs">
+              ContactUs
+                </a>
+              </li> 
       
               <li className="nav-item" style={{fontSize:"15px",color:"#0FB91B"}}>
                 {this.props.vgsUsrId!==null?this.getAppStatusValue(this.props.appStatus):""}

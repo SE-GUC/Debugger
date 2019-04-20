@@ -21,6 +21,10 @@ import ViewAllUsersAndDelete from './components/ViewAllUsersAndDelete'
 //import ViewUserItem from './components/ViewUserItem'
 //import ViewUsers from './components/ViewUsers'
 import GetFaq from './components/GetFaq'
+import ContactUs from './components/ContactUs'
+import ViewEvents from './components/ViewEvents'
+import ViewEventForms from './components/ViewEventForms'
+import ViewMessages from './components/ViewMessages'
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 
 class App extends Component {
@@ -52,6 +56,10 @@ class App extends Component {
             <Route path="/GetFaq" component={GetFaq} />
 
             <Route path="/ShowEvents" component={ShowEvents} />
+            <Route path="/ContactUs" component={ContactUs} />
+            <Route path="/ViewEvents" component={ViewEvents} />
+            <Route path="/ViewMessages" component={ViewMessages} />
+            <Route path="/ViewEventForms" component={ViewEventForms} />
           </Switch>
         </div>
       </Router>

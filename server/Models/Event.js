@@ -7,20 +7,19 @@ const EventSchema = new Schema({
         required: true
     },
     eventType : {
-        type: String
-        
+        type: String,
+        required: true
     },
     description : {
         type: String,
         required: true
     },
     date : {
-        type: String 
-
-        
+        type: String,
+        required: true
     }
 
 })
 
 
-module.exports =Event= mongoose.model('events', EventSchema)
+module.exports = Event = mongoose.model('Events', EventSchema)
