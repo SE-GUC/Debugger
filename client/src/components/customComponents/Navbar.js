@@ -16,7 +16,7 @@ export class Navbar extends Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light target-active">
           <a className="navbar-brand" href='/'>
             VGS 
           </a>

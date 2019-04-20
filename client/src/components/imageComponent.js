@@ -9,7 +9,7 @@ export class imageComponent extends Component {
         <div className="container"/>
           <div className="row"/>
           <div className="col-md-12" align='center'>
-          <img src={cont} alt='' style={{width:"100%" , height:"700px"}} />
+          <img src={cont} alt='' style={{width:"98.5%" , height:"700px"}} />
           </div>
       </div>
     )
