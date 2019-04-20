@@ -9,7 +9,7 @@ import {Enum_userType} from '../Enums/Enums'
 //import { stringify } from 'querystring';
 
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
-const email = 'ahmed@gmail.com'
+
 //const newSlots =[]
 export class ShowFreeSlots extends Component {
  
