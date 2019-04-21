@@ -52,7 +52,8 @@ export class ShowInterviews extends Component {
             interview : s.interview
         })     
 
-        .then(res => alert ("This Interview was updated Successfully"))
+        .then(res => { this.setState({interviews: res.data })
+          alert ("This Interview was updated Successfully")})
         .catch(function(error) {
            alert(error.message);
       })
@@ -61,6 +62,7 @@ export class ShowInterviews extends Component {
   render() {
 
       if (this.props.userId){
+       if (this.state.interviews.length > 0){
         return (
         <div className = "container"> 
                 <table className = "table">
@@ -83,6 +85,14 @@ export class ShowInterviews extends Component {
         )
     }
 
+  else{
+    return(
+        <div className="alert alert-info">
+           <strong> Note: </strong> There are no Interviews yet
+        </div>
+      )
+  }
+}
     else{
         return(
             <div className="alert alert-danger">

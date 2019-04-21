@@ -122,14 +122,7 @@ router.put('/edit', async (req, res) => {
 
         })
 
-        const updated = await Interview.findOne({
-            interviewerEmail: interviewerEmail
-            , day: day
-            , date: date
-            , interviewslot: slot
-
-        })
-
+        const updated = await Interview.find()
         res.send(updated);
 
     }
