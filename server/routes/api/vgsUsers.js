@@ -10,6 +10,19 @@ const UserTable = require('../../Models/User')
 const appStatusEnum = require('../../Models/Enums/Enums').Enum_appStatus;
 const userTypeEnum = require('../../Models/Enums/Enums').Enum_userType;
 
+router.get('/:id', async (req, res) => {
+  try{
+    
+    const userId = req.params.id
+    const user = await VGS_User.findOne({userId: userId})
+    res.send(user)
+    
+  }
+
+  catch(error){
+    res.send(error.message)
+  }
+})
 // Id in body not in params
 // email in creating
 // Testing

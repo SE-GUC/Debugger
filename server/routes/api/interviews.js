@@ -37,7 +37,6 @@ router.get('/', async (req, res) => {
 
     try {
         
-        
         const interviews = await Interview.find()
         res.send(interviews)
 
@@ -56,45 +55,6 @@ router.put('/edit', async (req, res) => {
 
     try {
 
-        const exist = await Interview.find()
-        //console.log(exist)
-        if (exist == false || !exist) {
-            await Interview.create({
-                interviewerEmail: 'ahmed@gmail.com'
-                , intervieweeEmail: 'mohamed@gmail.com'
-                , day: 'Monday'
-                , date: '11-09-2019'
-                , interviewslot: '2nd'
-                , startTime: '10:00'
-                , endTime: '10:30'
-                , interview: true
-            })
-
-            await Interview.create({
-                interviewerEmail: 'ahmed@gmail.com'
-                , intervieweeEmail: null
-                , day: 'Monday'
-                , date: '11-09-2019'
-                , interviewslot: '3rd'
-                , startTime: null
-                , endTime: null
-                , interview: false
-            })
-
-            await Interview.create({
-                interviewerEmail: 'tamer@gmail.com'
-                , intervieweeEmail: null
-                , day: 'Monday'
-                , date: '11-09-2019'
-                , interviewslot: '3rd'
-                , startTime: null
-                , endTime: null
-                , interview: false
-            })
-
-        }
-
-        //console.log(await Interview.find())
 
         const interviewerEmail = req.body.interviewerEmail
         const day = req.body.day
@@ -121,7 +81,7 @@ router.put('/edit', async (req, res) => {
         const result = Joi.validate(req.body, schema)
 
         if (result.error)
-            return res.status(400).send({ error: result.error.details[0].message })
+            return res.status(400).send(result.error.details[0].message )
 
         const interviewsCheck = await Interview.findOne({
 
@@ -133,7 +93,7 @@ router.put('/edit', async (req, res) => {
         })
 
         if (!interviewsCheck || interviewsCheck == false)
-            return res.status(404).send({ err: 'Does not exist' })
+            return res.status(404).send('Does not exist' )
 
         const oldInterview = {
 
@@ -158,7 +118,7 @@ router.put('/edit', async (req, res) => {
         await Interview.update(oldInterview, newInt, (err, result) => {
 
             if (err)
-                res.status(404).send(err.message)
+                return res.status(404).send(err.message)
 
         })
 
