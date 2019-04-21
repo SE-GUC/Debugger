@@ -31,17 +31,18 @@ export class GetFaq extends Component {
         };s
 
 
-        //     async updatefaq(id){
-        //     let currentfaq = document.getElementById(id).value
-        //     const data = {
-        //       id:id,
+            async updatefaq(id){
+            let currentfaq = document.getElementById(id).value
+            const data = {
+              id:id,
+
               
-        //     }
-        //     const updateDate = await axios.post('http://localhost:8000/api/VGS/update/AppForm',data)
-        //     if(updateDate.status === 200){
-        //       this.gettingAppForms()
-        //     }
-        //   }
+            }
+            const updateDate = await axios.post('http://localhost:8000/api/faq/edit_faq/:id',data)
+            if(updateDate.status === 200){
+              this.getFaqs()
+            }
+          }
 
 
 

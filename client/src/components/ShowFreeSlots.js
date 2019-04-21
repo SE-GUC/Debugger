@@ -70,7 +70,8 @@ export class ShowFreeSlots extends Component {
     return (
       <div>
         <CreateFreeSlots createSlots = {this.createSlots}/>
-        <HeadFreeSlots editSlots = {this.editSlots} headFreeSlots = {this.state.freeSlots} />
+        <HeadFreeSlots editSlots = {this.editSlots}
+         headFreeSlots = {this.state.freeSlots} />
        {/* editSlots = {this.editSlots}/> */}
       </div>
     )

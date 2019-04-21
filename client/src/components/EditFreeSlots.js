@@ -10,7 +10,8 @@ export class EditFreeSlots extends Component {
         newSlot: ""
       }
 
-      onChange = (e) => {this.setState ({day: this.props.oldSlots.day,
+      onChange = (e) => {this.setState 
+        ({day: this.props.oldSlots.day,
         date: this.props.oldSlots.date,
         slot: this.props.oldSlots.slot})
         
