@@ -8,7 +8,9 @@ import {connect} from "react-redux";
 export class OneInterview extends Component {
   render() {
 
-      if (this.props.boothMember || (this.props.userType === (Enum_userType.President.value||Enum_userType.Director.value||Enum_userType.Head.value))){
+      if (this.props.boothMember || (this.props.userType === Enum_userType.President.value)||
+        (this.props.userType === Enum_userType.Director.value)||
+        (this.props.userType === Enum_userType.Head.value)){
         return (
           <div>
             <div className = "container">
