@@ -13,7 +13,8 @@ class HeadFreeSlots extends Component {
 }
 
 HeadFreeSlots.propTypes = {
-    headFreeSlots: PropTypes.array.isRequired
+    headFreeSlots: PropTypes.array.isRequired,
+    editSlots: PropTypes.func.isRequired
 }
 
 export default HeadFreeSlots;
