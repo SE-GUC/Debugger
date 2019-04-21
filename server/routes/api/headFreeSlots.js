@@ -13,7 +13,8 @@ const User = require('../../Models/User')
 router.post('/add', async (req, res) => {
 
     try {
-
+        
+        
         const email = req.body.email
         const day = req.body.day
         const date = req.body.date
@@ -29,16 +30,16 @@ router.post('/add', async (req, res) => {
         };
 
         const result = Joi.validate(req.body, schema)
-        if (result.error) return res.status(400).send({ error: result.error.details[0].message })
+        if (result.error) return res.status(400).send(result.error.details[0].message )
 
-        const headSlot = await HeadFreeSlot.find({
+        const headSlot = await HeadFreeSlot.findOne({
             headEmail: email
             , date: date
             , day: day
             , slot: slot
         })
 
-        if (headSlot === true) return res.status(404).send({ err: 'Already exists' })
+       if (headSlot) return res.status(404).send( {error :"Already exists"})
 
         newFreeSlot = await HeadFreeSlot.create({
             headEmail: email
@@ -58,10 +59,10 @@ router.post('/add', async (req, res) => {
             , interview: false
         })
 
-        const freeSlots = await HeadFreeSlot.find()
+        const freeSlots = await HeadFreeSlot.find({headEmail: email})
         const interviews = await Interview.find()
-        console.log(interviews)
-        res.send({ data: freeSlots })
+        //console.log(interviews)
+        res.send(freeSlots)
 
     }
 
@@ -75,44 +76,12 @@ router.post('/add', async (req, res) => {
 
 //Showing the whole free slots table
 router.get('/:email', async (req, res) => {
-
+   
     try {
-
-        const exist = HeadFreeSlot.find()
-        if (exist == false) {
-
-            await HeadFreeSlot.create({
-
-                headEmail: 'ahmed@gmail.com'
-                , day: 'Monday'
-                , date: '11-09-2019'
-                , slot: '2nd'
-
-            })
-
-            await HeadFreeSlot.create({
-
-                headEmail: 'ahmed@gmail.com'
-                , day: 'Monday'
-                , date: '11-09-2019'
-                , slot: '3rd'
-
-            })
-
-            await HeadFreeSlot.create({
-
-                headEmail: 'tamer@gmail.com'
-                , day: 'Monday'
-                , date: '11-09-2019'
-                , slot: '3rd'
-
-            })
-
-        }
-
+        
         const userEmail = req.params.email
         const freeSlots = await HeadFreeSlot.find({ headEmail: userEmail })
-        res.send({ data: freeSlots })
+        res.send(freeSlots)
 
     }
 
@@ -129,81 +98,7 @@ router.put('/update/', async (req, res) => {
 
     try {
 
-        const ex = await HeadFreeSlot.find()
-        if (ex == false) {
-
-            await HeadFreeSlot.create({
-
-                headEmail: 'ahmed@gmail.com'
-                , day: 'Monday'
-                , date: '11-09-2019'
-                , slot: '2nd'
-
-            })
-
-            await HeadFreeSlot.create({
-
-                headEmail: 'ahmed@gmail.com'
-                , day: 'Monday'
-                , date: '11-09-2019'
-                , slot: '3rd'
-
-            })
-
-            await HeadFreeSlot.create({
-
-                headEmail: 'tamer@gmail.com'
-                , day: 'Monday'
-                , date: '11-09-2019'
-                , slot: '3rd'
-
-            })
-
-        }
-
-        const exist = await Interview.find()
-        if (exist == false) {
-
-            await Interview.create({
-
-                interviewerEmail: 'ahmed@gmail.com'
-                , intervieweeEmail: 'mohamed@gmail.com'
-                , day: 'Monday'
-                , date: '11-09-2019'
-                , interviewslot: '2nd'
-                , startTime: '10:00'
-                , endTime: '10:30'
-                , interview: true
-
-            })
-
-            await Interview.create({
-
-                interviewerEmail: 'ahmed@gmail.com'
-                , intervieweeEmail: null
-                , day: 'Monday'
-                , date: '11-09-2019'
-                , interviewslot: '3rd'
-                , startTime: null
-                , endTime: null
-                , interview: false
-
-            })
-
-            await Interview.create({
-
-                interviewerEmail: 'tamer@gmail.com'
-                , intervieweeEmail: null
-                , day: 'Monday'
-                , date: '11-09-2019'
-                , interviewslot: '3rd'
-                , startTime: null
-                , endTime: null
-                , interview: false
-
-            })
-
-        }
+        
 
         const headEmail = req.body.email
         const oldDay = req.body.oldDayToBeChanged
@@ -227,7 +122,7 @@ router.put('/update/', async (req, res) => {
 
         const result = Joi.validate(req.body, schema)
 
-        if (result.error) return res.status(400).send({ error: result.error.details[0].message })
+        if (result.error) return res.status(400).send(result.error.details[0].message )
 
         const check = await HeadFreeSlot.findOne({
 
@@ -239,7 +134,7 @@ router.put('/update/', async (req, res) => {
         })
 
         if (check == false || !check)
-            return res.status(404).send({ err: 'Cannot update this slot since it does not exist' })
+            return res.status(404).send('Cannot update this slot since it does not exist')
 
         const interviewsCheck = await Interview.findOne({
 
@@ -251,7 +146,7 @@ router.put('/update/', async (req, res) => {
         })
 
         if (interviewsCheck.interview == true)
-            return res.status(404).send({ err: 'Cannot update this slot since you have an interview in' })
+            return res.status(404).send('Cannot update this slot since you have an interview in')
 
         const oldOne = {
 
@@ -273,7 +168,7 @@ router.put('/update/', async (req, res) => {
         const updated = await HeadFreeSlot.updateOne(oldOne, newOne, (err, result) => {
 
             if (err)
-                res.status(404).send(err.message)
+                return res.status(404).send(err.message)
 
         })
 
@@ -298,14 +193,14 @@ router.put('/update/', async (req, res) => {
 
             if (err)
 
-                res.status(404).send(err.message)
+                return res.status(404).send(err.message)
 
         })
 
         const freeSlots = await HeadFreeSlot.find({ headEmail: headEmail })
         const showInterview = await Interview.find()
-        console.log(showInterview)
-        res.send({ data: freeSlots })
+       // console.log(showInterview)
+        res.send(freeSlots)
 
     }
 
