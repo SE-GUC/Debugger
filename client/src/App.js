@@ -18,9 +18,12 @@ import Note from './components/Note'
 import HeadAddMember from './components/HeadAddMember'
 import CreateFaq from './components/CreateFaq'
 import ViewAllUsersAndDelete from './components/ViewAllUsersAndDelete'
+import Presidentedit from './components/Presidentedit'
 //import ViewUserItem from './components/ViewUserItem'
 //import ViewUsers from './components/ViewUsers'
 import GetFaq from './components/GetFaq'
+import Head from './components/Head'
+import President from './components/President'
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 
 class App extends Component {
@@ -46,11 +49,12 @@ class App extends Component {
             <Route path="/head" component={HeadDelete} />
             <Route path="/note" component={Note} />
             <Route path="/headAddMember" component={HeadAddMember} />
-
+            <Route path="/presidentedit" component={Presidentedit} />
+            <Route path="/presidentfeatures" component={President} />
             <Route path="/CreateFaq" component={CreateFaq} />
             <Route path="/ViewAllUsersAndDelete" component={ViewAllUsersAndDelete} />
             <Route path="/GetFaq" component={GetFaq} />
-
+            <Route path="/headfeatures" component ={Head} />
             <Route path="/ShowEvents" component={ShowEvents} />
           </Switch>
         </div>

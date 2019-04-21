@@ -406,7 +406,7 @@ router
 		res.status(500).send(`error, can't add member`)
 	}
    })
-// prisedent can edit user
+// president can edit user
 
 router.route("/edituser").put(async (req, res) => {
   //vgsuser data
@@ -520,7 +520,7 @@ router.route("/edituser").put(async (req, res) => {
 	await VGS_User.updateOne({userId:user.id},
 	      {
 		
-	    	userId: vgsuser.userId,
+	    userId: vgsuser.userId,
 			hobbies: vgsuser.hobbies,
 			appliedPosition: vgsuser.appliedPosition,
 			gameName: vgsuser.gameName,
@@ -575,26 +575,16 @@ router.get('/getDirectors', async (req, res)=>{
 // VGS_User.create({
  
 // appStatus:1,
-// userId:"5cb0c80b3b744f424817553d",
-// userType:2,
-// clubCommittee:null,
+// userId:"5cbb3284ee29571fb4703189",
+// userType:4,
+// clubCommittee:"null",
 // hobbies:"swimmming",
 // VGSYear:2018,
-// appliedPosition:null,
-// notes:
-// "verygood",
-// gameName
-// :
-// "candy cruch",
-// gameScrSho
-// :
-// null,
-
-// downloadLink
-// :
-// "asldfkkffjjf",
-// boothMember
-// :
-// true
+// appliedPosition:"member",
+// notes:"good",
+// gameName: "tower",
+// gameScrSho : null,
+// downloadLink : "http://tower",
+// boothMember: true
 // })
 module.exports = router;
