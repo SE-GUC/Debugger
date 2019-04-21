@@ -5,12 +5,11 @@ const mongoose = require("mongoose");
 
 const AWG = require("../../Models/AWG");
 const Message = require("../../Models/Message");
-
-
+const validator = require('../../Validations/messageValidations');
 
 router.get("/", async (req, res) => res.json({ data: await AWG.find() }));
 
-
+router.get("/contactUs", async (req, res) => res.json({ data: await Message.find() }));
 
 // Send contact us Message
 router.post("/", async (req, res) => {
@@ -23,7 +22,6 @@ router.post("/", async (req, res) => {
     const newMessage = await Message.create(req.body);
     res.json({ msg: "Message sent successfully", data: newMessage });
   } catch (error) {
-    //       // We will be handling the error later
     console.log(error);
   }
 });
