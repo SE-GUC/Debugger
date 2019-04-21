@@ -24,7 +24,7 @@ router
                 var endDate = new Date(req.body.voteEndTime);
                 req.body.voteEndTime = endDate;
                 const vote = await Vote.create(req.body)
-                return res.send(vote)
+                return res.status(200).send(vote)
             }
             catch(err) {
                 return res.status(500).json({ error: `Error, couldn't raise the vote`})

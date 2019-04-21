@@ -16,10 +16,10 @@ export class Navbar extends Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <span className="navbar-brand">
-            VGS
-          </span>
+        <nav className="navbar navbar-expand-lg navbar-light bg-light target-active">
+          <a className="navbar-brand" href='/'>
+            VGS 
+          </a>
           <button
             className="navbar-toggler"
             type="button"

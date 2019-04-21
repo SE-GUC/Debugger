@@ -22,12 +22,14 @@ export class Registration extends Component {
       shit: [],
       studyYearCodes: [],
       transportationCodes: [],
-      clubCodes: []
+      clubCodes: [],
+      registerMsg: false,
+      validationMsg: false
     };
     //this.Register = this.Register.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleCheckBox = this.handleCheckBox.bind(this);
-    this.show = this.show.bind(this);
+    //this.show = this.show.bind(this);
   }
 
   parseStudyYears(studyYears) {
@@ -84,9 +86,9 @@ export class Registration extends Component {
     });
   }
 
-  show() {
-    console.log(this.state.UserData);
-  }
+  // show() {
+  //   console.log(this.state.UserData);
+  // }
 
   handleCheckBox(event) {
     const value = parseInt(event.target.value);
@@ -109,10 +111,23 @@ export class Registration extends Component {
   }
 
   Register = async () => {
+    if(this.state.UserData.name === "" || 
+       this.state.UserData.birthDay === "" || 
+       this.state.UserData.email.length < 3 || 
+       this.state.UserData.password <6 || 
+       this.state.UserData.studyYear === -1 || 
+       this.state.UserData.generalAddress === "" || 
+       this.state.UserData.PhoneNumber === "" || this.state.UserData.modeOfTran === -1){
+         this.setState({validationMsg: true});
+         return;
+       }
     const registerUser = await axios.post(
       "http://localhost:8000/api/profile/register",
       this.state.UserData
     );
+    if(registerUser.status === 200){
+      this.setState({registerMsg: true})
+    }
     console.log(registerUser.data);
   };
 
@@ -122,8 +137,8 @@ export class Registration extends Component {
         {this.props.usrId ===null?
         <div className="container">
           <div className="row">
-            <div className="col-md-3" />
-            <div className="col-md-6 center-block" align="center">
+            <div className="col-md-2" />
+            <div className="col-md-8 center-block" align="center">
               <table className="table">
                 <tbody>
                   <tr>
@@ -137,6 +152,8 @@ export class Registration extends Component {
                         onChange={this.handleChange}
                       />
                     </td>
+                    {this.state.validationMsg === true?
+                    <td style={divStyle}> Please, enter your email </td>:null}
                   </tr>
 
                   <tr>
@@ -148,9 +165,12 @@ export class Registration extends Component {
                         type="password"
                         className="form-control"
                         name="password"
+                        placeholder='minimum 6 characters'
                         onChange={this.handleChange}
                       />
                     </td>
+                    {this.state.validationMsg === true?
+                    <td style={divStyle}> password must be 6 characters or more </td>:null}
                   </tr>
 
                   <tr>
@@ -165,10 +185,12 @@ export class Registration extends Component {
                         onChange={this.handleChange}
                       />
                     </td>
+                    {this.state.validationMsg === true?
+                    <td style={divStyle}> Please, enter your DOB </td>:null}
                   </tr>
 
                   <tr>
-                    <td>Name</td>
+                    <td>Name <span style={divStyle}>*</span></td>
                     <td>
                       <input
                         className="form-control"
@@ -176,10 +198,12 @@ export class Registration extends Component {
                         onChange={this.handleChange}
                       />
                     </td>
+                    {this.state.validationMsg === true?
+                    <td style={divStyle}> Please, enter your name </td>:null}
                   </tr>
 
                   <tr>
-                    <td>Study Year</td>
+                    <td>Study Year<span style={divStyle}>*</span></td>
                     <td>
                       <select
                         className="form-control"
@@ -194,10 +218,12 @@ export class Registration extends Component {
                         ))}
                       </select>
                     </td>
+                    {this.state.validationMsg === true?
+                    <td style={divStyle}> Please, select you study year </td>:null}
                   </tr>
 
                   <tr>
-                    <td>General Address</td>
+                    <td>General Address<span style={divStyle}>*</span></td>
                     <td>
                       <input
                         className="form-control"
@@ -205,10 +231,12 @@ export class Registration extends Component {
                         onChange={this.handleChange}
                       />
                     </td>
+                    {this.state.validationMsg === true?
+                    <td style={divStyle}> Please, enter your Address </td>:null}
                   </tr>
 
                   <tr>
-                    <td>Phone Number</td>
+                    <td>Phone Number <span style={divStyle}>*</span></td>
                     <td>
                       <input
                         type="number"
@@ -217,10 +245,12 @@ export class Registration extends Component {
                         onChange={this.handleChange}
                       />
                     </td>
+                    {this.state.validationMsg === true?
+                    <td style={divStyle}> Please, enter you phone number </td>:null}
                   </tr>
 
                   <tr>
-                    <td>Mode of Transportation</td>
+                    <td>Mode of Transportation<span style={divStyle}>*</span></td>
                     <td>
                       <select
                         className="form-control"
@@ -235,6 +265,8 @@ export class Registration extends Component {
                         ))}
                       </select>
                     </td>
+                    {this.state.validationMsg === true?
+                    <td style={divStyle}> Please, select a Mode of Transportation </td>:null}
                   </tr>
 
                   <tr>
@@ -262,20 +294,31 @@ export class Registration extends Component {
                       >
                         Register
                       </button>
-                      <button
+                      {/* <button
                         type="button"
                         className="btn btn-success"
                         onClick={this.show}
                       >
                         show
-                      </button>
+                      </button> */}
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div className="col-md-3" />
+            <div className="col-md-2" />
           </div>
+
+          {this.state.registerMsg === true ?
+          <div className="row">
+            <div className="col-md-3" />
+            <div className="col-md-6 center-block" align="center">
+                <div className="alert alert-success" align='center'>
+                    You have registered successfully.
+                </div>
+            </div>
+            <div className="col-md-3"/>
+          </div>:null}
         </div>
            :<div className="alert alert-danger">
                 <strong>Warning !</strong> You are not allowed to view this page !!
