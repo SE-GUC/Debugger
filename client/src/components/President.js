@@ -5,7 +5,6 @@ import Presidentedit from './Presidentedit'
 import {connect} from "react-redux";
 import {Enum_userType} from '../Enums/Enums'
 import Note from './Note'
-
 export class President extends Component {
   render() {
     return (
