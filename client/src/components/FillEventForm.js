@@ -12,18 +12,23 @@ export class FillEventForm extends Component {
     email : '' ,
     nationalidCardNumber : ''
   }
-  onChange = (e) => this.setState({ [e.target.name]: e.target.value });
+  onChange = (e) => { 
+    this.setState({ [e.target.name]: e.target.value})
+console.log(this.state)
+   }
 
   onSubmit = (e) => {
     e.preventDefault();
-    this.props.fillform(this.state);
+    this.props.fillform(this.props.eventId,this.state);
+  // console.log(this.state)
     this.setState({ 
         student_id : '' ,
     attendeeName : '' ,
     phoneNumber : '' ,
     email : '' ,
     nationalidCardNumber : '' 
-},()=>(console.log(this.state)));
+})
+console.log(this.state);
   }
 
   
@@ -31,24 +36,21 @@ export class FillEventForm extends Component {
   render() {
     return (
 
-        <div> 
-      <form>
+        <div className = "container"> 
+      <div>
       <br/>
         <h6>Fill event form </h6>
 
         <input
-
             type = "text" 
-
-            name = "student_id "
+            name = 'student_id'
             placeholder = "Student_id"
-            //value = {this.state.student_id }
+          value = {this.state.student_id }
             onChange = {this.onChange}
 />
 <input
 
             type = "text" 
-
             name = "attendeeName"
             placeholder = "AttendeeName"
            value = {this.state.attendeeName }
@@ -57,19 +59,17 @@ export class FillEventForm extends Component {
 <input
 
             type = "text" 
-
-            name = "phoneNumber "
+            name = "phoneNumber"
             placeholder = "PhoneNumber"
-          //  value = {this.state.phoneNumber}
+            value = {this.state.phoneNumber}
             onChange = {this.onChange}
 />
 <input
 
             type = "text" 
-
             name = "email"
             placeholder = "Email"
-           // value = {this.state.email}
+           value = {this.state.email}
             onChange = {this.onChange}
 />
 <input
@@ -78,7 +78,7 @@ export class FillEventForm extends Component {
 
             name = "nationalidCardNumber"
             placeholder = "NationalidCardNumber"
-            value = {this.state.nationalidCardNumber}
+           value = {this.state.nationalidCardNumber}
             onChange = {this.onChange}
 />
 <button
@@ -92,7 +92,7 @@ Submit
 </button>
 
 
-</form>
+</div>
 
 <br />
 

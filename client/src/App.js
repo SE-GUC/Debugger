@@ -16,6 +16,9 @@ import PresidentDelete from './components/PresidentDelete'
 import HeadDelete from './components/HeadDelete'
 import Note from './components/Note'
 import HeadAddMember from './components/HeadAddMember'
+import AddRequest from './components/AddRequest'
+import EditRequest from './components/EditRequest'
+import Director from './components/Director'
 import CreateFaq from './components/CreateFaq'
 import ViewAllUsersAndDelete from './components/ViewAllUsersAndDelete'
 import Presidentedit from './components/Presidentedit'
@@ -66,6 +69,11 @@ class App extends Component {
             <Route path="/GetFaq" component={GetFaq} />
             <Route path="/headfeatures" component ={Head} />
             <Route path="/ShowEvents" component={ShowEvents} />
+            <Route path="/AddRequest" component={AddRequest}/>
+            <Route path="/EditRequest" component={EditRequest}/>
+            <Route path="/Director" component={Director}/>
+
+
 
             <Route path="/" component={imageComponent}/>
           </Switch>

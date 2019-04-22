@@ -103,24 +103,18 @@ router.post('/filleventforms', async (req,res) => {
 
   try {
     //let studentID = (await EventForm.findOne({student_id:req.body.student_id}))
-    //if(!studentID) return res.status(400).send(`please enter your national id number `)
+   ////let NationalID = (await EventForm.findOne({nationalidCardNumber:req.body.nationalidCardNumber}))
+   // if(studentID || NationalID == null) return res.status(400).send(`please enter your national id number `)
    const newEventForm = await EventForm.create(req.body)
 
    res.json({msg:'Response submitted successfully', data: newEventForm})
    }
-   
   
-    
-    
-  
-  
-  
-
   catch(error) {
 
       
 
-    res.send(`error, can't submit response`)
+    res.status(404).send(`error, can't submit response`)
 
   }  
 
