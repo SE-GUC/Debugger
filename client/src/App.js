@@ -18,9 +18,11 @@ import Note from './components/Note'
 import HeadAddMember from './components/HeadAddMember'
 import CreateFaq from './components/CreateFaq'
 import ViewAllUsersAndDelete from './components/ViewAllUsersAndDelete'
+import AssignBoothMembers from './components/AssignBoothMembers'
 //import ViewUserItem from './components/ViewUserItem'
 //import ViewUsers from './components/ViewUsers'
 import GetFaq from './components/GetFaq'
+import ShowInterviews from "./components/ShowInterviews";
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 
 class App extends Component {
@@ -33,6 +35,8 @@ class App extends Component {
           <Navbar />
           <Switch>
             <Route path="/ShowFreeSlots" component={ShowFreeSlots} />
+            <Route path="/ShowInterviews" component={ShowInterviews} />
+            <Route path="/AssignBoothMembers" component={AssignBoothMembers} />
 
             <Route path="/AppForm" component={AppForm} />
             <Route path="/Vote" component={Vote} />

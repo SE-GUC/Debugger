@@ -96,6 +96,18 @@ export class Navbar extends Component {
               </li> 
 
               <li>
+              <a className="nav-link" style={fontStyle} href="/ShowInterviews">
+              Interviews
+                </a>
+              </li>
+
+              <li>
+              <a className="nav-link" style={fontStyle} href="/AssignBoothMembers">
+              Assign Booth Members
+                </a>
+              </li> 
+
+              <li>
               <a className="nav-link" style={fontStyle} href="/ShowEvents">
               Events
                 </a>
