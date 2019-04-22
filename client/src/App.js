@@ -21,6 +21,8 @@ import ViewAllUsersAndDelete from './components/ViewAllUsersAndDelete'
 //import ViewUserItem from './components/ViewUserItem'
 //import ViewUsers from './components/ViewUsers'
 import GetFaq from './components/GetFaq'
+import AppFormEdit from './components/AppFormEdit'
+import imageComponent from './components/imageComponent'
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 
 class App extends Component {
@@ -35,6 +37,7 @@ class App extends Component {
             <Route path="/ShowFreeSlots" component={ShowFreeSlots} />
 
             <Route path="/AppForm" component={AppForm} />
+            <Route path="/AppFormEdit" component={AppFormEdit} />
             <Route path="/Vote" component={Vote} />
             <Route path="/Login" component={Login} />
             <Route path="/Registration" component={Registration} />
@@ -52,6 +55,8 @@ class App extends Component {
             <Route path="/GetFaq" component={GetFaq} />
 
             <Route path="/ShowEvents" component={ShowEvents} />
+
+            <Route path="/" component={imageComponent}/>
           </Switch>
         </div>
       </Router>

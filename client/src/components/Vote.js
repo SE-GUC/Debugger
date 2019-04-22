@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from 'axios'
 import {connect} from "react-redux";
+import {Enum_userType} from '../Enums/Enums'
+import {Enum_appStatus} from '../Enums/Enums'
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 
@@ -14,7 +16,8 @@ export class Vote extends Component {
     nominees:[],
     minDate:null,
     maxDate:null,
-    activeVoteExists: false
+    activeVoteExists: false,
+    voteMsg:false
   };
 
   componentDidMount(){
@@ -34,6 +37,7 @@ export class Vote extends Component {
       minDate : _minDate,
       maxDate :_maxDate
     })
+    //console.log(Enum_userType.President.value)
   }
 
   parseNominees(Nominees) {
@@ -63,14 +67,26 @@ export class Vote extends Component {
     CreateVote = async () =>{
       const SubmittedVote = await axios.post('http://localhost:8000/api/raise_vote',this.state.vote)
       if (SubmittedVote.status === 203){
-        this.setState({activeVoteExists: true})
+        this.setState({activeVoteExists: true,voteMsg:false})
       }
-      
+      if(SubmittedVote.status===200){
+        this.setState({
+          voteMsg:true
+        })
+      }
+    }
+
+    checkAuthorization (){
+      if(this.props.usrId !==null && this.props.vgsUsrId !==null &&
+         this.props.vgsType === (Enum_userType.President.value || Enum_userType.Director.value) && 
+         this.props.appStatus.toLowerCase() === Enum_appStatus.Accepted.key.toLowerCase())
+         return true;
+      else return false;
     }
   render() {
     return (
       <div>
-     {this.props.usrId !==null?
+     {this.checkAuthorization () === true?
         <div className="container">
           <div className="row">
             <div className="col-md-3" />
@@ -123,15 +139,29 @@ export class Vote extends Component {
           
           <div className="row">
               <div className="col-md-3"></div>
-              <div className="col-md-6 center-block" align="center">
-              { this.state.activeVoteExists ? <p>There is already an active vote</p> : null }
+             
+              { this.state.activeVoteExists ?
+              <div className="col-md-6 center-block alert alert-warning" align="center">
+               <strong>Your voted wasn not created !!</strong> There is already an active vote running  
               </div>
+                : null }
               <div className="col-md-3"></div>
           </div>
         </div>
       :<div className="alert alert-danger">
       <strong>Warning !</strong> You are not allowed to view this page !!
 </div> }
+
+{this.state.voteMsg === true ? 
+        <div className="row">
+            <div className="col-md-3" />
+            <div className="col-md-6">
+                <div className="alert alert-success" align='center'> 
+                    Your vote has been successfully created
+                </div>
+            </div>
+            <div className="col-md-3" />
+        </div>:null}
      </div>
     );
   }
@@ -140,7 +170,9 @@ export class Vote extends Component {
 const mapStateToProps = (state)=>{
   return {
     usrId:state.userId,
-    vgsUsrId:state.VGSUserId
+    vgsUsrId:state.VGSUserId,
+    vgsType:state.userType,
+    appStatus:state.appStatus
   }
 }
 export default connect(mapStateToProps)(Vote);

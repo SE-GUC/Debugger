@@ -19,6 +19,13 @@ const reducer = (state = initialState, action) => {
     if(action.type ==="LOGOUT"){
       return initialState;
     }
+    if(action.type === "SUBMITAPP"){
+      return{
+        ...state,
+        VGSUserId:action.updatedVgsId,
+        appStatus:action.updatedStatus
+      }
+    }
   return state;
 };
 

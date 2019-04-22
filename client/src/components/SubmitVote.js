@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
 import VoteDashBoard from "./customComponents/VoteDashBoard";
+import {Enum_userType} from '../Enums/Enums'
+import {Enum_appStatus} from '../Enums/Enums'
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 export class SubmitVote extends Component {
@@ -19,7 +21,8 @@ export class SubmitVote extends Component {
       lastVoteDecision: null,
       noActiveVote: null,
       TotalForVotes: 0,
-      TotalAgainstVotes: 0
+      TotalAgainstVotes: 0,
+      submitMsg: false
     };
 
   }
@@ -65,8 +68,8 @@ export class SubmitVote extends Component {
     const totalFor = voteStatistics.data.For
     const totalAgainst = voteStatistics.data.Against
 
-    const perecntageFor = (totalFor/(totalFor+totalAgainst))*100
-    const perecntageAgainst = (totalAgainst/(totalFor+totalAgainst))*100
+    const perecntageFor = ((totalFor/(totalFor+totalAgainst))*100).toFixed(2)
+    const perecntageAgainst = ((totalAgainst/(totalFor+totalAgainst))*100).toFixed(2)
     this.setState({
       TotalForVotes: perecntageFor,
       TotalAgainstVotes: perecntageAgainst
@@ -83,7 +86,8 @@ export class SubmitVote extends Component {
     if (v.status === 200) {
     const lastVote = document.querySelectorAll('input')[0].checked===true ? "Yes" : "No";
       this.setState({
-        lastVoteDecision: lastVote
+        lastVoteDecision: lastVote,
+        submitMsg: true
       });
       this.getVoteStatistics(this.state.voteId);
     }
@@ -98,10 +102,18 @@ export class SubmitVote extends Component {
       return previousState;
     });
   };
+
+  checkAuthorization (){
+    if(this.props.usrId !==null && this.props.vgsUsrId !==null &&
+       this.props.vgsType === (Enum_userType.President.value || Enum_userType.Director.value) && 
+       this.props.appStatus.toLowerCase() === Enum_appStatus.Accepted.key.toLowerCase())
+       return true;
+    else return false;
+  }
   render() {
     return (
       <div>
-      {this.props.usrId !==null?
+      {this.checkAuthorization() === true?
         <div className="container">
           <div className="row">
             <div className="col-md-6 center-block" align="center">
@@ -114,12 +126,18 @@ export class SubmitVote extends Component {
                 />
               ) : null}
             </div>
+          
+            {this.state.noActiveVote === false ? 
             <div className="col-md-6">
+              <h1 align="center">Vote Results</h1>
+               <hr/>
               <b style={yesStyle}>Yes:</b>
               <div style={{backgroundColor:'#359AE8',width:this.state.TotalForVotes+'%', color:'white', textAlign:'center'}}> {this.state.TotalForVotes} %</div>
               <b style={noStyle}>No:</b>
               <div style={{backgroundColor:'#359AE8',width:this.state.TotalAgainstVotes+'%', color:'white', textAlign:'center'}}> {this.state.TotalAgainstVotes} %</div>
             </div>
+              : null}
+         
           </div>
           <div className="row">
             <div className="col-md-3" />
@@ -135,11 +153,11 @@ export class SubmitVote extends Component {
               ) : null}
             </div>
             <div className="col-md-3" />
-          </div>{" "}
+          </div>
           <div className="row">
             <div className="col-md-3" />
             <div className="col-md-6 center-block" align="center">
-              {this.state.noActiveVote ? <p>There is no active vote</p> : null}
+              {this.state.noActiveVote ? <div className="alert alert-warning" align='center'>There is no active vote</div> : null}
             </div>
             <div className="col-md-3" />
           </div>
@@ -147,6 +165,16 @@ export class SubmitVote extends Component {
       :<div className="alert alert-danger">
       <strong>Warning !</strong> You are not allowed to view this page !!
         </div> }
+        {this.state.submitMsg === true ? 
+        <div className="row">
+            <div className="col-md-3" />
+            <div className="col-md-6">
+                <div className="alert alert-success" align='center'> 
+                    Your vote has been successfully submitted
+                </div>
+            </div>
+            <div className="col-md-3" />
+        </div>:null}
      </div>
     );
   }
@@ -161,7 +189,9 @@ const noStyle = {
 const mapStateToProps = state => {
   return {
     usrId:state.userId,
-    vgsUsrId: state.VGSUserId
+    vgsUsrId: state.VGSUserId,
+    vgsType:state.userType,
+    appStatus:state.appStatus
   };
 };
 export default connect(mapStateToProps)(SubmitVote);
