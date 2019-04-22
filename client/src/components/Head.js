@@ -5,7 +5,7 @@ import HeadAddMmeber from './HeadAddMember'
 import Note from './Note'
 import {connect} from "react-redux";
 import {Enum_userType} from '../Enums/Enums'
-
+import AddRequest from './AddRequest'
 
 export class Head extends Component {
   render() {
@@ -20,12 +20,14 @@ export class Head extends Component {
     <br/>
     <a href="/note">add note</a>
     <br/>
-   
+    <a href="/AddRequest">head create Request</a>
+    <br/>
    
     <Switch>
     <Route path="/head" component={HeadDelete} />
     <Route path="/headAddMember" component={HeadAddMmeber}/>
     <Route path="/note" component={Note} />
+    <Route path="/AddRequest" component={AddRequest}/>
     </Switch>
       </div>
       </Router>:
