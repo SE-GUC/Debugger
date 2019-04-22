@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
 import {connect} from "react-redux";
+import AppFormEdit from './AppFormEdit'
+// import { BrowserRouter as Router, Route} from "react-router-dom";
+import AppFormCreate from './AppFormCreate'
+import {Enum_appStatus} from '../Enums/Enums'
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 export class AppForm extends Component {
@@ -17,7 +21,8 @@ export class AppForm extends Component {
         appliedPosition: "",
         gameName: ""
       },
-      allUserTypes: []
+      allUserTypes: [],
+      appSubmitMsg: false
     };
     this.handleApplicant = this.handleApplicant.bind(this);
     this.handleSubmitd = this.handleSubmit.bind(this);
@@ -71,7 +76,12 @@ export class AppForm extends Component {
       "http://localhost:8000/api/VGS/application_form",
       this.state.applicant
     );
-    console.log(SubmittedApp);
+    if(SubmittedApp.status === 200){
+      this.setState({appSubmitMsg: true})
+    }
+    let appStatusKey = Enum_appStatus.getKey(SubmittedApp.data.appStatus)
+    this.props.onSubmitAppForm(SubmittedApp.data._id, appStatusKey)
+    console.log(SubmittedApp.data);
     //<div className="alert alert-success">Submitted</div>
   };
 
@@ -81,133 +91,30 @@ export class AppForm extends Component {
   render() {
     return (
       <div>
-         {/* <div>USERID : {this.props.usrId}</div>
-        <div>VGSUSERID: {this.props.vgsUsrId}</div> */}
-      {this.props.usrId !==null?
-        <div className="container">
-          <div className="row">
-            <div className="col-md-3" />
-            <div className="col-md-6 center-block" align="center">
-              <table className="table">
-                <thead />
-                <tbody>
-                  <tr>
-                    <td>User Type</td>
-                    <td>
-                      <select
-                        className="form-control"
-                        name="userType"
-                        onChange={this.handleApplicant}
-                      >
-                        <option value="-1">please select</option>
-                        {this.state.allUserTypes.map((type, i) => (
-                          <option key={i} value={type.value}>
-                            {type.label}
-                          </option>
-                        ))}
-                      </select>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>Committee</td>
-                    <td>
-                      <input
-                        className="form-control"
-                        name="clubCommittee"
-                        type="text"
-                        onChange={this.handleApplicant}
-                      />
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>Hobbies</td>
-                    <td>
-                      <input
-                        className="form-control"
-                        name="hobbies"
-                        type="text"
-                        onChange={this.handleApplicant}
-                      />
-                    </td>
-                  </tr>
-                  
-                  <tr>
-                    <td>VGS Year</td>
-                    <td>
-                      <input
-                        className="form-control"
-                        name="VGSYear"
-                        type="number"
-                        onChange={this.handleApplicant}
-                      />
-                    </td>
-                  </tr>
-                
-                  <tr>
-                    <td>Applied Position</td>
-                    <td>
-                      <input
-                        className="form-control"
-                        name="appliedPosition"
-                        type="text"
-                        onChange={this.handleApplicant}
-                      />
-                    </td>
-                  </tr>
-      
-                  <tr>
-                    <td>Game Name</td>
-                    <td>
-                      <input
-                        className="form-control"
-                        name="gameName"
-                        type="text"
-                        onChange={this.handleApplicant}
-                      />
-                    </td>
-                  </tr>
-      
-                  <tr>
-                    <td>
-                      <button
-                        type="button"
-                        className="btn btn-danger"
-                        onClick={this.handleSubmit}
-                      >
-                        Submit
-                      </button>
-
-                      {/* <button
-                        type="button"
-                        className="btn btn-danger"
-                        onClick={this.handleRedux}>
-                        show redux
-                      </button> */}
-                    </td>
-                  </tr>
-
-                </tbody>
-              </table>
-            </div>
-            <div className="col-md-3" />
-          </div>
+        { this.props.usrId!==null?
+        <div>
+          {this.props.usrId !==null && this.props.vgsUsrId === null? <AppFormCreate /> : <AppFormEdit />}
         </div>
-    
-    :  <div className="alert alert-danger">
-     <strong>Warning !</strong> You are not allowed to view this page !!
-        </div> }
-     </div>
+       :   <div className="alert alert-danger">
+       <strong>Warning !</strong> You are not allowed to view this page !!
+          </div> }
+      </div>
     );
   }
 }
 const mapStateToProps = (state)=>{
   return {
     usrId:state.userId,
-    vgsUsrId:state.VGSUserId
+    vgsUsrId:state.VGSUserId,
+    status:state.appStatus
   }
 }
-export default connect(mapStateToProps)(AppForm)
+
+const mapDispatchToProps = (dispatch)=>{
+  return {
+    onSubmitAppForm:(_vgsID,_appStatus)=>dispatch({type:"SUBMITAPP", updatedVgsId: _vgsID, updatedStatus:_appStatus})
+  };
+}
+export default connect(mapStateToProps,mapDispatchToProps)(AppForm)
 // export default AppForm;
 

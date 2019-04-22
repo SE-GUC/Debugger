@@ -16,10 +16,10 @@ export class Navbar extends Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <span className="navbar-brand">
-            VGS
-          </span>
+        <nav className="navbar navbar-expand-lg navbar-light bg-light target-active">
+          <a className="navbar-brand" href='/'>
+            VGS 
+          </a>
           <button
             className="navbar-toggler"
             type="button"
@@ -92,6 +92,25 @@ export class Navbar extends Component {
               <li>
               <a className="nav-link" style={fontStyle} href="/ShowFreeSlots">
               My Free Slots
+                </a>
+              </li> 
+
+
+              <li>
+              <a className="nav-link" style={fontStyle} href="/ShowGroups">
+              My Groups
+                </a>
+              </li> 
+
+              <li>
+              <a className="nav-link" style={fontStyle} href="/ShowInterviews">
+              Interviews
+                </a>
+              </li>
+
+              <li>
+              <a className="nav-link" style={fontStyle} href="/AssignBoothMembers">
+              Assign Booth Members
                 </a>
               </li> 
 

@@ -161,7 +161,7 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch)=>{
   return {
-    onLogin:(_usrId,_vgsId,_usrType,_appStatus)=>dispatch({type:"ADDCRED",urId:_usrId, vgsId:_vgsId, vgsType: _usrType,appStatus:_appStatus})
+    onLogin:(_usrId,_vgsId,_usrType,_appStatus)=>dispatch({type:"ADDCRED", urId:_usrId, vgsId:_vgsId, vgsType: _usrType, appStatus:_appStatus})
   };
 }
 
