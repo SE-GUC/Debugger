@@ -41,7 +41,7 @@ export class SubmitVote extends Component {
     } else {
       this.getVoteStatistics(voteInfo.data.voteId);
       let lastVote;
-      if(voteInfo.data.lastVote){
+      if(voteInfo.data.lastVote !== null){
         lastVote = voteInfo.data.lastVote === true ? "Yes" : "No"
       }
       else{
@@ -103,9 +103,17 @@ export class SubmitVote extends Component {
     });
   };
 
+  isAllowedUserType(){
+    if((this.props.vgsType === Enum_userType.President.value  ||  this.props.vgsType ===  Enum_userType.Director.value)){
+      return true;
+    }
+    else
+      return false;
+  }
+
   checkAuthorization (){
     if(this.props.usrId !==null && this.props.vgsUsrId !==null &&
-       this.props.vgsType === (Enum_userType.President.value || Enum_userType.Director.value) && 
+        this.isAllowedUserType()&& 
        this.props.appStatus.toLowerCase() === Enum_appStatus.Accepted.key.toLowerCase())
        return true;
     else return false;

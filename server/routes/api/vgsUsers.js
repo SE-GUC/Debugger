@@ -9,6 +9,7 @@ const UserType = require('../../Models/Lookups/UserTypes')
 const UserTable = require('../../Models/User')
 const appStatusEnum = require('../../Models/Enums/Enums').Enum_appStatus;
 const userTypeEnum = require('../../Models/Enums/Enums').Enum_userType;
+const mongoose = require('mongoose')
 
 // Id in body not in params
 // email in creating
@@ -243,7 +244,8 @@ router
                     hobbies: (req.body.hobbies  || foundApplicant.hobbies), 
                     appliedPosition: (req.body.appliedPosition  || foundApplicant.appliedPosition),
                     gameName : (req.body.gameName  || foundApplicant.gameName),
-                    appStatus : appStatusEnum.Pending.value
+                    appStatus : appStatusEnum.Pending.value,
+                    VGSYear: (+req.body.VGSYear || foundApplicant.VGSYear)
                     }
                 )
             }
@@ -577,14 +579,19 @@ router.get('/getDirectors', async (req, res)=>{
     if (directors){
       for(i = 0 ; i < directors.length ; i++){
         let userid = directors[i].userId
-         _user = await UserTable.findById(userid)
-         if(_user){
-           directorsData.push({
-             vgsUserId: directors[i].id,
-             directorName: _user.name
-           })
-         }
-         else return (res.status(500).send('unexpected error'))
+        if(mongoose.Types.ObjectId.isValid(userid)){
+
+          _user = await UserTable.findById(userid)
+          if(_user){
+            directorsData.push({
+              vgsUserId: directors[i].id,
+              directorName: _user.name
+            })
+          }
+          else return (res.status(500).send('unexpected error'))
+        }
+        else break
+        //else return res.send('Please provide correct Id')
       }
     }
     return res.json({Directors: directorsData})

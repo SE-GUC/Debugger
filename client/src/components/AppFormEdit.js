@@ -39,6 +39,7 @@ export class AppFormEdit extends Component {
   }
 
   editAppForm = async () =>{
+    console.log(this.state.applicant)
       let update = await axios.put('http://localhost:8000/api/VGS/application_form_update/'+this.props.vgsUsrId,this.state.applicant)
       if(update.status === 200){
           this.setState({updateMsg : true})

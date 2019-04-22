@@ -76,9 +76,18 @@ export class Vote extends Component {
       }
     }
 
+    isAllowedUserType(){
+      if((this.props.vgsType === Enum_userType.President.value  ||  this.props.vgsType ===  Enum_userType.Director.value)){
+        return true;
+      }
+      else
+        return false;
+    }
+
     checkAuthorization (){
+      console.log(this.props.appStatus.toLowerCase() === Enum_appStatus.Accepted.key.toLowerCase())
       if(this.props.usrId !==null && this.props.vgsUsrId !==null &&
-         this.props.vgsType === (Enum_userType.President.value || Enum_userType.Director.value) && 
+         this.isAllowedUserType()&& 
          this.props.appStatus.toLowerCase() === Enum_appStatus.Accepted.key.toLowerCase())
          return true;
       else return false;
@@ -86,6 +95,11 @@ export class Vote extends Component {
   render() {
     return (
       <div>
+        <div>user:{this.props.usrId}</div>
+        <div>vgs:{this.props.vgsUsrId}</div>
+        <div>type:{this.props.vgsType}</div>
+        <div>status:{this.props.appStatus}</div>
+
      {this.checkAuthorization () === true?
         <div className="container">
           <div className="row">

@@ -40,6 +40,15 @@ export class ViewAppForms extends Component {
     }
   };
 
+  isAllowedUserType(){
+    if((this.props.usrType === Enum_userType.President.value || 
+       this.props.usrType ===  Enum_userType.Director.value ||
+       this.props.usrType === Enum_userType.Head.value)){
+      return true;
+    }
+    else return false;
+  }    
+
   async updateStatus(AppId){
     let currentStatus = document.getElementById(AppId).value
     const data = {
@@ -54,7 +63,7 @@ export class ViewAppForms extends Component {
   render() {
     return (
       <div>
-        {this.props.usrType === (Enum_userType.President.value||Enum_userType.Director.value||Enum_userType.Head.value)?
+        {this.isAllowedUserType()?
         <div className="container">
           <div className="row">
           {this.state.allApps.length > 0 ?

@@ -12,6 +12,15 @@ export class Navbar extends Component {
     return "App Status : "+ Enum_appStatus.getKey(value)
  }
 
+ isAllowedUserType(){
+  if((this.props.usrType === Enum_userType.President.value || 
+     this.props.usrType ===  Enum_userType.Director.value ||
+     this.props.usrType === Enum_userType.Head.value)){
+    return true;
+  }
+  else
+    return false;
+}
 
   render() {
     return (
@@ -63,7 +72,7 @@ export class Navbar extends Component {
               </li>
               :null}
             
-            {this.props.usrType === (Enum_userType.President.value||Enum_userType.Director.value||Enum_userType.Head.value )? 
+            {this.isAllowedUserType()===true? 
               <li>
               <a className="nav-link" style={fontStyle} href="/viewApplications">
               View Applications
