@@ -31,6 +31,9 @@ import AssignBoothMembers from './components/AssignBoothMembers'
 import GetFaq from './components/GetFaq'
 import AppFormEdit from './components/AppFormEdit'
 import imageComponent from './components/imageComponent'
+
+import EditFaq from  './components/EditFaq'
+import Faq from './components/Faq'
 import ShowInterviews from "./components/ShowInterviews";
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 
@@ -72,6 +75,8 @@ class App extends Component {
             <Route path="/AddRequest" component={AddRequest}/>
             <Route path="/EditRequest" component={EditRequest}/>
             <Route path="/Director" component={Director}/>
+            <Route path='/Faq' component={Faq}/>
+            <Route path="/EditFaq" component={EditFaq} />
 
 
 
@@ -79,6 +84,8 @@ class App extends Component {
           </Switch>
         </div>
       </Router>
+           //</Router>
+
     );
   }
 }

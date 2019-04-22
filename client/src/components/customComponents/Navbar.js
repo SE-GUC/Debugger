@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {Enum_userType} from '../../Enums/Enums'
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import {Enum_appStatus} from '../../Enums/Enums'
+import Faq from "../Faq";
 
 export class Navbar extends Component {
 
@@ -77,17 +78,12 @@ export class Navbar extends Component {
               </li>
              
               <li>
-              <a className="nav-link" style={fontStyle} href="/CreateFaq">
-              Faq Section to ask
+              <a className="nav-link" style={fontStyle} onClick = {<Faq/>} href="/Faq">
+              Faq Section 
                 </a>
               </li>
 
 
-              <li>
-              <a className="nav-link" style={fontStyle} href="/GetFaq">
-              Faq Section view
-                </a>
-              </li>
 
               <li>
               <a className="nav-link" style={fontStyle} href="/ShowFreeSlots">

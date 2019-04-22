@@ -72,9 +72,9 @@ export class GetFaq extends Component {
                             <td>{data.answer}</td>
                             <td>{data.answeredBy}</td>
                             <td>{data.date}</td>
-                            <td>
+                            
 
-                            <button className="قم بالضغط ع الزر يا سكر" onClick={()=>this.updateStatus(data.id)}>Update</button></td>                    
+                             
                           </tr>
                         ))}
                       </tbody>
