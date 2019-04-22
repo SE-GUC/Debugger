@@ -117,8 +117,13 @@ export class ShowFreeSlots extends Component {
 
      else {
       return(
-        <div className="alert alert-info">
-           <strong> Note: </strong> You don't have Free Slots yet
+        <div className = "container">
+          <div className="alert alert-info">
+            <strong> Note: </strong> You don't have Free Slots yet
+          </div>
+          <div>
+            <CreateFreeSlots createSlots = {this.createSlots}/>
+          </div>
         </div>
       )
      }
