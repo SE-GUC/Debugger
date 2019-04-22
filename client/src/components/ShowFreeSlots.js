@@ -9,7 +9,7 @@ import {Enum_userType} from '../Enums/Enums'
 //import { stringify } from 'querystring';
 
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
-const email = 'ahmed@gmail.com'
+
 //const newSlots =[]
 export class ShowFreeSlots extends Component {
  
@@ -117,8 +117,13 @@ export class ShowFreeSlots extends Component {
 
      else {
       return(
-        <div className="alert alert-info">
-           <strong> Note: </strong> You don't have Free Slots yet
+        <div className = "container">
+          <div className="alert alert-info">
+            <strong> Note: </strong> You don't have Free Slots yet
+          </div>
+          <div>
+            <CreateFreeSlots createSlots = {this.createSlots}/>
+          </div>
         </div>
       )
      }
