@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ViewUsers from './ViewUsers'
 import axios from 'axios'
-import { userInfo } from 'os';
+//import { userInfo } from 'os';
 
 class ViewAllUsersAndDelete extends Component {
   constructor(props){
@@ -28,7 +28,8 @@ async componentDidMount(){
   }
 
  delUser = async (id) => {
-      const deleted = await axios.delete(`http://localhost:8000/api/profile/${id}`)
+      //const deleted = await axios.delete(`http://localhost:8000/api/profile/${id}`)
+      await axios.delete(`http://localhost:8000/api/profile/${id}`)
       console.log("user deleted")
       this.setState({allUser: [...this.state.allUser.filter(User => User['_id'] !== id)]})
   }

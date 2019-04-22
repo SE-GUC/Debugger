@@ -10,6 +10,19 @@ const UserTable = require('../../Models/User')
 const appStatusEnum = require('../../Models/Enums/Enums').Enum_appStatus;
 const userTypeEnum = require('../../Models/Enums/Enums').Enum_userType;
 
+router.get('/:id', async (req, res) => {
+  try{
+    
+    const userId = req.params.id
+    const user = await VGS_User.findOne({userId: userId})
+    res.send(user)
+    
+  }
+
+  catch(error){
+    res.send(error.message)
+  }
+})
 // Id in body not in params
 // email in creating
 // Testing
@@ -20,72 +33,11 @@ const userTypeEnum = require('../../Models/Enums/Enums').Enum_userType;
 // Assigning the booth member
 router.put("/assign", async (req, res) => {
   try {
-      await VGS_User.create({
-        userId: "5ca96a2ylaamk6d4cbcd231",
-        userType: userTypeEnum.Member.value,
-        clubCommittee: "HR",
-        hobbies: "Playing Volleyball",
-        VGSYear: "2016",
-        appliedPosition: "HR Member",
-        appStatus: appStatusEnum.Accepted.value,
-        notes: null,
-        gameName: null,
-        gameScrSho: null,
-        downloadLink: null,
-        boothMember: false
-      });
 
-      await VGS_User.create({
-        userId: "5ca9rrdalaamk6d4cbcd231",
-        userType: userTypeEnum.Member.value,
-        clubCommittee: "GDD",
-        hobbies: "Developing games",
-        VGSYear: "2014",
-        appliedPosition: "GDD Member",
-        appStatus: appStatusEnum.Accepted.value,
-        notes: null,
-        gameName: null,
-        gameScrSho: null,
-        downloadLink: null,
-        boothMember: true
-      });
-
-      await VGS_User.create({
-        userId: "5tt328hylaamk6d4cbcd231",
-        userType: null,
-        clubCommittee: null,
-        hobbies: null,
-        VGSYear: null,
-        appliedPosition: null,
-        appStatus: appStatusEnum.Rejected.value,
-        notes: null,
-        gameName: null,
-        gameScrSho: null,
-        downloadLink: null,
-        boothMember: false
-      });
-
-      await VGS_User.create({
-        userId: "5cate45haaamk6d4cbcd231",
-        userType: userTypeEnum.Director.value,
-        clubCommittee: "GDD",
-        hobbies: "Coding",
-        VGSYear: "2012",
-        appliedPosition: "GDD Advisor",
-        appStatus: appStatusEnum.Accepted.value,
-        notes: null,
-        gameName: null,
-        gameScrSho: null,
-        downloadLink: null,
-        boothMember: false
-      });
-    
-
-    console.log(await VGS_User.find());
-    const memberId = req.body.userId;
+    const memberEmail = req.body.email;
 
     const schema = {
-      userId: Joi.string()
+      email: Joi.string().email()
         .required()
     };
 
@@ -93,33 +45,34 @@ router.put("/assign", async (req, res) => {
     if (result.error)
       return res.status(400).send({ error: result.error.details[0].message });
 
-    const user = await VGS_User.findOne({ userId: memberId });
+    const user = await UserTable.findOne({ email: memberEmail });
+    const vgsUser = await VGS_User.findOne({ userId: user._id });
 
     // checking if he is already a booth member
-    if (user.boothMember === true)
+    if (vgsUser.boothMember === true)
       return res.status(404).send({ err: "This member is already a booth member" });
 
     // checking if he is even accepted
-    if (user.appStatus == appStatusEnum.Rejected.value)
+    if (vgsUser.appStatus == appStatusEnum.Rejected.value)
       return res.status(404).send({
         err: "This applicant was rejected and is not a member in the club"
       });
 
     // checking if he is a member
-    if (user.userType !== userTypeEnum.Member.value)
+    if (vgsUser.userType !== userTypeEnum.Member.value)
       return res
         .status(404)
         .send({ err: "This person position is not member" });
 
     // Assigning the boothMember
-    const old = { userId: { $eq: memberId } };
+    const old = { userId: { $eq: vgsUser.userId } };
     const newR = { $set: { boothMember: true } };
 
     await VGS_User.updateOne(old, newR, (err, result) => {
-      if (err) res.status(404).send(err.message);
+      if (err) return res.status(404).send(err.message);
     });
 
-    const boothMembr = await VGS_User.findOne({ userId: memberId });
+    const boothMembr = await VGS_User.findOne({ userId: user._id });
     res.send(boothMembr);
 
   } catch (error) {
@@ -175,7 +128,7 @@ router
     .get(async (req, res) => {
         try {
             let user=null
-            const allApplicationForms = await VGS_User.find({appStatus: appStatusEnum.Pending.value,userType:userTypeEnum.Applicant.value})
+            const allApplicationForms = await VGS_User.find({appStatus: appStatusEnum.Pending.value/*,userType:userTypeEnum.Applicant.value*/})
             if(allApplicationForms.length >0){
               let pendingApps=[]
               for(let i = 0 ; i < allApplicationForms.length ; i++){
@@ -222,21 +175,21 @@ router
     })
 // update applicant fields
 router
-    .route('/application_form_update')
+    .route('/application_form_update/:id')
     .put(async (req, res) => {
         try{
             //const foundApplicant = await VGS_User.find(app => app.email == req.body.email)
             //if(!req.body.email) return res.status(400).send('email is required')
             //let foundApplicant = (await VGS_User.findOne({userId:req.body.id}))
-            let foundApplicant = (await VGS_User.findById(req.body.id))
-            if(!foundApplicant) return res.status(400).send(`the applicant with this id is not found, check the id`)
+            let foundApplicant = (await VGS_User.findById(req.params.id))
+            if(!foundApplicant) return res.status(500).send(`the applicant with this id is not found, check the id`)
             // if(req.body.newEmail.trim()!='' || req.body.newEmail){
             //   let foundApplicantWithNewEmail = (await VGS_User.findOne({email:req.body.newEmail}))
             //   if(foundApplicantWithNewEmail)
             //    return res.status(500).send(`This email is already used`)
             // }
             else{
-                await VGS_User.update({_id:req.body.id},
+                await VGS_User.update({_id:req.params.id},
                     {
                     //email : (req.body.newEmail || foundApplicant.email),
                     clubCommittee : (req.body.clubCommittee || foundApplicant.clubCommittee),
@@ -250,8 +203,30 @@ router
             return res.send('Updated')
         }
         catch (error){
-            return res.status(400).send('error, failed to update')
+            return res.status(501).send('error, failed to update')
         }
+    })
+
+router
+    .route('/returnApplicant/:id')
+    .get(async (req, res)=>{
+      try{
+        let foundApplication = await VGS_User.findById(req.params.id)
+        if(!foundApplication) return res.status(500).send(`there's no application with this id`)
+        let AppData = {
+          userType: foundApplication.userType,
+          clubCommittee: foundApplication.clubCommittee,
+          hobbies: foundApplication.hobbies,
+          VGSYear: foundApplication.VGSYear,
+          appliedPosition: foundApplication.appliedPosition,
+          gameName: foundApplication.gameName
+        }
+        return res.send(AppData)
+      }
+      catch(error){
+        return res.status(501).send(error.message)
+      }
+
     })
  
  router.get('/showusers', async (req,res) => {
