@@ -18,6 +18,7 @@ import Note from './components/Note'
 import HeadAddMember from './components/HeadAddMember'
 import CreateFaq from './components/CreateFaq'
 import ViewAllUsersAndDelete from './components/ViewAllUsersAndDelete'
+import ShowGroups from "./components/ShowGroups"
 //import ViewUserItem from './components/ViewUserItem'
 //import ViewUsers from './components/ViewUsers'
 import GetFaq from './components/GetFaq'
@@ -33,6 +34,8 @@ class App extends Component {
           <Navbar />
           <Switch>
             <Route path="/ShowFreeSlots" component={ShowFreeSlots} />
+
+            <Route path="/ShowGroups" component={ShowGroups} />
 
             <Route path="/AppForm" component={AppForm} />
             <Route path="/Vote" component={Vote} />
