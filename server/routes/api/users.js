@@ -16,11 +16,19 @@ router.get('/', async (req,res) =>{
 
 //get a specific user
 router.get('/:id', async (req,res) =>{
+  
+  try{
     const userID = req.params.id
     const users = await User.findById(userID)
     res.json({
-        data : users
+      data : users
     })
+  }
+   
+  catch (error){
+    res.status(404).send(error.message)
+  }
+
 });
 
 //create a user

@@ -29,7 +29,8 @@ export class HeadFreeSlotItem extends Component {
 }
 
 HeadFreeSlotItem.propTypes = {
-    slot: PropTypes.object.isRequired
+    slot: PropTypes.object.isRequired,
+    editSlots: PropTypes.func.isRequired
 }
 
 export default HeadFreeSlotItem

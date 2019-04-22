@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 
 export class EditFreeSlots extends Component {
     state = {
@@ -71,4 +72,8 @@ export class EditFreeSlots extends Component {
   }
 }
 
+EditFreeSlots.propTypes = {
+  oldSlots: PropTypes.object.isRequired,
+  editSlots: PropTypes.func.isRequired
+}
 export default EditFreeSlots
