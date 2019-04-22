@@ -1,27 +1,27 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import PresidentDelete from './PresidentDelete'
-import HeadDelete from './HeadDelete'
-import Note from './Note'
-import HeadAddMmeber from './HeadAddMember'
+import Head from './Head'
+import President from './President';
+import Director from './Director'
+import ViewAllUsersAndDelete from './ViewAllUsersAndDelete'
 export class VgsFeaturesPage extends Component {
   render() {
     return (
       <Router>
       <div>
-        <a href="/president">President Delete</a>
+        <a href="/presidentfeatures">president</a>
         <br/>
-        <a href="/note">add note</a>
+        <a href="/headfeatures">Head</a>
         <br/>
-        <a href="/head">head delete</a>
+        <a href="/Director"> Director features</a>
         <br/>
-        <a href="/headAddMember">head add member</a>
-
+        <a href="/ViewAllUsersAndDelete"> View All Users And Delete</a>
+        <br/>
         <Switch>
-            <Route path="/president" component={PresidentDelete} />
-            <Route path="/head" component={HeadDelete} />
-            <Route path="/note" component={Note} />
-            <Route path="/headAddMember" component={HeadAddMmeber}/>
+           <Route path="/headfeatures" component={Head} />
+           <Route path="/presidentfeatures" component={President} />
+           <Route path="/Director" component={Director}/>
+           <Route path="/ViewAllUsersAndDelete" component={ViewAllUsersAndDelete}/>
           </Switch>
       </div>
       </Router>

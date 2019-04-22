@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {Enum_userType} from '../../Enums/Enums'
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import {Enum_appStatus} from '../../Enums/Enums'
+import Faq from "../Faq";
 
 export class Navbar extends Component {
 
@@ -16,10 +17,10 @@ export class Navbar extends Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <span className="navbar-brand">
-            VGS
-          </span>
+        <nav className="navbar navbar-expand-lg navbar-light bg-light target-active">
+          <a className="navbar-brand" href='/'>
+            VGS 
+          </a>
           <button
             className="navbar-toggler"
             type="button"
@@ -77,21 +78,35 @@ export class Navbar extends Component {
               </li>
              
               <li>
-              <a className="nav-link" style={fontStyle} href="/CreateFaq">
-              Faq Section to ask
+              <a className="nav-link" style={fontStyle} href="/Faq">
+              Faq Section 
                 </a>
               </li>
 
 
-              <li>
-              <a className="nav-link" style={fontStyle} href="/GetFaq">
-              Faq Section view
-                </a>
-              </li>
 
               <li>
               <a className="nav-link" style={fontStyle} href="/ShowFreeSlots">
               My Free Slots
+                </a>
+              </li> 
+
+
+              <li>
+              <a className="nav-link" style={fontStyle} href="/ShowGroups">
+              My Groups
+                </a>
+              </li> 
+
+              <li>
+              <a className="nav-link" style={fontStyle} href="/ShowInterviews">
+              Interviews
+                </a>
+              </li>
+
+              <li>
+              <a className="nav-link" style={fontStyle} href="/AssignBoothMembers">
+              Assign Booth Members
                 </a>
               </li> 
 

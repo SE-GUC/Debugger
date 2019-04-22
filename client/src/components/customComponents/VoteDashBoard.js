@@ -36,7 +36,7 @@ export class VoteDashBoard extends Component {
                </div>
                :
                <div className="alert alert-warning">
-                <strong>Warning !</strong> You voted before and your decision was <b>{this.props.lastDecision}</b>
+                You voted before and your last decision was <b>{this.props.lastDecision}</b>
              </div>  
             }
 

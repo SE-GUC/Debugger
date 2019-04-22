@@ -9,7 +9,7 @@ const validator = require("../../Validations/RequestValidations");
 router.post("/", async (req, res) => {
   try {
     const isValidated = validator.createValidation(req.body);
-
+    req.body.Status = false ;
     if (isValidated.error)
       return res
         .status(400)
@@ -44,16 +44,15 @@ router.get("/", async (req, res) => {
     }  
  })*/
 
-router.put("/edit_requests/:id", async (req, res) => {
+router.put("/edit_requests/: RequestID", async (req, res) => {
   try {
-    let selectreq = await Request.findById(req.params.id);
+    let selectreq = await Request.findById(req.params. RequestID);
     await Request.update(
-      { _id: req.params.id },
+      { _id: req.params. RequestID},
       {
-        sender_email: req.body.sender_email || selectreq.sender_email,
-        reciever_email: req.body.reciever_email || selectreq.reciever_email,
+        
         Status: req.body.Status || selectreq.Status,
-        request_msg: req.body.request_msg || selectreq.request_msg
+       
       }
     );
     return res.send("request updated");
@@ -61,19 +60,35 @@ router.put("/edit_requests/:id", async (req, res) => {
     res.status(400).send("cannot edit request  , id not found");
   }
 });
-router.get("/:id", async (req, res) => {
+router.get("/viewstatus/:sender_email", async (req, res) => {
   try {
-    const urReq = await Request.find({ _id: req.params.id });
+    const Requ = await Request.findOne({ sender_email:req.params.sender_email });
     //res.json({data: requests})
-    if (urReq[0].Status == true) {
-      return res.send("your request is accepted");
-    } else if (urReq[0].Status == false) {
-      return res.send("your request is rejected");
-    }
+    
+    
 
-    return res.json({ data: urReq });
+    return res.json({ data: Requ });
+  } 
+  catch {
+    res.status(400).send("email not found");
+  }
+});
+
+router.get("/viewrequest/:reciever_email", async (req, res) => {
+  try {
+    const urReq = await Request.findOne({ reciever_email:req.params.reciever_email });
+    //res.json({data: requests})
+    
+    let RequestID = {
+      
+      RequestID: urReq._id
+    
+      
+  }
+  
+    return res.json({ data: urReq , RequestID});
   } catch {
-    res.status(400).send("id not found");
+    res.status(400).send("email not found");
   }
 });
 

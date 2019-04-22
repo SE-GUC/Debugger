@@ -19,7 +19,7 @@ const EventFormSchema = new Schema({
         required: true
     },
     phoneNumber : {
-        type: Number,
+        type: String,
         required: true
     },
     email : {
@@ -33,4 +33,4 @@ const EventFormSchema = new Schema({
 
 })
 
-module.exports = mongoose.model('EventForm', EventFormSchema, "EventForm") 
+module.exports = EventForm=mongoose.model('eventforms', EventFormSchema) 

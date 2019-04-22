@@ -31,11 +31,12 @@ export class ShowEvents extends Component {
  
    }
    
-   fillform = (s) => {
-     
+   fillform = (id,s) => {
+    console.log(s.student_id)
     axios.post('http://localhost:8000/api/events/filleventforms', 
-
+      
        { //bodyMethod
+        event_id: id,
         student_id : s.student_id ,
          attendeeName :s.attendeeName ,
         phoneNumber : s.phoneNumber ,
@@ -48,13 +49,12 @@ export class ShowEvents extends Component {
 
     .then( res => {
        console.log(res.data)
-        
-         
-       alert ("submitted")}
+       alert ("submitted")
+    
+    }
    
     
     )
-
 
 
     .catch(function(error) {
