@@ -21,6 +21,8 @@ import ViewAllUsersAndDelete from './components/ViewAllUsersAndDelete'
 //import ViewUserItem from './components/ViewUserItem'
 //import ViewUsers from './components/ViewUsers'
 import GetFaq from './components/GetFaq'
+import EditFaq from  './components/EditFaq'
+import Faq from './components/Faq'
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 
 class App extends Component {
@@ -50,8 +52,9 @@ class App extends Component {
             <Route path="/CreateFaq" component={CreateFaq} />
             <Route path="/ViewAllUsersAndDelete" component={ViewAllUsersAndDelete} />
             <Route path="/GetFaq" component={GetFaq} />
-
+            <Route path="/EditFaq" component={EditFaq} />
             <Route path="/ShowEvents" component={ShowEvents} />
+            <Route path='/Faq' component={Faq}/>
           </Switch>
         </div>
       </Router>

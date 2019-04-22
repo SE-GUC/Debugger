@@ -77,15 +77,8 @@ export class Navbar extends Component {
               </li>
              
               <li>
-              <a className="nav-link" style={fontStyle} href="/CreateFaq">
-              Faq Section to ask
-                </a>
-              </li>
-
-
-              <li>
-              <a className="nav-link" style={fontStyle} href="/GetFaq">
-              Faq Section view
+              <a className="nav-link" style={fontStyle} href="/Faq">
+              Faq Section
                 </a>
               </li>
 

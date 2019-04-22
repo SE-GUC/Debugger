@@ -12,6 +12,7 @@
     "joi": "^14.3.1",
     "mongoose": "^5.5.1",
     "mongos": "0.0.0",
+    "react": "^16.8.6",
     "uuid": "^3.3.2"
   },
   "devDependencies": {

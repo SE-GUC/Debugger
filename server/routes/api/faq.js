@@ -30,17 +30,17 @@ router
     })
 
 router
-    .route('/edit_faq/:id')
+    .route('/edit_faq')
     .put(async (req, res)=>{
         try{
-            let createdFaq = await FAQ.findById(req.params.id)
-            await FAQ.update({_id: req.params.id},{
+            let date =await FAQ.findOne({date:req.body.date},{answeredBy:req.body.answeredBy})
+           // let answeredBy = await FAQ.findOne()
+            await FAQ.updateOne({_id:date._id},{
                 question: (req.body.question || createdFaq.question),
                 askedBy: (req.body.askedBy || createdFaq.askedBy),
                 noOfTimes: (req.body.noOfTimes || createdFaq.noOfTimes),
                 answer:(req.body.answer || createdFaq.answer),
-                answeredBy: (req.body.answeredBy || createdFaq.answeredBy),
-                date: (req.body.date || createdFaq.date)
+                
             })
             return res.send('done updating')
 
@@ -49,5 +49,20 @@ router
             res.status(400).send("cannot edit faq")
         }
     }) 
+
+
+
+
+    // router.delete('/:id', async (req,res) => {
+    //     try {
+    //      const id = req.params.id
+    //      const deletedFaq = await User.findByIdAndRemove(id)
+    //      res.json({msg:' deleted successfully', data: deletedUser})
+    //     }
+    //     catch(error) {
+    //         // We will be handling the error later
+    //         console.log(error)
+    //     }  
+    //  })
 
 module.exports = router
