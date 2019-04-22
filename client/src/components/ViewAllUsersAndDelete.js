@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ViewUsers from './ViewUsers'
 import axios from 'axios'
+import {connect} from "react-redux";
 //import { userInfo } from 'os';
 
 class ViewAllUsersAndDelete extends Component {
@@ -42,11 +43,21 @@ async componentDidMount(){
             return <h3>Page Is Loading...</h3>
         }
         return (
+        <div>  
+        {this.props.usrId !== null ? 
         <div>
             <ViewUsers Users = {allUser} delUser = {this.delUser} />
+        </div>: null}
         </div>
     )
   }
 }
+const mapStateToProps = (state)=>{
+    return {
+      usrId: state.userId,
+      vgsUsrId: state.VGSUserId,
+      usrType: state.userType
+    }
+  }
 
-export default ViewAllUsersAndDelete
+export default connect(mapStateToProps)(ViewAllUsersAndDelete)

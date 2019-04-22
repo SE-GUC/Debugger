@@ -78,7 +78,7 @@ export class Navbar extends Component {
               </li>
              
               <li>
-              <a className="nav-link" style={fontStyle} onClick = {<Faq/>} href="/Faq">
+              <a className="nav-link" style={fontStyle} href="/Faq">
               Faq Section 
                 </a>
               </li>

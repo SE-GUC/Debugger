@@ -54,7 +54,7 @@ class App extends Component {
 
             <Route path="/AppForm" component={AppForm} />
             <Route path="/AppFormEdit" component={AppFormEdit} />
-            <Route path="/Vote" component={Vote} />
+            {/* <Route path="/Vote" component={Vote} /> */}
             <Route path="/Login" component={Login} />
             <Route path="/Registration" component={Registration} />
             <Route path="/SubmitVote" component={SubmitVote} />
