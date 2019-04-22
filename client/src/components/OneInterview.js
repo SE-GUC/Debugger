@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { EditInterviews } from './EditInterviews';
 import {Enum_userType} from '../Enums/Enums'
 import {connect} from "react-redux";
-//import EditFreeSlots from "./EditFreeSlots"
+
 
 export class OneInterview extends Component {
   render() {

@@ -33,72 +33,11 @@ router.get('/:id', async (req, res) => {
 // Assigning the booth member
 router.put("/assign", async (req, res) => {
   try {
-      await VGS_User.create({
-        userId: "5ca96a2ylaamk6d4cbcd231",
-        userType: userTypeEnum.Member.value,
-        clubCommittee: "HR",
-        hobbies: "Playing Volleyball",
-        VGSYear: "2016",
-        appliedPosition: "HR Member",
-        appStatus: appStatusEnum.Accepted.value,
-        notes: null,
-        gameName: null,
-        gameScrSho: null,
-        downloadLink: null,
-        boothMember: false
-      });
 
-      await VGS_User.create({
-        userId: "5ca9rrdalaamk6d4cbcd231",
-        userType: userTypeEnum.Member.value,
-        clubCommittee: "GDD",
-        hobbies: "Developing games",
-        VGSYear: "2014",
-        appliedPosition: "GDD Member",
-        appStatus: appStatusEnum.Accepted.value,
-        notes: null,
-        gameName: null,
-        gameScrSho: null,
-        downloadLink: null,
-        boothMember: true
-      });
-
-      await VGS_User.create({
-        userId: "5tt328hylaamk6d4cbcd231",
-        userType: null,
-        clubCommittee: null,
-        hobbies: null,
-        VGSYear: null,
-        appliedPosition: null,
-        appStatus: appStatusEnum.Rejected.value,
-        notes: null,
-        gameName: null,
-        gameScrSho: null,
-        downloadLink: null,
-        boothMember: false
-      });
-
-      await VGS_User.create({
-        userId: "5cate45haaamk6d4cbcd231",
-        userType: userTypeEnum.Director.value,
-        clubCommittee: "GDD",
-        hobbies: "Coding",
-        VGSYear: "2012",
-        appliedPosition: "GDD Advisor",
-        appStatus: appStatusEnum.Accepted.value,
-        notes: null,
-        gameName: null,
-        gameScrSho: null,
-        downloadLink: null,
-        boothMember: false
-      });
-    
-
-    console.log(await VGS_User.find());
-    const memberId = req.body.userId;
+    const memberEmail = req.body.email;
 
     const schema = {
-      userId: Joi.string()
+      email: Joi.string().email()
         .required()
     };
 
@@ -106,33 +45,34 @@ router.put("/assign", async (req, res) => {
     if (result.error)
       return res.status(400).send({ error: result.error.details[0].message });
 
-    const user = await VGS_User.findOne({ userId: memberId });
+    const user = await UserTable.findOne({ email: memberEmail });
+    const vgsUser = await VGS_User.findOne({ userId: user._id });
 
     // checking if he is already a booth member
-    if (user.boothMember === true)
+    if (vgsUser.boothMember === true)
       return res.status(404).send({ err: "This member is already a booth member" });
 
     // checking if he is even accepted
-    if (user.appStatus == appStatusEnum.Rejected.value)
+    if (vgsUser.appStatus == appStatusEnum.Rejected.value)
       return res.status(404).send({
         err: "This applicant was rejected and is not a member in the club"
       });
 
     // checking if he is a member
-    if (user.userType !== userTypeEnum.Member.value)
+    if (vgsUser.userType !== userTypeEnum.Member.value)
       return res
         .status(404)
         .send({ err: "This person position is not member" });
 
     // Assigning the boothMember
-    const old = { userId: { $eq: memberId } };
+    const old = { userId: { $eq: vgsUser.userId } };
     const newR = { $set: { boothMember: true } };
 
     await VGS_User.updateOne(old, newR, (err, result) => {
-      if (err) res.status(404).send(err.message);
+      if (err) return res.status(404).send(err.message);
     });
 
-    const boothMembr = await VGS_User.findOne({ userId: memberId });
+    const boothMembr = await VGS_User.findOne({ userId: user._id });
     res.send(boothMembr);
 
   } catch (error) {

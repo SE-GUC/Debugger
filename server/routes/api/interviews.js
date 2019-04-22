@@ -35,7 +35,7 @@ router.put('/interview/:interviewerEmail', async (req, res) => {
 // Showing the whole interview sheet
 router.get('/', async (req, res) => {
 
-    try {
+    try { 
         
         const interviews = await Interview.find()
         res.send(interviews)
