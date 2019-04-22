@@ -18,6 +18,7 @@ import Note from './components/Note'
 import HeadAddMember from './components/HeadAddMember'
 import CreateFaq from './components/CreateFaq'
 import ViewAllUsersAndDelete from './components/ViewAllUsersAndDelete'
+import ShowGroups from "./components/ShowGroups"
 import AssignBoothMembers from './components/AssignBoothMembers'
 //import ViewUserItem from './components/ViewUserItem'
 //import ViewUsers from './components/ViewUsers'
@@ -39,6 +40,8 @@ class App extends Component {
             <Route path="/ShowFreeSlots" component={ShowFreeSlots} />
             <Route path="/ShowInterviews" component={ShowInterviews} />
             <Route path="/AssignBoothMembers" component={AssignBoothMembers} />
+
+            <Route path="/ShowGroups" component={ShowGroups} />
 
             <Route path="/AppForm" component={AppForm} />
             <Route path="/AppFormEdit" component={AppFormEdit} />
