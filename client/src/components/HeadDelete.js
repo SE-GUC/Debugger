@@ -23,16 +23,10 @@ export class HeadDelete extends Component {
     }
 
     handleDelete= async () =>{
-        const deleting = await axios.delete('http://localhost:8000/api/VGS/deletefromcommity/'+this.state.email)
-        console.log(deleting.status)
-        console.log(deleting.data)
-        if(deleting.status === 501){
-            alert("you can not delete this user")
-        }
-        else if (deleting.status===500){
-            alert('invalid email')
-        }
-        else if (deleting.status === 200){
+       const method={email:this.state.email}  
+      const deleting = await axios.put('http://localhost:8000/api/VGS/deletefromcommity',method)
+        console.log('done')
+        if (deleting.status === 200){
             alert('user deleted')
         }
 

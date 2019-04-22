@@ -181,4 +181,21 @@ router.post('/register', async(req, res)=>{
 //     res.send(users)
 // })
 
+
+
+// User.create({
+ 
+// name:"edit member",
+// PhoneNumber:"0123456789",
+// email:"presidentedit@yahoo.com",
+// password:"heloo",
+// birthDay:7/7/1998,
+// studyYear:2018,
+// modeOfTran:1,
+// generalAddress:"6th of october",
+// clubName:"VGS"
+
+// })
+
+
 module.exports = router;
