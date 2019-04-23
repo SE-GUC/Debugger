@@ -85,7 +85,7 @@ export class Vote extends Component {
     }
 
     checkAuthorization (){
-      console.log(this.props.appStatus.toLowerCase() === Enum_appStatus.Accepted.key.toLowerCase())
+      //console.log(this.props.appStatus.toLowerCase() === Enum_appStatus.Accepted.key.toLowerCase())
       if(this.props.usrId !==null && this.props.vgsUsrId !==null &&
          this.isAllowedUserType()&& 
          this.props.appStatus.toLowerCase() === Enum_appStatus.Accepted.key.toLowerCase())
@@ -95,10 +95,10 @@ export class Vote extends Component {
   render() {
     return (
       <div>
-        <div>user:{this.props.usrId}</div>
+        {/* <div>user:{this.props.usrId}</div>
         <div>vgs:{this.props.vgsUsrId}</div>
         <div>type:{this.props.vgsType}</div>
-        <div>status:{this.props.appStatus}</div>
+        <div>status:{this.props.appStatus}</div> */}
 
      {this.checkAuthorization () === true?
         <div className="container">

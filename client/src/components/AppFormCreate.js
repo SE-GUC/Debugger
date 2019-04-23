@@ -88,9 +88,9 @@ export class AppFormCreate extends Component {
   render() {
     return (
       <div>
-        <div>USERID : {this.props.usrId}</div>
+        {/* <div>USERID : {this.props.usrId}</div>
         <div>VGSUSERID: {this.props.vgsUsrId}</div> 
-        <div>appStatues: {this.props.status}</div> 
+        <div>appStatues: {this.props.status}</div>  */}
 
       {this.props.usrId !==null && this.props.vgsUsrId === null?
         <div className="container">
